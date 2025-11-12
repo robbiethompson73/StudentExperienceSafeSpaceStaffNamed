@@ -1,0 +1,586 @@
+﻿@model SharedViewModelLibrary.Models.MainFormAdminViewModel
+@using AyrshireCollege.Biis.PresentationFormattingLibrary.Date;
+
+@{
+    ViewData["Title"] = "View Record Details";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb admin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Admin Home", "Index", "Admin")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("View All Records", "List", "Admin")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <!-- Title + Export Button Row -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="pageTitle admin mb-0">
+                    <h1 class="display-4 mb-0">@ViewData["Title"]</h1>
+                </div>
+            </div>
+
+            <a asp-action="List"
+               asp-controller="Admin"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to view all records">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to View All Records
+            </a>
+
+            <span class="mx-3 text-muted" aria-hidden="true" style="user-select:none;">•</span>
+
+
+            <a asp-controller="Admin"
+               asp-action="Update"
+               asp-route-id="@Model.Id"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Edit record">
+                <i class="fas fa-pen me-2" aria-hidden="true"></i>
+                Edit this record
+            </a>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="container py-1">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your update was successful!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div> @* <div class="col-12"> *@
+        </div> @* <div class="row"> *@
+    </div> @* <div class="container py-0"> *@
+}
+
+
+<div class="container py-1">
+
+    <!-- Nav Tabs with Font Awesome icons -->
+    <ul class="nav nav-tabs mb-3" id="detailsTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="record-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="record" aria-selected="true">
+                <i class="fas fa-file-alt me-1"></i> Record Details
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link d-inline-flex align-items-center" id="other-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="other" aria-selected="false">
+                <i class="fas fa-user-shield me-1"></i> Admin Area
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link d-inline-flex align-items-center" id="audit-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="other" aria-selected="false">
+                <i class="fas fa-note-sticky me-1"></i> Audit Notes
+
+                @if (!string.IsNullOrWhiteSpace(Model.AdminNote) || !string.IsNullOrWhiteSpace(Model.AdminAuditFormatted))
+                {
+                    <i class="fas fa-comment-dots fa-xs ms-2" aria-hidden="true"></i>
+                    <span class="visually-hidden">Admin info available</span>
+                }
+            </button>
+        </li>
+
+
+    </ul>
+
+    <div class="tab-content" id="detailsTabContent">
+        <!-- First Tab Pane -->
+        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="record-tab">
+            <div class="row">
+                <div class="col-12">
+
+
+
+
+
+
+                    <!-- Student Information Section -->
+                    <div class="card mt-3 shadow-sm">
+                        <div class="card-header teal-header text-white">
+                            <i class="fas fa-user-graduate me-2"></i>Student Information
+                        </div>
+                        <div class="card-body">
+
+
+                                <!-- Full Name -->
+                                <div class="row pt-2 pb-0 bg-light">
+                                    <div class="col-sm-4 col-md-3 fw-bold">
+                                        Full Name
+                                    </div>
+                                    <div class="col-sm-8 col-md-9">
+                                        @Html.DisplayFor(model => model.StudentFullName)
+                                    </div>
+                                </div>
+
+
+                                <!-- Student Reference -->
+                                <div class="row py-2 bg-light">
+                                    <div class="col-sm-4 col-md-3 fw-bold">
+                                        Student Reference
+                                    </div>
+                                    <div class="col-sm-8 col-md-9">
+                                        @Html.DisplayFor(model => model.StudentReferenceNumber)
+                                    </div>
+                                </div>
+
+                                <!-- Student Date of Birth -->
+                                <div class="row py-2">
+                                    <div class="col-sm-4 col-md-3 fw-bold">
+                                        @Html.DisplayNameFor(model => model.StudentDateOfBirth)
+                                    </div>
+                                    <div class="col-sm-8 col-md-9">
+                                        @Html.DisplayFor(model => model.StudentDateOfBirth)
+                                    </div>
+                                </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- Form Submission Section -->
+                    <div class="card mt-3 mb-4 shadow-sm">
+                            @{
+                                var cardHeaderClass = Model.StatusDisplayName?.ToLower() switch
+                                {
+                                    "closed" => "card-header teal-header text-white",
+                                    "open" => "card-header bg-warning text-dark",
+                                    _ => "card-header"
+                                };
+                            }
+                            <div class="@cardHeaderClass">
+
+
+                            <i class="fas fa-pen-to-square me-2"></i>Form Details
+                        </div>
+
+                        <div class="card-body">
+
+
+                            <!-- Record ID -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">Record ID</div>
+                                <div class="col-sm-8 col-md-9">@Model.Id</div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.StatusId)</div>
+                                <div class="col-sm-8 col-md-9">
+                                    @{
+                                        var badgeClass = Model.StatusDisplayName?.ToLower() switch
+                                        {
+                                            "closed" => "bg-success",
+                                            "open" => "bg-warning text-dark",
+                                            _ => "bg-secondary"
+                                        };
+                                    }
+                                    <span class="badge @badgeClass">@Model.StatusDisplayName</span>
+                                </div>
+                            </div>
+
+                            <!-- Submitted By -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">Submitted By</div>
+                                <div class="col-sm-8 col-md-9">@Model.SubmittedByDisplayName</div>
+                            </div>
+
+                            <!-- Date Submitted -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.DateSubmitted)</div>
+                                <div class="col-sm-8 col-md-9">
+                                    @DateFormatting.ToLongOrdinalDate(Model.DateSubmitted)
+                                    at @DateFormatting.ToShortTime(Model.DateSubmitted)
+                                </div>
+                            </div>
+
+                            <!-- SampleTextbox -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">SampleTextbox</div>
+                                <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleTextbox)</div>
+                            </div>
+
+                            <!-- SampleTextarea -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">SampleTextarea</div>
+                                <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleTextarea)</div>
+                            </div>
+
+                            <!-- SampleDate -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleDate)</div>
+                                <div class="col-sm-8 col-md-9">
+                                    @if (Model.SampleDate.HasValue)
+                                    {
+                                        @DateFormatting.ToLongOrdinalDate(Model.SampleDate.Value)
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- SampleTime -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleTime)</div>
+                                <div class="col-sm-8 col-md-9">
+                                    @(Model.SampleTime.HasValue? Model.SampleTime.Value.ToString(@"hh\:mm") : "-")
+                                </div>
+                            </div>
+
+
+                            <!-- SampleCost -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleCost)</div>
+                                <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleCost)</div>
+                            </div>
+
+                            <!-- SampleDropdown -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleDropdownId)</div>
+                                <div class="col-sm-8 col-md-9">@Model.SampleDropdownDisplayName</div>
+                            </div>
+
+                            <!-- SampleRadio -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedSampleRadioId)</div>
+                                <div class="col-sm-8 col-md-9">
+
+
+                                    <div class="form-check">
+                                        @for (int i = 0; i < Model.SampleRadioOptions.Count; i++)
+                                        {
+                                            var item = Model.SampleRadioOptions[i];
+                                            var itemId = int.Parse(item.Value);
+                                            var isChecked = Model.SelectedSampleRadioId == itemId;
+
+                                            if (isChecked)
+                                            {
+                                                <div class="form-check mb-2 ps-0 ms-0">
+                                                    <input type="radio"
+                                                           name="SampleRadio"
+                                                           id="sampleradio_@item.Value"
+                                                           class="form-check-input"
+                                                           value="@item.Value"
+                                                           disabled
+                                                           @(isChecked ? "checked" : null) />
+                                                    <label class="form-check-label" for="sampleradio_@item.Value">
+                                                        @item.Text
+                                                    </label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- Sample Checkbox -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">Sample Checkbox</div>
+                                <div class="col-sm-8 col-md-9">
+                                        @foreach (var item in Model.SampleCheckboxOptions)
+                                        {
+                                            var itemId = int.Parse(item.Value);
+                                            var isChecked = Model.SelectedSampleCheckboxIds.Contains(itemId);
+
+                                            if (isChecked)
+                                            {
+                                                <div class="form-check mb-2">
+                                                    <input type="checkbox" class="form-check-input" disabled checked />
+                                                    <label class="form-check-label">@item.Text</label>
+                                                </div>
+                                            }
+                                        }
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    <a asp-controller="Admin"
+                       asp-action="Update"
+                       asp-route-id="@Model.Id"
+                       class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted"
+                       role="button"
+                       aria-label="Edit record">
+                        <i class="fas fa-pen me-2" aria-hidden="true"></i>
+                        Edit this record
+                    </a>
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Tab Pane -->
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="other-tab">
+            <div class="row">
+                <div class="col-12">
+
+                    <!-- Admin Fields -->
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-pink text-dark-pink">
+                            <i class="fas fa-user-shield me-2"></i>Admin Fields
+                        </div>
+                        <div class="card-body">
+
+                            <!-- SampleTextboxAdmin -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.SampleTextboxAdmin)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    @(string.IsNullOrWhiteSpace(Model.SampleTextboxAdmin) ? "-" : Model.SampleTextboxAdmin)
+                                </div>
+                            </div>
+
+                            <!-- SampleTextareaAdmin -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.SampleTextareaAdmin)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    @(string.IsNullOrWhiteSpace(Model.SampleTextareaAdmin) ? "-" : Model.SampleTextareaAdmin)
+                                </div>
+                            </div>
+
+                            <!-- SampleDateAdmin -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.SampleDateAdmin)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    @(Model.SampleDateAdmin.HasValue
+                                            ? $"{DateFormatting.ToLongOrdinalDate(Model.SampleDateAdmin.Value)} at {DateFormatting.ToShortTime(Model.SampleDateAdmin.Value)}"
+                                            : "-")
+                                </div>
+                            </div>
+
+                            <!-- SampleCostAdmin -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.SampleCostAdmin)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    @(Model.SampleCostAdmin.HasValue ? $"£{Model.SampleCostAdmin.Value:F2}" : "-")
+                                </div>
+                            </div>
+
+
+                            <!-- SampleDropdownAdminId -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.SampleDropdownAdminId)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    @Model.SampleDropdownAdminDisplayName
+                                </div>
+                            </div>
+
+
+                            <!-- SelectedSampleRadioAdminId -->
+                            <div class="row py-2">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.SelectedSampleRadioAdminId)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+
+                                    <div class="form-check">
+                                        @for (int i = 0; i < Model.SampleRadioAdminOptions.Count; i++)
+                                        {
+                                            var item = Model.SampleRadioAdminOptions[i];
+                                            var itemId = int.Parse(item.Value);
+                                            var isChecked = Model.SelectedSampleRadioAdminId == itemId;
+
+                                            if (isChecked)
+                                            {
+                                                <div class="form-check mb-2 ps-0 ms-0">
+                                                    <input type="radio"
+                                                           name="SampleRadioAdmin"
+                                                           id="sampleradioadmin_@item.Value"
+                                                           class="form-check-input"
+                                                           value="@item.Value"
+                                                           disabled
+                                                           @(isChecked ? "checked" : null) />
+                                                    <label class="form-check-label" for="sampleradioadmin_@item.Value">
+                                                        @item.Text
+                                                    </label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- Sample Checkbox Admin -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    Sample Checkbox Admin
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    <div class="form-check">
+                                        @foreach (var item in Model.SampleCheckboxAdminOptions)
+                                        {
+                                            var itemId = int.Parse(item.Value);
+                                            var isChecked = Model.SelectedSampleCheckboxAdminIds.Contains(itemId);
+
+                                            if (isChecked)
+                                            {
+                                                <div class="mb-2">
+                                                    <input type="checkbox" class="form-check-input" disabled @(isChecked ? "checked" : "") />
+                                                    <label class="form-check-label">@item.Text</label>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admin Note -->
+                            <div class="row py-2 bg-light">
+                                <div class="col-sm-4 col-md-3 fw-bold">
+                                    @Html.DisplayNameFor(model => model.AdminNote)
+                                </div>
+                                <div class="col-sm-8 col-md-9">
+                                    @(string.IsNullOrWhiteSpace(Model.AdminNote) ? "-" : Model.AdminNote)
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    <a asp-controller="Admin"
+                       asp-action="Update"
+                       asp-route-id="@Model.Id"
+                       class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+                       role="button"
+                       aria-label="Edit record">
+                        <i class="fas fa-pen me-2" aria-hidden="true"></i>
+                        Edit this record
+                    </a>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Third Tab Pane -->
+        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="other-tab">
+            <div class="row">
+                <div class="col-12">
+
+
+                    <!-- Audit Section -->
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-note-sticky me-2"></i>Audit Notes
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+
+
+                                <dt class="col-sm-4 col-md-3">Record History</dt>
+                                <dd class="col-sm-9 col-md-10">
+                                    @Html.Raw(
+                                    string.IsNullOrWhiteSpace(Model.AdminAuditFormatted)
+                                    ? "-"
+                                    : Model.AdminAuditFormatted
+                                                                        )
+                                </dd>
+
+
+                            </dl>
+                        </div>
+                    </div>
+
+
+
+
+                    <a asp-controller="Admin"
+                       asp-action="Update"
+                       asp-route-id="@Model.Id"
+                       class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+                       role="button"
+                       aria-label="Edit record">
+                        <i class="fas fa-pen me-2" aria-hidden="true"></i>
+                        Edit this record
+                    </a>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>

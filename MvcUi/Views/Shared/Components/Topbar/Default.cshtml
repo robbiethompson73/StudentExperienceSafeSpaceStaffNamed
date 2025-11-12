@@ -1,0 +1,64 @@
+﻿@model TopbarViewModel
+
+<nav class="navbar custom-navbar">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- LEFT: Logo + Title -->
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center me-2" asp-controller="Home" asp-action="Index" title="Home Page Link">
+                <img class="logo" src="https://biis.ayrshire.ac.uk/StudentExperienceSharedAssetsSite/images/se_logo_40x40.png" alt="Student Experience Logo" />
+            </a>
+
+            @{
+                var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+            }
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               title="Home Page Link"
+               class="navbar-title mb-0 d-none d-sm-inline text-white-sticky">
+                @(ViewData["AppName"] ?? "Default App Name")
+            </a>
+
+        </div>
+
+        <!-- RIGHT: Home & Sidebar Toggle -->
+        <div class="d-flex align-items-center">
+            @if (Model.UserRole == "Staff")
+            {
+                <!-- Optional: Add staff-specific buttons -->
+            }
+
+            @if (Model.UserRole == "Admin")
+            {
+                <!-- Optional: Add admin-specific buttons -->
+            }
+
+            @if (Model.UserRole == "BiisAdmin")
+            {
+                <!-- Optional: Add BIIS admin-specific buttons -->
+            }
+
+            <!-- Home Icon (hidden on small screens) -->
+            <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" class="text-white d-none d-md-inline me-3" title="Home">
+                <i class="fas fa-home fa-lg"></i>
+            </a>
+
+            <!-- Contact Icon (hidden on small screens) -->
+            <a asp-controller="Contact"
+               asp-action="Index"
+               title="Contact Us Link"
+               class="text-white d-none d-md-inline me-3">
+                <i class="fas fa-comment-dots fa-lg"></i>
+            </a>
+
+
+
+            <!-- Sidebar Toggle -->
+            <button id="toggleSidebar" class="btn btn-dark" type="button" title="Toggle Sidebar">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+        </div>
+    </div>
+</nav>

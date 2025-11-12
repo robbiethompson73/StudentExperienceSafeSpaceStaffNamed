@@ -1,0 +1,1141 @@
+﻿@model SharedViewModelLibrary.Models.MainFormAdminViewModel
+@using AyrshireCollege.Biis.PresentationFormattingLibrary.Date;
+
+
+@{
+    ViewData["Title"] = "Update Record";
+}
+
+
+<div class="container py-0">
+
+    <span id="startsection"></span>
+
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb admin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Admin Home", "Index", "Admin")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("View All Records", "List", "Admin")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle admin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+            <a asp-action="List"
+               asp-controller="Admin"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to view all records">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to View All Records
+            </a>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="container py-1">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your update was successful!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div> @* <div class="col-12"> *@
+        </div> @* <div class="row"> *@
+    </div> @* <div class="container py-0"> *@
+}
+
+
+
+<div class="container py-1">
+
+    <!-- Nav Tabs with Font Awesome icons -->
+    <ul class="nav nav-tabs mb-3" id="detailsTab" role="tablist">
+
+        <!-- Record Details Tab -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="details-tab"
+                    data-bs-toggle="tab" data-bs-target="#tab0"
+                    type="button" role="tab"
+                    aria-controls="details" aria-selected="true">
+                <i class="fas fa-info-circle me-1"></i> Record Details
+            </button>
+        </li><!-- /.nav-item -->
+
+        <!-- Update Record Tab -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="record-tab"
+                    data-bs-toggle="tab" data-bs-target="#tab1"
+                    type="button" role="tab"
+                    aria-controls="record" aria-selected="false">
+                <i class="fas fa-file-alt me-1"></i> Update Record
+            </button>
+        </li><!-- /.nav-item -->
+
+        <!-- Audit Notes Tab -->
+        <li class="nav-item" role="presentation">
+            <button class="nav-link d-inline-flex align-items-center" id="other-tab"
+                    data-bs-toggle="tab" data-bs-target="#tab2"
+                    type="button" role="tab"
+                    aria-controls="other" aria-selected="false">
+                <i class="fas fa-user-shield me-1"></i> Audit Notes
+
+                @if (!string.IsNullOrWhiteSpace(Model.AdminAuditFormatted))
+                {
+                    <i class="fas fa-comment-dots fa-xs ms-2" aria-hidden="true"></i>
+                    <span class="visually-hidden">Audit notes available</span>
+                }
+            </button>
+        </li><!-- /.nav-item -->
+
+    </ul><!-- /.nav-tabs -->
+
+
+
+
+
+
+    <div class="tab-content" id="detailsTabContent">
+
+        <!-- Record Details Tab Pane -->
+        <div class="tab-pane fade show active" id="tab0" role="tabpanel" aria-labelledby="details-tab">
+
+
+            <!-- Student Information Section -->
+            <div class="card mt-3 shadow-sm">
+                <div class="card-header teal-header text-white">
+                    <i class="fas fa-user-graduate me-2"></i>Student Information
+                </div>
+                <div class="card-body">
+
+
+                    <!-- Full Name -->
+                    <div class="row pt-2 pb-0 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">
+                            Full Name
+                        </div>
+                        <div class="col-sm-8 col-md-9">
+                            @Html.DisplayFor(model => model.StudentFullName)
+                        </div>
+                    </div>
+
+
+                    <!-- Student Reference -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">
+                            Student Reference
+                        </div>
+                        <div class="col-sm-8 col-md-9">
+                            @Html.DisplayFor(model => model.StudentReferenceNumber)
+                        </div>
+                    </div>
+
+                    <!-- Student Date of Birth -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">
+                            @Html.DisplayNameFor(model => model.StudentDateOfBirth)
+                        </div>
+                        <div class="col-sm-8 col-md-9">
+                            @Html.DisplayFor(model => model.StudentDateOfBirth)
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+            <!-- Form Submission Section -->
+            <div class="card mt-3 mb-4 shadow-sm">
+                @{
+                    var cardHeaderClass = Model.StatusDisplayName?.ToLower() switch
+                    {
+                        "closed" => "card-header teal-header text-white",
+                        "open" => "card-header bg-warning text-dark",
+                        _ => "card-header"
+                    };
+                }
+                <div class="@cardHeaderClass">
+
+
+                    <i class="fas fa-pen-to-square me-2"></i>Form Details
+                </div>
+
+                <div class="card-body">
+
+
+                    <!-- Record ID -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">Record ID</div>
+                        <div class="col-sm-8 col-md-9">@Model.Id</div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.StatusId)</div>
+                        <div class="col-sm-8 col-md-9">
+                            @{
+                                var badgeClass = Model.StatusDisplayName?.ToLower() switch
+                                {
+                                    "closed" => "bg-success",
+                                    "open" => "bg-warning text-dark",
+                                    _ => "bg-secondary"
+                                };
+                            }
+                            <span class="badge @badgeClass">@Model.StatusDisplayName</span>
+                        </div>
+                    </div>
+
+                    <!-- Submitted By -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">Submitted By</div>
+                        <div class="col-sm-8 col-md-9">@Model.SubmittedByDisplayName</div>
+                    </div>
+
+                    <!-- Date Submitted -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.DateSubmitted)</div>
+                        <div class="col-sm-8 col-md-9">
+                            @DateFormatting.ToLongOrdinalDate(Model.DateSubmitted)
+                            at @DateFormatting.ToShortTime(Model.DateSubmitted)
+                        </div>
+                    </div>
+
+                    <!-- SampleTextbox -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">SampleTextbox</div>
+                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleTextbox)</div>
+                    </div>
+
+                    <!-- SampleTextarea -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">SampleTextarea</div>
+                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleTextarea)</div>
+                    </div>
+
+                    <!-- SampleDate -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleDate)</div>
+                        <div class="col-sm-8 col-md-9">
+                            @if (Model.SampleDate.HasValue)
+                            {
+                                @DateFormatting.ToLongOrdinalDate(Model.SampleDate.Value)
+                            }
+                        </div>
+                    </div>
+
+                    <!-- SampleTime -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleTime)</div>
+                        <div class="col-sm-8 col-md-9">
+                            @(Model.SampleTime.HasValue? Model.SampleTime.Value.ToString(@"hh\:mm") : "-")
+                        </div>
+                    </div>
+
+
+                    <!-- SampleCost -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleCost)</div>
+                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleCost)</div>
+                    </div>
+
+                    <!-- SampleDropdown -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleDropdownId)</div>
+                        <div class="col-sm-8 col-md-9">@Model.SampleDropdownDisplayName</div>
+                    </div>
+
+                    <!-- SampleRadio -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedSampleRadioId)</div>
+                        <div class="col-sm-8 col-md-9">
+
+
+                            <div class="form-check">
+                                @for (int i = 0; i < Model.SampleRadioOptions.Count; i++)
+                                {
+                                    var item = Model.SampleRadioOptions[i];
+                                    var itemId = int.Parse(item.Value);
+                                    var isChecked = Model.SelectedSampleRadioId == itemId;
+
+                                    if (isChecked)
+                                    {
+                                        <div class="form-check mb-2 ps-0 ms-0">
+                                            <input type="radio"
+                                                   name="SampleRadio"
+                                                   id="sampleradio_@item.Value"
+                                                   class="form-check-input"
+                                                   value="@item.Value"
+                                                   disabled
+                                                   @(isChecked ? "checked" : null) />
+                                            <label class="form-check-label" for="sampleradio_@item.Value">
+                                                @item.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- Sample Checkbox -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">Sample Checkbox</div>
+                        <div class="col-sm-8 col-md-9">
+                            @foreach (var item in Model.SampleCheckboxOptions)
+                            {
+                                var itemId = int.Parse(item.Value);
+                                var isChecked = Model.SelectedSampleCheckboxIds.Contains(itemId);
+
+                                if (isChecked)
+                                {
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" disabled checked />
+                                        <label class="form-check-label">@item.Text</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div> <!-- tab-pane -->
+
+        <!-- Update Record Tab Pane -->
+        <div class="tab-pane fade" id="tab1" role="tabpanel" aria-labelledby="record-tab">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 px-0">
+
+
+                        <!-- Safeguarding Action Form Section -->
+                        <div id="safeguarding-action-form" class="card mt-3 shadow-sm">
+                            <div class="card-header admin-section-heading">
+                                <h5 class="mb-0">
+                                    <i class="fa-solid fa-chevron-right me-2"></i>
+                                    Update @ViewData["AppName"] Record
+                                </h5>
+                            </div>
+
+                            <div class="card-body px-3 px-md-4">
+
+
+
+
+
+                                @using (Html.BeginForm("Update", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+
+                                    <!--
+                                        Troubleshooting Only (Not for Production)
+                                        The validation summary below is useful during development
+                                        to quickly see all model binding/validation errors in one place.
+                                        In production, consider either:
+                                          - limiting this to model-level errors only (excludePropertyErrors: true), or
+                                          - removing it entirely and relying on per-field ValidationMessageFor.
+                                    -->
+
+                                    @if (!ViewData.ModelState.IsValid)
+                                        {
+                                            @Html.ValidationSummary(
+                                            excludePropertyErrors: false,
+                                            message: "Please correct the following errors before submitting:",
+                                            htmlAttributes: new { @class = "alert alert-danger" }
+                                        )
+                                    }
+
+
+                                    @Html.HiddenFor(m => m.Id)
+
+
+                                    <!-- TextBox StudentFullName -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.StudentFullName)
+                                    </div>
+
+
+                                    <!-- TextBox StudentReferenceNumber -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.StudentReferenceNumber)
+                                    </div>
+
+
+                                    <!-- StudentDateOfBirth - Date Picker -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.StudentDateOfBirth)
+                                    </div>
+
+
+                                    <!-- TextBox SampleTextbox -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.SampleTextbox)
+                                    </div>
+
+
+                                    <!-- SampleDate - Date Picker -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.SampleDate)
+                                    </div>
+
+
+                                    <!-- SampleTime - Time Picker -->
+                                    <div class="form-group">
+                                        @Html.Hidden("SampleTime", Model.SampleTime?.ToString(@"hh\:mm") ?? "")
+                                    </div>
+
+
+                                    <!-- Cost SampleCost -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.SampleCost)
+                                    </div>
+
+
+                                    <!-- Textarea SampleTextarea -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.SampleTextarea)
+                                    </div>
+
+
+                                    <!-- Radio Button List - SampleRadioId -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.SelectedSampleRadioId)
+                                    </div>
+
+
+                                    <!-- Drop Down List - SampleDropdown -->
+                                    <div class="form-group">
+                                        @Html.HiddenFor(m => m.SampleDropdownId)
+                                    </div>
+
+
+                                    <!-- Checkbox Group - SampleCheckbox -->
+                                   <div class="form-group">
+                                        @foreach (var id in Model.SelectedSampleCheckboxIds)
+                                        {
+                                            @Html.Hidden("SelectedSampleCheckboxIds", id)
+                                        }
+                                    </div>
+
+
+
+
+
+                                    <div class="admin-section-heading bg-light border rounded p-2 mb-3 mt-4">
+                                        <i class="fas fa-user-shield me-2 text-danger"></i>
+                                        <span id="adminsection"><strong>Admin Section</strong></span>
+
+                                    </div>
+
+                                    <!-- DDL Status -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.AdminStatusId)
+
+                                        @Html.DropDownListFor(m => m.AdminStatusId, Model.StatusOptions, "Select a Status", new Dictionary<string, object>
+                                        {
+                                            { "class", "form-select" },                                     // Apply Bootstrap styling
+                                            { "aria-describedby", "AdminStatusId-validation" },     // Link to the validation message span for screen readers
+                                            { "aria-invalid", (ViewData.ModelState["AdminStatusId"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }   // Indicate if the field is currently in an invalid state
+                                        })
+
+                                        @Html.ValidationMessageFor(m => m.AdminStatusId, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "AdminStatusId-validation",
+                                            @aria_live = "assertive"
+                                        })
+                                    </div>
+
+                                    <!-- TextBox SampleTextboxAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextboxAdmin)
+
+                                        @Html.TextBoxFor(m => m.SampleTextboxAdmin, new Dictionary<string, object>
+                                        {
+                                            // Apply Bootstrap styling to the input field for consistent UI design.
+                                            { "class", "form-control" },
+
+                                            // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                            // This improves accessibility for screen reader users.
+                                            { "aria-describedby", "SampleTextboxAdmin-validation" },
+
+                                            // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                            // This allows screen readers to announce when a field has failed validation.
+                                            { "aria-invalid", (ViewData.ModelState["SampleTextboxAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+
+                                            // Explicit ID for JS targeting
+                                            { "id", "SampleTextbox" }                      
+                                        })
+
+
+                                        @Html.ValidationMessageFor(m => m.SampleTextboxAdmin, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "SampleTextboxAdmin-validation",               // unique id for validation message span
+                                            @aria_live = "assertive"                    // announce validation changes immediately
+                                        })
+                                    </div>
+
+
+
+
+                                    <!-- Textarea SampleTextareaAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextareaAdmin)
+                                        @Html.TextAreaFor(m => m.SampleTextareaAdmin, new Dictionary<string, object>
+                                        {
+                                            { "class", "form-control" },                        // Apply Bootstrap styling and fixed height
+                                            { "rows", "4" },                                    // Set number of visible rows
+                                            { "id", Html.IdFor(m => m.SampleTextareaAdmin) },         // Ensure ID is consistent with the label 'for' attribute
+                                            { "aria-describedby", "SampleTextareaAdmin-validation" }, // Link to validation message span for screen readers
+                                            { "aria-invalid", (ViewData.ModelState["SampleTextareaAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Indicate whether the field has a validation error
+                                        })
+
+                                        @Html.ValidationMessageFor(m => m.SampleTextboxAdmin, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "SampleTextareaAdmin-validation",               // unique id for validation message span
+                                            @aria_live = "assertive"                    // announce validation changes immediately
+                                        })
+
+                                    </div>
+
+
+
+
+                                    <!-- SampleDateAdmin - Date Picker -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleDateAdmin)
+
+                                        @Html.TextBox("SampleDateAdmin", Model.SampleDateAdmin.HasValue? Model.SampleDateAdmin.Value.ToString("yyyy-MM-dd") : "",
+                                        new Dictionary<string, object>
+                                        {
+                                            { "type", "date" },                                  // HTML5 date input
+                                            { "class", "form-control w-100 w-md-custom" },      // Apply Bootstrap styling to the input
+                                            { "aria-describedby", "SampleDateAdmin-validation" },  // Link to help and validation message spans for screen readers
+                                            { "aria-invalid", (ViewData.ModelState["SampleDateAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }  // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                        })
+
+                                        @Html.ValidationMessageFor(m => m.SampleDateAdmin, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "SampleDateAdmin-validation",
+                                            @aria_live = "assertive"
+                                        })
+                                    </div>
+
+
+
+
+                                    <!-- Cost - SampleCostAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleCostAdmin)
+
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="CostPrefix">£</span>
+
+                                            @Html.TextBoxFor(m => m.SampleCostAdmin, new Dictionary<string, object>
+                                            {
+                                                { "class", "form-control w-md-custom" },
+                                                { "type", "number" },
+                                                { "step", "0.01" },
+                                                { "min", "0" }, // matches [Range(0, ...)] and allows 0.00
+
+                                                // Link to help and validation message spans for screen readers
+                                                { "aria-describedby", "CostPrefix SampleCostAdmin-validation" },
+
+                                                // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                                { "aria-invalid", (ViewData.ModelState["SampleCostAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }
+                                            })
+                                        </div>
+
+                                        <small class="form-text text-muted">
+                                            E.g. Sample Admin cost example
+                                        </small>
+
+                                        @Html.ValidationMessageFor(m => m.SampleCostAdmin, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "SampleCostAdmin-validation",
+                                            @aria_live = "assertive"
+                                        })
+                                    </div>
+
+
+
+
+                                    <!-- Radio Button List - SampleRadioAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedSampleRadioAdminId)
+
+                                        <div data-radio-group="SelectedSampleRadioAdminId"
+                                             describedby="SelectedSampleRadioAdminId-validation"
+                                             aria-invalid="@(ViewData.ModelState["SelectedSampleRadioAdminId"]?.Errors?.Count > 0 ? "true" : "false")"
+                                             role="radioadmingroup">
+
+                                            @for (int i = 0; i < Model.SampleRadioAdminOptions.Count; i++)
+                                            {
+                                                var item = Model.SampleRadioAdminOptions[i];
+                                                <div class="form-check">
+                                                    @Html.RadioButtonFor(m => m.SelectedSampleRadioAdminId, item.Value, new
+                                                    {
+                                                        @class = "form-check-input",
+                                                        id = $"sampleradioadmin_{item.Value}"
+                                                    })
+                                                    <label class="form-check-label" for="@($"sampleradioadmin_{item.Value}")">
+                                                        @item.Text
+                                                    </label>
+                                                </div>
+                                            }
+
+                                        </div>
+
+                                        @Html.ValidationMessageFor(m => m.SelectedSampleRadioAdminId, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "SelectedSampleRadioAdminId-validation",
+                                            @aria_live = "assertive"
+                                        })
+                                    </div>
+
+
+
+
+
+
+                                    <!-- Drop Down List -  SampleDropdownAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleDropdownAdminId) 
+
+                                        @Html.DropDownListFor(m => m.SampleDropdownAdminId, Model.SampleDropdownAdminOptions, "Select an Option", new Dictionary<string, object>
+                                        {
+                                            // Applies Bootstrap styling and a validation class to ensure visual consistency and enable validation highlighting
+                                            { "class", "form-select validate-dropdown" },
+
+                                            // Links the dropdown to its corresponding validation message element for screen readers
+                                            // This improves accessibility by providing assistive technology with the proper error context
+                                            { "aria-describedby", "SampleDropdownAdminId-validation" },
+
+                                            // Dynamically sets the aria-invalid attribute to communicate the validation status
+                                            // "true" if there are validation errors for this field; otherwise "false"
+                                            // This supports accessibility by indicating whether the current value is invalid
+                                            { "aria-invalid", (ViewData.ModelState["SampleDropdownAdminId"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }
+                                        })
+
+                                        @Html.ValidationMessageFor(m => m.SampleDropdownAdminId, "", new
+                                            {
+                                                @class = "form-error-message",
+                                                id = "SampleDropdownAdminId-validation",
+                                                @aria_live = "assertive"
+                                            })
+                                    </div>
+
+
+
+
+
+
+                                    <!-- Checkbox Group - SampleCheckboxAdmin samplecheckboxadmin -->
+                                    <div class="form-group" data-checkbox-group="SampleCheckboxAdmin">
+
+                                        <fieldset aria-describedby="samplecheckboxadmin-help awardtype-validation" class="border-0 p-0 m-0">
+                                            <legend class="col-form-label pt-0 pb-0">
+
+                                                @Html.LabelWithRequiredIndicatorFor(m => m.SelectedSampleCheckboxAdminIds) <span class="text-danger"> *</span>
+
+                                            </legend>
+
+                                            @for (int i = 0; i < Model.SampleCheckboxAdminOptions.Count; i++)
+                                                {
+                                                var item = Model.SampleCheckboxAdminOptions[i];
+                                                    var checkboxId = $"samplecheckboxadmin_{item.Value}";
+
+                                                    <div class="form-check">
+                                                        <input type="checkbox"
+                                                                id="@checkboxId"
+                                                                value="@item.Value"
+                                                                class="form-check-input checkbox-group"
+
+                                                                @* Name shared for model binding to List<int> *@
+                                                                name="SelectedSampleCheckboxAdminIds"
+                                                   
+                                                                @* Group identifier for generic checkbox group validation *@
+                                                                data-group-name="SampleCheckboxAdmin"
+
+                                                                @* Links input to help text and validation message for screen readers *@
+                                                                aria-describedby="samplecheckboxadmin-help samplecheckboxadmin-validation"
+
+                                                                @* Dynamicaly sets aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false" *@
+                                                                aria-invalid="@((ViewData.ModelState["SampleCheckboxAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false")"
+                                                   
+                                                                @* Preserve checked state *@
+                                                                @(Model.SelectedSampleCheckboxAdminIds.Contains(int.Parse(item.Value)) ? "checked" : "") />
+
+                                                            <label class="form-check-label" for="@checkboxId">
+                                                                @item.Text
+                                                            </label>
+                                                    </div>
+                                                }
+
+
+                                                <!-- Help text for screen readers and visual users -->
+                                                <span id="samplecheckboxadmin-help" class="form-text text-muted">
+                                                     Please mark all that apply
+                                                </span>
+
+                                                <!--
+                                                    Hidden field used to store whether any checkbox in the group is selected.
+                                                    This is necessary because model binding and validation attributes work with a scalar boolean
+                                                    (HasSelectedFilms) rather than the list of selected IDs. The custom client-side script updates this field dynamically.
+                                                    COMMENT OUT FOR NON-MANDATORY
+                                                -->
+                                                @Html.HiddenFor(m => m.HasSelectedSampleCheckboxAdmin)
+
+                                                <!--
+                                                    Validation message container:
+                                                    - Displays validation errors related to the checkbox group.
+                                                    - 'id' is linked in aria-describedby to inputs for screen reader users.
+                                                    - 'data-valmsg-for' attribute allows client-side validation scripts to find and update this element.
+                                                    - 'aria-live="assertive"' ensures screen readers announce error messages immediately when they change.
+                                                -->
+                                            @Html.ValidationMessageFor(m => m.HasSelectedSampleCheckboxAdmin, "", new
+                                                {
+                                                    @class = "form-error-message",
+                                                    id = "samplecheckboxadmin-validation",          // ID used by aria-describedby
+                                                    data_valmsg_for = "HasSelectedSampleCheckboxAdmin", // Used for client-side lookup
+                                                    @aria_live = "assertive"             // Announce validation changes immediately
+                                                })
+                                        </fieldset>
+                                    </div>
+
+
+
+                                    <!-- Admin Comments -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.AdminNote)  <!-- no required indicator for optional field -->
+                                        @Html.TextAreaFor(m => m.AdminNote, new Dictionary<string, object>
+                                        {
+                                            { "class", "form-control" },                        // Apply Bootstrap styling and fixed height
+                                            { "rows", "4" },                                    // Set number of visible rows
+                                            { "id", Html.IdFor(m => m.AdminNote) },         // Ensure ID is consistent with the label 'for' attribute
+                                            { "aria-describedby", "AdminNote-validation" }, // Link to validation message span for screen readers
+                                            { "aria-invalid", (ViewData.ModelState["AdminNote"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Indicate whether the field has a validation error
+                                        })
+
+                                        <small class="form-text text-muted">
+                                            Use this field to record active notes or ongoing comments related to this record.
+                                        </small>
+
+                                    </div>
+
+
+
+
+                                    <button type="submit"
+                                            class="btn btn-teal w-100 w-md-auto"
+                                            aria-label="Submit form to Update item">
+                                        Update <i class="fas fa-angle-double-right fa-sm ms-1"></i>
+                                    </button>
+
+                                    <button type="reset"
+                                            class="btn btn-secondary w-100 w-md-auto"
+                                            aria-label="Clear form and reset values">
+                                        Clear
+                                    </button>
+
+
+                                } @* // using *@
+
+
+                            </div> <!-- // <div class="card-body"> -->
+
+
+
+
+                            <!-- Long Procesisng Modal  -->
+                            <div class="modal fade" id="processingModal" tabindex="-1" aria-labelledby="processingModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content text-center">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="processingModalLabel" style="color: #00818a !important;">Form Updating...</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="spinner-border text-primary mb-3" role="status" aria-hidden="true" style="color: #00818a !important;"></div>
+                                            <p style="color: #00818a !important;">
+                                                <strong>Updating your form...</strong><br />
+                                                This may take a few moments.<br /> Please <em>wait until you see a confirmation message</em> before leaving the page.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div> <!-- // <div class="card mt-3 shadow-sm"> -->
+
+
+                </div> <!-- col-md-8 col-lg-6 px-0-->
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Audit Notes Tab Pane -->
+        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="other-tab">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-user-shield me-2"></i>Audit Notes
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3 col-md-2">@Html.DisplayNameFor(model => model.AdminAuditFormatted)</dt>
+                                <dd class="col-sm-9 col-md-10">
+                                    @Html.Raw(
+                                    string.IsNullOrWhiteSpace(Model.AdminAuditFormatted)
+                                    ? "-"
+                                    : Model.AdminAuditFormatted
+                                                                        )
+                                </dd>
+                            </dl>
+                        </div>
+                    </div> <!-- card -->
+                </div> <!-- col-12 -->
+            </div> <!-- row -->
+        </div> <!-- tab-pane -->
+
+    </div> <!-- tab-content-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div> <!-- // <div container py-1 -->
+
+
+
+
+
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form.css" asp-append-version="true" />
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+            function formatSortCode(input) {
+                let value = input.value.replace(/\D/g, ''); // Strip non-digits
+                if (value.length > 6) value = value.slice(0, 6); // Max 6 digits
+                let parts = value.match(/.{1,2}/g); // Split every 2 digits
+                input.value = parts ? parts.join('-') : '';
+            }
+
+
+        // --- Shows a Bootstrap modal to indicate form processing after successful validation
+        function showProcessingModal() {
+            const modal = new bootstrap.Modal(document.getElementById('processingModal'));
+            modal.show();
+        }
+
+        $(function () {
+            let formSubmitted = false;
+            let submitInProgress = false;
+
+            // --- Checkbox Group Validation
+            function validateCheckboxGroups() {
+                let allValid = true;
+
+                $("[data-checkbox-group]").each(function () {
+                    const groupContainer = $(this);
+                    const group = groupContainer.data("checkbox-group");
+
+                   // Skip validation for Non-mandatory group
+                   // Example: if (group === "JourneyTicketType") return;
+
+
+                    const checkboxes = groupContainer.find(`.checkbox-group[data-group-name="${group}"]`);
+                    const anyChecked = checkboxes.is(":checked");
+
+                    groupContainer.find(`input[name="HasSelected${group}"], input[name="${group}Selected"]`)
+                        .val(anyChecked ? "true" : "false");
+
+                    const validationSpan = groupContainer.find(`.form-error-message[data-valmsg-for="HasSelected${group}"]`);
+
+                    if (formSubmitted) {
+                        validationSpan
+                            .text(anyChecked ? "" : `Please select at least one ${group.toLowerCase()}.`)
+                            .toggleClass("field-validation-error", !anyChecked)
+                            .toggleClass("field-validation-valid", anyChecked);
+                    } else {
+                        validationSpan.text("").removeClass("field-validation-error").addClass("field-validation-valid");
+                    }
+
+                    checkboxes.attr("aria-invalid", formSubmitted && !anyChecked);
+                    if (!anyChecked) allValid = false;
+                });
+
+                return allValid;
+            }
+
+            // --- Dropdown Validation
+            function validateDropdowns() {
+                let allValid = true;
+
+                $(".validate-dropdown").each(function () {
+                    const $dropdown = $(this);
+                    const val = $dropdown.val();
+                    const isValid = val !== null && val !== "";
+                    const msgSelector = $dropdown.data("validation-message");
+                    const $messageSpan = msgSelector ? $(msgSelector) : null;
+                    const requiredMessage = $dropdown.attr("data-val-required") || "This field is required.";
+
+                    $dropdown.attr("aria-invalid", !isValid);
+
+                    if ($messageSpan && $messageSpan.length) {
+                        $messageSpan
+                            .text(isValid ? "" : requiredMessage)
+                            .toggleClass("field-validation-error", !isValid)
+                            .toggleClass("field-validation-valid", isValid);
+                    }
+
+                    if (!isValid) allValid = false;
+                });
+
+                return allValid;
+            }
+
+
+            // --- Radio Group Validation
+                function validateRadioGroups() {
+                    let allValid = true;
+
+                    $("[data-radio-group]").each(function () {
+                        const groupContainer = $(this);
+                        const groupName = groupContainer.data("radio-group");
+
+                        // Select all radio buttons within this group
+                        const radios = groupContainer.find(`input[type="radio"][name="${groupName}"]`);
+                        const anySelected = radios.is(":checked");
+
+                        // Optionally update any hidden flags if used
+                        groupContainer.find(`input[name="HasSelected${groupName}"], input[name="${groupName}Selected"]`)
+                            .val(anySelected ? "true" : "false");
+
+                        // Find validation span
+                        const validationSpan = groupContainer.find(`.form-error-message[data-valmsg-for="HasSelected${groupName}"], .form-error-message[data-valmsg-for="${groupName}"]`);
+
+                        // Toggle validation messages
+                        if (formSubmitted) {
+                            validationSpan
+                                .text(anySelected ? "" : `Please select a ${groupName.toLowerCase()} option.`)
+                                .toggleClass("field-validation-error", !anySelected)
+                                .toggleClass("field-validation-valid", anySelected);
+                        } else {
+                            validationSpan.text("").removeClass("field-validation-error").addClass("field-validation-valid");
+                        }
+
+                        // Update accessibility state
+                        radios.attr("aria-invalid", formSubmitted && !anySelected);
+
+                        if (!anySelected) allValid = false;
+                    });
+
+                    return allValid;
+                }
+
+
+
+            // --- Revalidation on Change
+            function bindRevalidation() {
+                $(".validate-dropdown").on("change", validateDropdowns);
+
+                $("input[data-val='true'], select[data-val='true']").on("change", function () {
+                    $(this).valid();
+                });
+
+                $(".checkbox-group").on("change", function () {
+                    if (formSubmitted) validateCheckboxGroups();
+                });
+
+                $(".radio-group").on("change", function () {
+                    if (formSubmitted) validateRadioGroups();
+                });
+            }
+
+            bindRevalidation();
+
+            // --- Form Submit Handler
+            $("form").on("submit", function (e) {
+                // Prevent multiple submissions
+                if (submitInProgress) return false;
+
+                // Prevent default form submission for custom validation logic
+                e.preventDefault();
+
+                const form = $(this);
+
+                // Flag that form has been submitted (used for client-side validation state tracking)
+                formSubmitted = true;
+
+                // Validate the standard form fields using jQuery Validation plugin
+                const formValid = form.valid();
+
+                // Custom validation for checkbox groups (e.g., at least one per group)
+                const checkboxesValid = validateCheckboxGroups();
+
+                // Custom validation for radio button groups (e.g., one option must be selected)
+                const radiosValid = validateRadioGroups();
+
+                // Custom validation for required dropdowns (e.g., default empty value check)
+                const dropdownsValid = validateDropdowns();
+
+                // Overall form validity — must pass all individual validation checks
+                const allValid = formValid && checkboxesValid && radiosValid && dropdownsValid;
+
+                if (allValid) {
+                    // Prevent further submissions
+                    submitInProgress = true;
+
+                    // Disable all submit and reset buttons to prevent interaction during submission
+                    $("button[type=submit], button[type=reset]").prop("disabled", true);
+
+                    // Show a modal or overlay to indicate that the form is being processed
+                    showProcessingModal();
+
+                    // Delay actual submission to allow the modal to be displayed
+                    setTimeout(() => {
+                        form.off("submit");  // Remove this handler to avoid infinite loop
+                        form[0].submit();    // Submit the form using the native DOM method
+                    }, 2000);
+                }
+
+                // Prevent default behavior in all cases
+                return false;
+            });
+
+
+
+            /* -------------------------------------------------------------
+             * HOW TO ADD NEW FORM ELEMENTS FOR VALIDATION:
+             *
+             * 1. Checkbox Groups:
+             *    - Wrap checkboxes inside a container with attribute: data-checkbox-group="GroupName"
+             *    - Each checkbox inside should have class "checkbox-group" and attribute data-group-name="GroupName"
+             *    - Add a hidden input named "HasSelectedGroupName" or "GroupNameSelected" inside the container for server binding
+             *    - Add a span with class "form-error-message" and attribute data-valmsg-for="HasSelectedGroupName"
+             *    - Validation messages will display after submit attempt automatically
+             *
+             * 2. File Inputs:
+             *    - Add class "validate-file" to file input elements
+             *    - Add an element with id "[fileInputId]ValidationMessage" (e.g., if input id="uploadFile", then span id="uploadFileValidationMessage")
+             *    - Use data-val-required attribute on file input to specify required message (optional)
+             *    - Validation auto-handled and messages show on submit or file change
+             *
+             * 3. Dropdowns:
+             *    - Add class "validate-dropdown" to select elements
+             *    - Add a data-validation-message attribute referencing the selector of the validation message span for this dropdown (e.g., "#dropdown1Msg")
+             *    - Use data-val-required attribute on the dropdown to specify required message (optional)
+             *    - Validation auto-handled on submit and change
+             *
+             * 4. Other Inputs (text, date, time, etc.):
+             *    - Ensure they have jQuery Validation attributes (e.g., data-val="true", data-val-required="message")
+             *    - Validation handled by jQuery Validation plugin automatically
+             *
+             * 5. To Add Custom Validation Rules:
+             *    - Use $.validator.addMethod(...) to define a new rule
+             *    - Add adapters via $.validator.unobtrusive.adapters.add* to link to HTML attributes
+             *    - Call the new validation method inside the submit handler if needed
+             *
+             * 6. To Add New Validation Types:
+             *    - Create a new validateXYZ() function similar to validateCheckboxGroups()
+             *    - Call it in the submit handler and in bindRevalidation for corresponding change events
+             *
+             * ----------------------------------------------------------- */
+        });
+    </script>
+
+
+
+
+}

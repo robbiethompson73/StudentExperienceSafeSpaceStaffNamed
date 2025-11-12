@@ -1,0 +1,123 @@
+﻿@model AyrshireCollege.Biis.CommonModelsLibraryStudentExperience.ResolvedUserIdentity
+
+@{
+    ViewData["Title"] = "Current User Identity Override ";
+}
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb biisadmin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("BIIS Admin Dashboard", "Index", "BiisAdmin")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle biisadmin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-7">
+
+
+            @if (Model.IsOverridden == true)
+            {
+                <a asp-controller="IdentityOverride"
+                   asp-action="Update"
+                   asp-route-id="@Model.Id"
+                   class="btn btn-biisadmin mb-3 w-md-auto"
+                   role="button"
+                   aria-label="edit record">
+                    <i class="fas fa-pen me-2" aria-hidden="true"></i>
+                    Edit Identity Override
+                </a>
+            }
+            else
+            {
+                <a asp-controller="IdentityOverride"
+                   asp-action="Create"
+                   class="btn btn-biisadmin mb-3 w-md-auto"
+                   role="button"
+                   aria-label="create record">
+                    <i class="fa fa-pen-to-square me-2" aria-hidden="true"></i>
+                    Create Identity Override
+                </a>
+
+            }
+
+
+
+
+            <div class="container mt-4 ps-0">
+                <div class="card shadow-sm">
+                    <div class="card-header biisadmin-section-heading">
+                        <h5 class="mb-0">Identity Override Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover mb-0">
+                            <tbody>
+
+                                <tr>
+                                    <th scope="row">Is Overridden</th>
+                                    <td>
+                                        @if (Model.IsOverridden)
+                                        {
+                                            <span class="badge bg-danger">Yes</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success">No</span>
+                                        }
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">Real Windows Username</th>
+                                    <td>@Model.RealWindowsUsername</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Real Formatted Name</th>
+                                    <td>@Model.RealFormattedName</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Effective Windows Username</th>
+                                    <td>@Model.EffectiveWindowsUsername</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Effective Formatted Name</th>
+                                    <td>@Model.EffectiveFormattedName</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@

@@ -1,0 +1,255 @@
+﻿@model SharedViewModelLibrary.Models.IdentityOverrideViewModel
+
+@{
+    ViewData["Title"] = "Update Identity Override";
+}
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb biisadmin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("BIIS Admin Dashboard", "Index", "BiisAdmin")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Identity Override View All", "List", "IdentityOverride")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle biisadmin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+<div class="container px-3 px-sm-4 px-md-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+
+                <div class="card-header biisadmin-section-heading">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-chevron-right me-2"></i>
+                        Update Identity Override
+                    </h5>
+                </div>
+
+
+                <div class="card-body px-3 px-md-4">
+
+                    @using (Html.BeginForm("Update", "IdentityOverride", FormMethod.Post))
+                    {
+
+                        <!-- Hidden Field Id -->
+                        @Html.HiddenFor(m => m.Id)
+
+                        <!-- RealWindowsUsername -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.RealWindowsUsername)
+
+                            @Html.TextBoxFor(m => m.RealWindowsUsername, new Dictionary<string, object>
+                            {
+                                { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                                { "readonly", "readonly" },
+                                { "aria-describedby", "RealWindowsUsername-validation" },     // Link this input to the associated validation message span for screen readers
+                                { "aria-invalid", (ViewData.ModelState["RealWindowsUsername"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                        <small class="form-text text-muted">
+                            Format: <code>firstname(s).lastname</code> (e.g. <code>john.doe</code>)
+                        </small>
+
+                        @Html.ValidationMessageFor(m => m.RealWindowsUsername, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "RealWindowsUsername-validation",               // unique id for validation message span
+                            @aria_live = "assertive"                    // announce validation changes immediately
+                        })
+                    </div>
+
+
+                    <!-- RealFormattedName -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.RealFormattedName)
+
+                        @Html.TextBoxFor(m => m.RealFormattedName, new Dictionary<string, object>
+                        {
+                            { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                            { "readonly", "readonly" },
+                            { "aria-describedby", "RealFormattedName-validation" },     // Link this input to the associated validation message span for screen readers
+                            { "aria-invalid", (ViewData.ModelState["FirstName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                        })
+
+                        <small class="form-text text-muted">
+                            Format: <code>Firstname(s) Lastname</code> (e.g. <code>John Doe</code>)
+                        </small>
+
+                        @Html.ValidationMessageFor(m => m.RealFormattedName, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "RealFormattedName-validation",               // unique id for validation message span
+                            @aria_live = "assertive"                    // announce validation changes immediately
+                        })
+                    </div>
+
+
+
+
+
+                    <!-- EffectiveWindowsUsername -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.EffectiveWindowsUsername)
+
+                        @Html.TextBoxFor(m => m.EffectiveWindowsUsername, new Dictionary<string, object>
+                        {
+                            { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                            { "aria-describedby", "EffectiveWindowsUsername-validation" },     // Link this input to the associated validation message span for screen readers
+                            { "aria-invalid", (ViewData.ModelState["EffectiveWindowsUsername"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                        })
+
+                        <small class="form-text text-muted">
+                            Format: <code>firstname(s).lastname</code> (e.g. <code>jane.doe</code>)
+                        </small>
+
+                        @Html.ValidationMessageFor(m => m.EffectiveWindowsUsername, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "EffectiveWindowsUsername-validation",               // unique id for validation message span
+                            @aria_live = "assertive"                    // announce validation changes immediately
+                        })
+                    </div>
+
+
+
+                    <!-- EffectiveFormattedName -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.EffectiveFormattedName)
+
+                        @Html.TextBoxFor(m => m.EffectiveFormattedName, new Dictionary<string, object>
+                        {
+                            { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                            { "aria-describedby", "EffectiveFormattedName-validation" },     // Link this input to the associated validation message span for screen readers
+                            { "aria-invalid", (ViewData.ModelState["FirstName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                        })
+
+                        <small class="form-text text-muted">
+                            Format: <code>Firstname(s) Lastname</code> (e.g. <code>Jane Doe</code>)
+                        </small>
+
+                        @Html.ValidationMessageFor(m => m.EffectiveFormattedName, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "EffectiveFormattedName-validation",               // unique id for validation message span
+                            @aria_live = "assertive"                    // announce validation changes immediately
+                        })
+                    </div>
+
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                            class="btn btn-biisadmin w-100 w-md-auto"
+                            aria-label="Submit form to create item">
+                        Update <i class="fas fa-angle-double-right fa-sm ms-1"></i>
+                    </button>
+
+
+                }  @* // using *@
+  
+
+
+
+                </div> <!-- Close card-body -->
+                <!-- Long Procesisng Modal  -->
+                <div class="modal fade" id="processingModal" tabindex="-1" aria-labelledby="processingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content text-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="processingModalLabel" style="color: #00818a !important;">Form Submitting...</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="spinner-border text-primary mb-3" role="status" aria-hidden="true" style="color: #00818a !important;"></div>
+                                <p style="color: #00818a !important;">
+                                    <strong>Submitting your form...</strong><br />
+                                    This may take a few moments.<br /> Please <em>wait until you see a confirmation message</em> before leaving the page.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div> <!-- Close card-shadow -->
+        </div>
+    </div>
+</div>  @* <div class="container px-3 px-sm-4 px-md-5"> *@
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(function () {
+            let formSubmitted = false;
+
+            $("form").on("submit", function (e) {
+                const form = this;
+
+                // Run jQuery validation check
+                if (!$(form).valid()) {
+                    // Let validation messages show, don't show modal
+                    return;
+                }
+
+                // Prevent double submission
+                if (formSubmitted) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                e.preventDefault(); // Stop form from submitting immediately
+                formSubmitted = true;
+
+                const myModal = new bootstrap.Modal(document.getElementById('processingModal'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                myModal.show();
+
+                // Submit form after short delay so modal appears first
+                setTimeout(() => {
+                    form.submit();
+                }, 2000);
+            });
+        });
+    </script>
+}
+
+
+

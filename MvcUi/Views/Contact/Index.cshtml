@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Contact Us";
+}
+
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb mb-3">
+
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container py-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="feature-block">
+                <div class="top-section">
+                    <h2 class="sub1">
+                        <i class="fas fa-hands-helping icon-right"></i> We're Here to Help
+                    </h2>
+                </div>
+
+                <div class="bottom-section">
+
+                    <p>There are several ways to get in touch with the Student Experience team — all listed below.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container py-1">
+    <div class="row">
+        <div class="col-12">
+            <div class="feature-block">
+                <div class="top-section">
+                    <h2 class="sub1">
+                        <i class="fas fa-envelope icon-right"></i> Get in Touch
+                    </h2>
+                </div>
+
+                <div class="bottom-section">
+
+                    <p>For any enquiries, feel free to send us an email, connect on Teams or call us!<br />Reach us at:</p>
+
+                    <ul class="list-unstyled">
+
+                        <li class="d-flex align-items-start mb-3">
+                            <img src="https://biis.ayrshire.ac.uk/StudentExperienceSharedAssetsSite/images/se_logo_on_white_40x40.png" alt="Image" class="rounded-circle" width="40" height="40">
+                            <div class="ms-3">
+                                <strong>Student Experience Contact Name</strong>
+                                <p class="mb-0">
+                                    <a href="mailto:se@ayrshire.ac.uk" class="link-teal"><i class="fas fa-envelope me-2"></i> se@ayrshire.ac.uk</a>
+                                </p>
+                                <p class="mb-0"><i class="fas fa-phone-alt me-2 text-dark"></i> 01294 555325 </p>
+                                <p class="mb-0"><i class="fas fa-map-marker-alt me-2 text-dark"></i> Student Experience office on the ground floor of each campus </p>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div> @* // class="container py-3" *@
+
+
+
+
+
+

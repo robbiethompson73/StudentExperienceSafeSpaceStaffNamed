@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
+    <PackageReference Include="CommonModelsLibraryStudentExperience" Version="1.0.1" />
+    <PackageReference Include="InputProcessingLibrary" Version="1.0.3" />
+    <PackageReference Include="PresentationFormattingLibrary" Version="1.0.4" />
+    <PackageReference Include="UserIdentityLibrary" Version="3.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\EmailLibrary\EmailLibrary.csproj" />
+    <ProjectReference Include="..\SharedViewModelLibrary\SharedViewModelLibrary.csproj" />
+  </ItemGroup>
+
+</Project>

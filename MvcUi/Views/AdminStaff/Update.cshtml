@@ -1,0 +1,378 @@
+﻿@model SharedViewModelLibrary.Models.AdminStaffViewModel
+
+@{
+    ViewData["Title"] = "Update Admin Staff Member";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb admin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Admin Home", "Index", "Admin")
+                    </li>
+
+@*                    
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Manage Admin Staff", "Index", "AdminStaff")
+                    </li>
+*@
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle admin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+            <a asp-action="Index"
+               asp-controller="Admin"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to admin home">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to Admin Home
+            </a>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+<div class="container px-3 px-sm-4 px-md-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+
+                <div class="card-header admin-section-heading">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-chevron-right me-2"></i>
+                            Update Admin Staff Member
+                    </h5>
+                </div>
+
+
+                <div class="card-body px-3 px-md-4">
+
+                    @using (Html.BeginForm("Update", "AdminStaff", FormMethod.Post))
+                    {
+
+                        <!-- Windows Name -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.WindowsName)
+
+                            @Html.TextBoxFor(m => m.WindowsName, new Dictionary<string, object>
+                            {
+                                { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                                                { "aria-describedby", "WindowsName-validation" },     // Link this input to the associated validation message span for screen readers
+                                                { "aria-invalid", (ViewData.ModelState["WindowsName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            <small class="form-text text-muted">
+                                Format: <code>firstname(s).lastname</code> (e.g. <code>john.doe</code>)
+                            </small>
+
+
+                            @Html.ValidationMessageFor(m => m.WindowsName, "", new
+                            {
+                                @class = "form-error-message",
+                                            id = "WindowsName-validation",               // unique id for validation message span
+                                @aria_live = "assertive"                    // announce validation changes immediately
+                            })
+                        </div>
+
+
+                        <!-- First Name -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.FirstName)
+
+                            @Html.TextBoxFor(m => m.FirstName, new Dictionary<string, object>
+                                {
+                                { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                                { "aria-describedby", "FirstName-validation" },     // Link this input to the associated validation message span for screen readers
+                                { "aria-invalid", (ViewData.ModelState["FirstName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            @Html.ValidationMessageFor(m => m.FirstName, "", new
+                                {
+                                    @class = "form-error-message",
+                                    id = "FirstName-validation",               // unique id for validation message span
+                                    @aria_live = "assertive"                    // announce validation changes immediately
+                                })
+                        </div>
+
+
+                        <!-- Last Name -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.LastName)
+
+                            @Html.TextBoxFor(m => m.LastName, new Dictionary<string, object>
+                            {
+                                { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                                { "aria-describedby", "LastName-validation" },      // Link this input to the associated validation message span for screen readers
+                                { "aria-invalid", (ViewData.ModelState["LastName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            @Html.ValidationMessageFor(m => m.LastName, "", new
+                                {
+                                    @class = "form-error-message",
+                                    id = "LastName-validation",                // unique ID for validation
+                                    @aria_live = "assertive"                   // screen readers announce changes
+                                })
+                        </div>
+
+
+
+
+                        <!-- Contact Email -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.ContactEmail)
+
+                            @Html.TextBoxFor(m => m.ContactEmail, new Dictionary<string, object>
+                            {
+                                { "class", "form-control" },                        // Apply Bootstrap styling to the input
+                                { "aria-describedby", "ContactEmail-validation" },      // Link this input to the associated validation message span for screen readers
+                                { "aria-invalid", (ViewData.ModelState["ContactEmail"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            @Html.ValidationMessageFor(m => m.ContactEmail, "", new
+                                {
+                                    @class = "form-error-message",
+                                    id = "ContactEmail-validation",                // unique ID for validation
+                                    @aria_live = "assertive"                   // screen readers announce changes
+                                })
+                        </div>
+
+
+
+
+                        <!-- Receive Email Notifications -->
+                        <div class="form-group">
+                            <fieldset aria-describedby="active-help receiveemail-validation" class="border-0 p-0 m-0">
+                                <legend class="col-form-label pt-0">
+                                    @Html.DisplayNameWithRequiredIndicatorFor(m => m.ReceiveEmail)
+                                </legend>
+
+                                <span id="active-help" class="form-text text-muted">
+                                    Select if staff should receive an email notification upon form submission.
+                                </span>
+
+                                <div class="form-check">
+
+                                    @Html.RadioButtonFor(m => m.ReceiveEmail, true, new Dictionary<string, object>
+                                    {
+                                        { "class", "form-check-input" }, // Apply Bootstrap styling to the input
+                                        { "id", "ReceiveEmailYes" },  // Unique ID for label association used by aria-describedby
+                                        { "aria-describedby", "receieveemail-help receiveemail-validation" }, // Link to help and validation message spans for screen readers
+                                        { "aria-invalid", (ViewData.ModelState["ReceiveEmail"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                    })
+                                    <label class="form-check-label" for="ReceiveEmailYes">Yes</label>
+                                </div>
+
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.ReceiveEmail, false, new Dictionary<string, object>
+                                    {
+                                        { "class", "form-check-input" }, // Apply Bootstrap styling to the input
+                                        { "id", "ReceiveEmailNo" }, // Unique ID for label association used by aria-describedby
+                                        { "aria-describedby", "receieveemail-help receieveemail-validation" },  // Link to help and validation message spans for screen readers
+                                        { "aria-invalid", (ViewData.ModelState["ReceiveEmail"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                    })
+                                    <label class="form-check-label" for="ReceiveEmailNo">No</label>
+                                </div>
+
+
+                                @Html.ValidationMessageFor(m => m.ReceiveEmail, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "receieveemail-validation",
+                                        @aria_live = "assertive"
+                                    })
+                            </fieldset>
+                        </div>
+
+
+
+
+                        <!-- Active -->
+                        <div class="form-group">
+                            <fieldset aria-describedby="active-help active-validation" class="border-0 p-0 m-0">
+                                <legend class="col-form-label pt-0">
+                                    @Html.DisplayNameWithRequiredIndicatorFor(m => m.Active)
+                                </legend>
+
+                                <span id="meetingtime-help" class="form-text text-muted">
+                                    Please select an activity state.
+                                </span>
+
+                                <div class="form-check">
+
+                                    @Html.RadioButtonFor(m => m.Active, true, new Dictionary<string, object>
+                                    {
+                                        { "class", "form-check-input" }, // Apply Bootstrap styling to the input
+                                        { "id", "ActiveYes" },  // Unique ID for label association used by aria-describedby
+                                        { "aria-describedby", "active-help active-validation" }, // Link to help and validation message spans for screen readers
+                                        { "aria-invalid", (ViewData.ModelState["Active"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                    })
+                                    <label class="form-check-label" for="ActiveYes">Yes</label>
+                                </div>
+
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.Active, false, new Dictionary<string, object>
+                                    {
+                                        { "class", "form-check-input" }, // Apply Bootstrap styling to the input
+                                        { "id", "ActiveNo" }, // Unique ID for label association used by aria-describedby
+                                        { "aria-describedby", "active-help active-validation" },  // Link to help and validation message spans for screen readers
+                                        { "aria-invalid", (ViewData.ModelState["Active"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                    })
+                                    <label class="form-check-label" for="ActiveNo">No</label>
+                                </div>
+
+
+                                @Html.ValidationMessageFor(m => m.Active, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "active-validation",
+                                        @aria_live = "assertive"
+                                    })
+                            </fieldset>
+                        </div>
+
+
+
+
+                        <button type="submit"
+                                class="btn btn-teal w-100 w-md-auto"
+                                aria-label="Submit form to Update item">
+                                Update <i class="fas fa-angle-double-right fa-sm ms-1"></i>                         
+                        </button>
+
+                        <button type="reset"
+                                class="btn btn-secondary w-100 w-md-auto"
+                                aria-label="Clear form and reset values">
+                            Clear
+                        </button>
+
+
+                    } @* // using *@
+
+                </div> <!-- Close card-body -->
+
+            </div> <!-- Close card-shadow -->
+        </div>
+    </div>
+</div>  @* <div class="container px-3 px-sm-4 px-md-5"> *@
+
+
+
+
+
+
+
+
+    @section Styles {
+        <link rel="stylesheet" href="~/css/form.css" asp-append-version="true" />
+    }
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script>
+            $(function () {
+
+                let formSubmitted = false; // Flag to track if the form was submitted
+
+                // Register custom client-side validator for MustBeTrue
+                $.validator.addMethod("mustbetrue", function (value, element) {
+                    return element.checked === true;
+                }, "You must agree to the terms and conditions CLIENT SIDE.");
+
+                $.validator.unobtrusive.adapters.addBool("mustbetrue");
+                $.validator.unobtrusive.parse(document);
+
+                // Add mustbetrue rule for AcceptTerms if needed
+                $("#AcceptTerms").rules("add", {
+                    mustbetrue: true
+                });
+
+                function validateCheckboxGroups() {
+                    let allValid = true;  // Flag to track if all checkbox groups are valid
+
+                    // Get all unique group names from checkboxes with class 'checkbox-group'
+                    const groups = [...new Set($(".checkbox-group").map((_, el) => $(el).data("group-name")).get())];
+
+                    groups.forEach(group => {
+                        // Select all checkboxes that belong to the current group
+                        const checkboxes = $(`.checkbox-group[data-group-name="${group}"]`);
+
+                        // Check if at least one checkbox in this group is checked
+                        const anyChecked = checkboxes.is(":checked");
+
+                        // Find the corresponding hidden input field to update its value for server-side usage
+                        const hiddenField = $(`input[name="HasSelected${group}"], input[name="${group}Selected"]`);
+
+                        // Update the hidden field value to reflect whether any checkbox is selected
+                        if (hiddenField.length > 0) hiddenField.val(anyChecked);
+
+                        // Find the MVC validation message span for this group (used for unobtrusive validation messages)
+                        const mvcValidationSpan = $(`.form-error-message[data-valmsg-for="HasSelected${group}"]`);
+
+                        if (mvcValidationSpan.length > 0) {
+                            if (!anyChecked) {
+                                // If no checkbox is checked, show validation error message and styling
+                                mvcValidationSpan
+                                    .text(`Please select at least one ${group.toLowerCase()} CLIENT SIDE.`)
+                                    .removeClass("field-validation-valid")
+                                    .addClass("field-validation-error");
+                            } else {
+                                // If validation passes, clear any error messages and update styling accordingly
+                                mvcValidationSpan
+                                    .text("")
+                                    .removeClass("field-validation-error")
+                                    .addClass("field-validation-valid");
+                            }
+                        }
+
+                        // **Set aria-invalid attribute on all checkboxes in this group**
+                        checkboxes.attr("aria-invalid", !anyChecked ? "true" : "false");
+
+                        // Get the container div for this checkbox group by matching data-checkbox-group attribute
+                        const container = $(`div[data-checkbox-group="${group}"]`);
+
+                        // Update overall form validation status
+                        if (!anyChecked) allValid = false;
+                    });
+
+                    // Return whether all groups passed validation
+                    return allValid;
+                }
+
+
+                $("form").on("submit", function () {
+                    // Mark that the form has been submitted (useful if you track submission state)
+                    formSubmitted = true;
+
+
+
+                });
+        </script>
+
+
+
+    }
+

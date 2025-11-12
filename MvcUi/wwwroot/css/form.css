@@ -1,0 +1,139 @@
+﻿/* Card Styling */
+.card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header */
+.card-header {
+    background-color: lightgrey; /* Grey background */
+    color: black;
+    padding: 10px 15px;
+}
+
+/* Form Inputs */
+.form-control {
+    width: 100%;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.form-select {
+    width: 100%;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Labels */
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-check-label {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Checkboxes & Radio Buttons */
+.form-check-input {
+    margin-right: 5px;
+}
+
+/* Group Spacing */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* 
+  Apply styles for viewport widths 768px and above (typically tablets and larger screens) 
+*/
+@media (min-width: 768px) {
+
+    /* 
+    Increase the bottom margin of .form-group elements to 24px 
+    to provide more spacing between form fields on larger screens 
+  */
+    .form-group {
+        margin-bottom: 24px; /* larger spacing on tablets and up */
+    }
+}
+
+
+/* Submit Button */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+/* Validation Messages */
+.text-danger {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+.form-error-message {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    position: relative;
+    font-weight: 500;
+}
+
+.field-validation-error.form-error-message {
+    background-color: #f8d7da; /* Light red background */
+    color: #842029; /* Dark red text */
+    border: 1px solid #dc3545; /* Bootstrap red */
+    border-radius: 0.5rem; /* Curved corners */
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.field-validation-error.form-error-message::before {
+    content: "⚠️"; /* or Font Awesome icon */
+    margin-right: 0.5rem;
+}
+
+.has-error {
+    border: 1px solid #dc3545; /* Bootstrap red */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+   .w-md-custom {
+        width: 270px !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .input-group {
+        flex-wrap: nowrap; /* Prevent prefix and input from stacking */
+    }
+
+        .input-group .w-md-custom {
+            width: auto !important; /* Let input take remaining width */
+            flex: 1 1 auto !important; /* Flexible width */
+        }
+}
+
+@media (min-width: 768px) {
+    .input-group .w-md-custom {
+        width: 240px !important; /* Fixed width on medium+ screens */
+        max-width: 240px !important;
+        flex: 0 0 240px !important; /* important in flex containers */
+    }
+}

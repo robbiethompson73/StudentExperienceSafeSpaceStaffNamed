@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SharedViewModelLibrary.Models.MainFormViewModel>
+@using AyrshireCollege.Biis.PresentationFormattingLibrary.Date;
+
+@{
+    ViewData["Title"] = "Submission List";
+}
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <p>
+                <a href="@Url.Action("Create", "MainForm")" class="btn btn-teal mb-3 w-md-auto">
+                    <i class="fas fa-pen me-2"></i> Submit New Form
+                </a>
+            </p>
+
+
+            <p class=" text-black-sticky mb-2">Records previously submitted by @ViewBag.LoggedInUser. </p>
+
+
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle ultra-sm-table" aria-label="List of submitted records">
+                    <thead style="background-color: #f1f1f1; color: #008080;">
+                        <tr>
+                            <!-- Always visible columns -->
+                            <th style="width: 5%;">@Html.DisplayNameFor(model => model.First().Id)</th>
+                            <th class="d-none d-md-table-cell" style="width: 15%;">@Html.DisplayNameFor(model => model.First().DateSubmitted)</th>
+                            <th style="width: 15%;">Name</th>
+
+                            <!-- Columns hidden on small screens (mobile), shown on md+ screens -->
+                            <th class="d-none d-md-table-cell" style="width: 40%;">@Html.DisplayNameFor(model => model.First().SampleTextarea)</th>
+
+                            
+
+                            <!-- Always visible columns -->
+                            <th style="width: 10%;">@Html.DisplayNameFor(model => model.First().StatusId)</th>
+                            <th class="text-middle" style="width: 15%;">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var rowClass = item.StatusDisplayName == "Closed" ? "table-success" : "";
+
+                            <tr class="@rowClass">
+                                <td class="align-top">@item.Id</td>
+                                <td class="d-none d-md-table-cell align-top">@DateFormatting.ToLongOrdinalDate(item.DateSubmitted)</td>
+                                <td class="align-top">@item.StudentFullName</td>
+
+                                <!-- Desktop-only columns -->
+                                <td class="d-none d-md-table-cell align-top">@item.SampleTextarea</td>
+
+
+                                <!-- Always visible columns -->
+                                <td class="align-top">@item.StatusDisplayName</td>
+
+                                <td class="text-middle align-top">
+                                    <a asp-action="Update" asp-controller="MainForm" asp-route-id="@item.Id" class="btn btn-sm btn btn-teal me-1">Edit</a>
+                                    <a asp-action="Details" asp-controller="MainForm" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@

@@ -1,0 +1,113 @@
+﻿@model List<string>
+@{
+    ViewData["Title"] = "BIIS Admin Dashboard";
+}
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb biisadmin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle biisadmin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+            <a asp-action="Index"
+               asp-controller="Home"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to view all records">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to @ViewData["AppName"]
+            </a>
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <h5 class="mt-2">Identity Overrides</h5>
+
+            <a asp-controller="IdentityOverride"
+               asp-action="User"
+               class="btn btn-biisadmin mb-3 w-md-auto"
+               role="button"
+               aria-label="current user records">
+                <i class="fas fa-user me-2" aria-hidden="true"></i>
+                View Current User Identity
+            </a>
+
+            <a asp-controller="IdentityOverride"
+               asp-action="List"
+               class="btn btn-biisadmin mb-3 w-md-auto"
+               role="button"
+               aria-label="View all records">
+                <i class="fas fa-magnifying-glass me-2" aria-hidden="true"></i>
+                View All User Idenity Overrides
+            </a>
+
+
+
+            <div class="col-md-6 mt-2">
+                <h5 class="mb-3">
+                    <i class="bi bi-people-fill me-2"></i>
+                    Current Users on Site
+                </h5>
+
+                @if (Model.Any())
+                {
+                    <ul class="list-group">
+                        @foreach (var user in Model)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>@user</span>
+                                <span class="badge bg-primary rounded-pill">Online</span>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <div class="alert alert-info" role="alert">
+                        No active users at the moment.
+                    </div>
+                }
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+

@@ -1,0 +1,186 @@
+﻿@model SharedViewModelLibrary.Models.AdminStaffViewModel
+
+@{
+    ViewData["Title"] = "Admin Staff Details";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb admin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Admin Home", "Index", "Admin")
+                    </li>
+
+@*                    
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Manage Admin Staff", "Index", "AdminStaff")
+                    </li>
+*@
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle admin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+            <a asp-action="Index"
+               asp-controller="Admin"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to admin home">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to Admin Home
+            </a>
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <a asp-controller="AdminStaff"
+               asp-action="Update"
+               asp-route-id="@Model.Id"
+               class="btn btn-teal mb-3 w-md-auto"
+               role="button"
+               aria-label="Edit Record">
+                <i class="fas fa-pen me-2" aria-hidden="true"></i>
+                Edit Record
+            </a>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="container py-1">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your submission was received and saved successfully. Thank you for completing the form!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div> @* <div class="col-12"> *@
+        </div> @* <div class="row"> *@
+    </div> @* <div class="container py-0"> *@
+}
+
+
+
+<div class="container py-1">
+    <div class="row">
+        <div class="col-12">
+
+
+
+            <!-- Student Details Section -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header teal-header text-white">
+                    <i class="fas fa-user-graduate me-2"></i> Staff Information
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.Id)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.Id)
+                        </dd>
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.WindowsName)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.WindowsName)
+                        </dd>
+
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.FirstName)
+                        </dd>
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.LastName)
+                        </dd>
+
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.FormattedName)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.FormattedName)
+                        </dd>
+
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.ContactEmail)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.ContactEmail)
+                        </dd>
+
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.ReceiveEmail)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.ReceiveEmail)
+                        </dd>
+
+                        <dt class="col-sm-3 col-md-2">
+                            @Html.DisplayNameFor(model => model.Active)
+                        </dt>
+                        <dd class="col-sm-9 col-md-10">
+                            @Html.DisplayFor(model => model.Active)
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+

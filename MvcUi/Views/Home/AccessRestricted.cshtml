@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Restricted Access";
+}
+
+
+
+
+<nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+    <ol class="breadcrumb custom-breadcrumb mb-3">
+        <li class="breadcrumb-item text-nowrap">
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li class="breadcrumb-item active text-nowrap" aria-current="page">
+            @ViewData["Title"]
+        </li>
+    </ol>
+</nav>
+
+
+<div class="pageTitle">
+
+    <h1>@ViewData["Title"]</h1>
+
+</div>
+
+
+
+<div class="row">
+
+    <!-- Left Content (12 columns) -->
+    <div class="col-lg-12">
+
+
+        <div class="feature-block">
+            <div class="top-section">
+                <h2 class="sub1"><i class="fas fa-lock icon-right"></i> Restricted Access</h2>
+            </div>
+
+            <div class="bottom-section">
+
+
+                <p>Unfortunately, you do not have permission to view this page.</p>
+                <p>If you need access, please reach out to a BIIS representative for further assistance.</p>
+
+            </div> <!-- <div class="bottom-section"> -->
+        </div> <!-- <div class="feature-block"> -->
+    </div>
+</div>

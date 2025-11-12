@@ -1,0 +1,250 @@
+﻿@model SidebarViewModel
+
+
+<div class="sidebar" id="sidebar">
+    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+
+        <h5 class="mb-0 text-white">Student Experience Forms</h5>
+
+        <button id="closeSidebar" class="btn btn-sm btn-outline-light menubutton" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <nav class="nav flex-column p-3">
+
+
+
+        <div class="dark-surface mb-2">
+            <a class="nav-link d-flex align-items-center"
+               href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway"
+               style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+               title="Student Experience Gateway Home Link">
+
+                <span class="d-inline-flex justify-content-center align-items-center me-2 icon-wrapper"
+                      style="width: 20px; height: 20px;">
+                    <i class="fas fa-home icon-color" style="font-size: 0.75rem;"></i>
+                </span>
+
+                <span class="text-truncate text-white"
+                      style="line-height: 1.6; display: inline-block;">Student Experience Gateway Home</span>
+            </a>
+        </div>
+
+
+
+
+        @foreach (var form in Model.Forms)
+        {
+
+            @if (form.Title == Model.FormName)
+            {
+
+                <div class="dark-surface">
+                    <a class="nav-link d-flex align-items-center"
+                       href="@($"https://biis.ayrshire.ac.uk/{form.Url}/Home")"
+                       style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                       title="@form.Title Home Link">
+
+                        <span class="d-inline-flex justify-content-center align-items-center me-2 icon-wrapper"
+                              style="width: 20px; height: 20px;">
+                            <i class="fas fa-angle-right icon-color" style="font-size: 0.75rem;"></i>
+                        </span>
+
+                        <span class="text-truncate text-white"
+                              style="line-height: 1.6; display: inline-block;">@form.Title Home</span>
+                    </a>
+                </div>
+
+
+
+
+                @if (Model.UserRole == "Staff")
+                {
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           asp-area="" asp-controller="MainForm" asp-action="Create"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="Submit Form Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px; background-color: transparent;">
+                                <i class="fa fa-pen-to-square icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">Submit Form</span>
+                        </a>
+                    </div>
+
+                }
+
+
+                @if (Model.UserRole == "Admin")
+                {
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           asp-area="" asp-controller="MainForm" asp-action="Create"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="Submit Form Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px; background-color: transparent;">
+                                <i class="fa fa-pen-to-square icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">Submit Form</span>
+                        </a>
+                    </div>
+
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           asp-area="" asp-controller="Admin" asp-action="Index"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="Admin Area Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px; background-color: transparent;">
+                                <i class="fas fa-user-shield icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">Admin Area</span>
+                        </a>
+                    </div>
+
+                }
+
+                @if (Model.UserRole == "BiisAdmin")
+                {
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           asp-area="" asp-controller="MainForm" asp-action="Create"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="Submit Form Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px; background-color: transparent;">
+                                <i class="fa fa-pen-to-square icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">Submit Form</span>
+                        </a>
+                    </div>
+
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           asp-area="" asp-controller="Admin" asp-action="Index"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="Admin Area Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px; background-color: transparent;">
+                                <i class="fas fa-user-shield icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">Admin Area</span>
+                        </a>
+                    </div>
+
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           asp-area="" asp-controller="BiisAdmin" asp-action="Index"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="BIIS Admin Area Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px; background-color: transparent;">
+                                <i class="fas fa-code icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">BIIS Admin Area</span>
+                        </a>
+                    </div>
+                }
+
+
+
+                <div class="dark-surface">
+                    <a class="nav-link d-flex align-items-center"
+                       asp-area="" asp-controller="Contact" asp-action="Index"
+                       style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                       title="Contact Us Link">
+
+                        <span class="d-inline-flex justify-content-center align-items-center ms-3 me-2 icon-wrapper"
+                              style="width: 20px; height: 20px; background-color: transparent;">
+                            <i class="fa-regular fa-comment-dots icon-color" style="font-size: 0.75rem;"></i>
+                        </span>
+
+                        <span class="text-truncate text-white"
+                              style="line-height: 1.6; display: inline-block;">Contact Us</span>
+                    </a>
+                </div>
+
+
+
+            } @* // if() *@
+
+        } @* // foreach() *@
+
+        <hr />
+
+        @if (Model.UserRole != "Student")
+        {
+            @* Display Forms *@
+            @foreach (var form in Model.Forms)
+            {
+                @if (form.Title != Model.FormName)
+                {
+                    <div class="dark-surface">
+                        <a class="nav-link d-flex align-items-center"
+                           href="@($"https://biis.ayrshire.ac.uk/{form.Url}/Home")"
+                           style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                           title="@form.Title Home Link">
+
+                            <span class="d-inline-flex justify-content-center align-items-center me-2 icon-wrapper"
+                                  style="width: 20px; height: 20px;">
+                                <i class="@form.IconClass icon-color" style="font-size: 0.75rem;"></i>
+                            </span>
+
+                            <span class="text-truncate text-white"
+                                  style="line-height: 1.6; display: inline-block;">@form.Title Home</span>
+                        </a>
+                    </div>
+                }
+
+
+
+
+
+
+            }
+        }
+
+
+        <hr />
+
+
+        <div class="dark-surface">
+            <a class="nav-link d-flex align-items-center"
+               href="https://biis.ayrshire.ac.uk/BIIS-Portal/"
+               style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+               title="BIIS Portal Link">
+
+                <span class="d-inline-flex justify-content-center align-items-center me-2 icon-wrapper"
+                      style="width: 20px; height: 20px;">
+                    <i class="fas fa-code icon-color" style="font-size: 0.75rem;"></i>
+                </span>
+
+                <span class="text-truncate text-white"
+                      style="line-height: 1.6; display: inline-block;">BIIS Portal</span>
+            </a>
+        </div>
+
+
+
+    </nav>
+</div>

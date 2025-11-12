@@ -1,0 +1,414 @@
+﻿@using AyrshireCollege.Biis.PresentationFormattingLibrary.Date
+@model SharedViewModelLibrary.Models.PagedResult<SharedViewModelLibrary.Models.MainFormAdminViewModel>
+@{
+    // Convert the IEnumerable<ModelType> to a List<ModelType> to enable indexing with [ ] in the for loop
+    var modelList = Model.Items;
+    int? statusId = null;
+    if (ViewData["StatusId"] != null)
+    {
+        statusId = Convert.ToInt32(ViewData["StatusId"]);
+    }
+
+    ViewData["Title"] = "View All Records";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb admin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">
+                            Student Experience Gateway Home
+                        </a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("Admin Home", "Index", "Admin")
+                    </li> 
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <!-- Title + Export Button Row -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="pageTitle admin mb-0">
+                    <h1 class="display-4 mb-0">@ViewData["Title"]</h1>
+                </div>
+
+                <a asp-controller="Admin"
+                   asp-action="ExportToExcel"
+                   class="btn btn-teal"
+                   role="button"
+                   aria-label="Export to Excel">
+                    <i class="fas fa-download me-2" aria-hidden="true"></i>
+                    Export to Excel
+                </a>
+            </div>
+
+            <a asp-action="Index"
+               asp-controller="Admin"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to admin home">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to Admin Home
+            </a>
+
+        </div>
+    </div>
+</div>
+
+
+
+@if (ViewData["SuccessMessage"] != null)
+{
+    <div class="container py-1">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your submission was received and saved successfully. Thank you for completing the form!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div> @* <div class="col-12"> *@
+        </div> @* <div class="row"> *@
+    </div> @* <div class="container py-0"> *@
+}
+
+
+
+<div class="container py-0">
+
+    <div class="row">
+        <div class="col-12">
+
+            <form method="get" asp-action="List" class="mb-0">
+                <fieldset class="row g-3 align-items-start">
+                    <legend class="col-12 mb-0">Filter Options</legend>
+
+                    <!-- Student Reference Filter -->
+                    <div class="col-md-3 me-4">
+                        <small class="text-muted">Filter by Student Reference Number</small>
+                        <input type="text" name="studentReferenceNumber" class="form-control"
+                                placeholder="Student Reference"
+                                value="@ViewData["StudentReference"]" />
+                    </div>
+
+                    <!-- Status Filter and Submit Button row -->
+                    <div class="col-md-6 d-flex align-items-end gap-2">
+                        <div>
+                            <small class="text-muted d-block mb-1">Filter by Status</small>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="statusId" id="statusOpen" value="1" @(statusId == 1 ? "checked" : "")>
+                                <label class="form-check-label" for="statusOpen">Open</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="statusId" id="statusClosed" value="2" @(statusId == 2 ? "checked" : "")>
+                                <label class="form-check-label" for="statusClosed">Closed</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="statusId" id="statusAll" value="" @(statusId == null ? "checked" : "")>
+                                <label class="form-check-label" for="statusAll">All</label>
+                            </div>
+                        </div>
+
+                        <div>
+                            @* Buttons *@
+                            <button type="submit" class="btn btn-teal ms-1" aria-label="Submit Filter">
+                                <i class="fas fa-filter me-2" aria-hidden="true"></i>
+                                Submit Filter
+                            </button>
+
+                            @if (!string.IsNullOrEmpty(ViewData["StudentReference"] as string) || !string.IsNullOrEmpty(ViewData["Status"] as string))
+                            {
+                                <a href="@Url.Action("List", "Admin")" class="btn btn-secondary" aria-label="Clear Filters">
+                                    Clear
+                                </a>
+                            }
+                        </div>
+                    </div>
+
+
+
+                </fieldset>
+            </form>
+
+
+
+            @{
+                var currentSortBy = ViewData["SortBy"] as string ?? "DateSubmitted";
+                var currentDirection = ViewData["SortDirection"] as string ?? "DESC";
+                string NextDirection(string column) => (currentSortBy == column && currentDirection == "ASC") ? "DESC" : "ASC";
+            }
+
+
+            <p class="text-muted mt-3 mb-3">Number of records = @ViewData["RecordCount"]</p>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle ultra-sm-table table-sortable" aria-label="List of submitted records">
+                    <thead style="background-color: #f1f1f1; color: #008080;">
+                        <tr>
+                            <!--
+                              TH for Id column
+                              - Keep asp-route-studentReferenceNumber and asp-route-statusId to preserve filters
+                              - Change asp-route-sortBy and asp-route-sortDirection to your property name (e.g., "StudentFullName")
+                              - Update title attribute for tooltip text
+                              - Update conditional Razor expressions accordingly
+                            -->
+                            <th class="d-none d-md-table-cell" style="width: 5%;">
+                                <a asp-action="List"
+                                   asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                   asp-route-statusId="@ViewData["StatusId"]"
+                                   asp-route-sortBy="Id"
+                                   asp-route-sortDirection="@NextDirection("Id")"
+                                   asp-route-pageNumber="@ViewData["PageNumber"]"
+                                   asp-route-pageSize="@ViewData["PageSize"]"
+                                   title="Click to sort by Id"
+                                   class="sort-link @(currentSortBy == "Id" ? "sorted" : "")">
+                                    @Html.DisplayNameFor(model => model.Items.FirstOrDefault().Id)
+                                    @if (currentSortBy == "Id")
+                                    {
+                                        <i class="fas @(currentDirection == "ASC" ? "fa-sort-up" : "fa-sort-down")" aria-hidden="true"></i>
+                                        <span class="visually-hidden">
+                                            Sorted by Id @currentDirection.ToLower()
+                                        </span>
+                                    }
+                                </a>
+                            </th>
+
+
+                            <!--
+                              TH for Submission Date column
+                              - Keep asp-route-studentReferenceNumber and asp-route-statusId to preserve filters
+                              - Change asp-route-sortBy and asp-route-sortDirection to your property name (e.g., "StudentFullName")
+                              - Update title attribute for tooltip text
+                              - Update conditional Razor expressions accordingly
+                            -->
+                            <th class="d-none d-md-table-cell" style="width: 10%;">
+                                <a asp-action="List"
+                                   asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                   asp-route-statusId="@ViewData["StatusId"]"
+                                   asp-route-sortBy="DateSubmitted"
+                                   asp-route-sortDirection="@NextDirection("DateSubmitted")"
+                                   asp-route-pageNumber="@ViewData["PageNumber"]"
+                                   asp-route-pageSize="@ViewData["PageSize"]"
+                                   title="Click to sort by submission date"
+                                   class="sort-link @(currentSortBy == "DateSubmitted" ? "sorted" : "")"> 
+                                    @Html.DisplayNameFor(model => model.Items.FirstOrDefault().DateSubmitted)
+
+                                    @if (currentSortBy == "DateSubmitted") 
+                                    {
+                                        <i class="fas @(currentDirection == "ASC" ? "fa-sort-up" : "fa-sort-down")" aria-hidden="true"></i>
+                                        <span class="visually-hidden">
+                                            Sorted by submission date @currentDirection.ToLower()
+                                        </span>
+                                    }
+                                </a>
+                            </th>
+
+
+
+
+
+                            <!--
+                              TH for Student Reference Number column
+                              - Keep asp-route-studentReferenceNumber and asp-route-statusId to preserve filters
+                              - Change asp-route-sortBy and asp-route-sortDirection to your property name (e.g., "StudentFullName")
+                              - Update title attribute for tooltip text
+                              - Update conditional Razor expressions accordingly
+                            -->
+                            <th class="d-none d-md-table-cell" style="width: 10%;">
+                                <a asp-action="List"
+                                   asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                   asp-route-statusId="@ViewData["StatusId"]"
+                                   asp-route-sortBy="StudentReferenceNumber"
+                                   asp-route-sortDirection="@NextDirection("StudentReferenceNumber")"
+                                   asp-route-pageNumber="@ViewData["PageNumber"]"
+                                   asp-route-pageSize="@ViewData["PageSize"]"
+                                   title="Click to sort by student reference number"
+                                   class="sort-link @(currentSortBy == "StudentReferenceNumber" ? "sorted" : "")">
+                                    Student Reference
+                                    @if (currentSortBy == "StudentReferenceNumber")
+                                    {
+                                        <i class="fas @(currentDirection == "ASC" ? "fa-sort-up" : "fa-sort-down")" aria-hidden="true"></i>
+                                        <span class="visually-hidden">
+                                            Sorted by student reference number @currentDirection.ToLower()
+                                        </span>
+                                    }
+                                </a>
+                            </th>
+
+
+
+
+                            <!--
+                              TH for FullName column
+                              - Keep asp-route-studentReferenceNumber and asp-route-statusId to preserve filters
+                              - Change asp-route-sortBy and asp-route-sortDirection to your property name (e.g., "StudentFullName")
+                              - Update title attribute for tooltip text
+                              - Update conditional Razor expressions accordingly
+                            -->
+                            <th class="d-none d-md-table-cell" style="width: 10%;">
+                                <a asp-action="List"
+                                   asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                   asp-route-statusId="@ViewData["StatusId"]"
+                                   asp-route-sortBy="StudentFullName"
+                                   asp-route-sortDirection="@NextDirection("StudentFullName")"
+                                   asp-route-pageNumber="@ViewData["PageNumber"]"
+                                   asp-route-pageSize="@ViewData["PageSize"]"
+                                   title="Click to sort by student last name"
+                                   class="sort-link @(currentSortBy == "StudentFullName" ? "sorted" : "")">
+                                    Student Name
+                                    @if (currentSortBy == "StudentFullName")
+                                    {
+                                        <i class="fas @(currentDirection == "ASC" ? "fa-sort-up" : "fa-sort-down")" aria-hidden="true"></i>
+                                        <span class="visually-hidden">
+                                            Sorted by student name @currentDirection.ToLower()
+                                        </span>
+                                    }
+                                </a>
+                            </th>
+
+
+                            <!-- Columns hidden on small screens (mobile), shown on md+ screens -->
+                            <th class="d-none d-md-table-cell" style="width: 35%;">@Html.DisplayNameFor(model => model.Items.FirstOrDefault().SampleTextarea)</th>
+
+                            <!-- Always visible columns -->
+                            <th style="width: 10%;">@Html.DisplayNameFor(model => modelList.First().StatusId)</th>
+                            <th class="text-middle" style="width: 5%;">Actions</th>
+
+                        </tr>
+                    </thead>
+
+                    @{
+                        // Helper to check if two dates are the same day
+                        bool IsSameDay(DateTime d1, DateTime d2) => d1.Date == d2.Date;
+
+                        DateTime today = DateTime.Today;
+                    }
+
+                    <tbody>
+                        @for (int i = 0; i < modelList.Count(); i++)
+                        {
+                            var item = modelList[i];
+                            var rowClass = item.StatusDisplayName == "Closed" ? "table-success" : "";
+
+                            <tr class="@rowClass">
+                                <!-- Id column -->
+                                <td class="align-top">@item.Id</td>
+
+                                <!-- Submission Date column (hidden on small screens) -->
+                                <td class="d-none d-md-table-cell align-top">
+                                    @DateFormatting.ToLongOrdinalDate(item.DateSubmitted) <br />
+                                    @DateFormatting.ToShortTime(item.DateSubmitted)
+                                </td>
+
+                                <!-- Student Reference Number column -->
+                                <td class="align-top">@item.StudentReferenceNumber</td>
+
+                                <!-- Student Name column (hidden on small screens) -->
+                                <td class="d-none d-md-table-cell align-top">@item.StudentFullName</td>
+
+                                <!-- Comments column (hidden on small screens); display "-" if empty or whitespace -->
+                                <td class="d-none d-md-table-cell align-top">
+                                    @(string.IsNullOrWhiteSpace(item.SampleTextarea) ? "-" : item.SampleTextarea)
+                                </td>
+
+                                <!-- Status Display Name column -->
+                                <td class="align-top">@item.StatusDisplayName</td>
+
+                                <!-- Actions column: Edit and Details buttons -->
+                                <td class="text-middle align-top">
+                                    <a asp-action="Update" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-sm btn btn-teal me-1">View</a>
+                                </td>
+                            </tr>
+
+
+                            // Insert a horizontal line to visually separate "today's" submissions from older ones
+
+                            // Check if the current item is not the last one in the list (is current item less than the "total number of list items" - 1)
+                            // This ensures it's safe to access the next item at index i + 1 without causing an out-of-range error
+                            if (i < modelList.Count - 1)
+                            {
+                                var nextItem = modelList[i + 1]; // Get the next item in the list
+
+                                // Check if the current item is from today, and the next item is from a previous day
+                                if (IsSameDay(item.DateSubmitted, today) && nextItem.DateSubmitted.Date < today)
+                                {
+                                    // Render a table row with a styled horizontal line spanning all 7 columns
+                                    <tr>
+                                        <td colspan="7" style="border-top: 2px solid #008080; padding: 0;"></td>
+                                    </tr>
+                                }
+                            }
+
+
+                        } 
+                    </tbody>
+
+                </table>
+
+                @if (Model.TotalPages > 1)
+                {
+                    <nav aria-label="Page navigation" class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            @if (Model.PageNumber > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="List"
+                                       asp-route-pageNumber="@(Model.PageNumber - 1)"
+                                       asp-route-pageSize="@Model.PageSize"
+                                       asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                       asp-route-statusId="@ViewData["StatusId"]"
+                                       asp-route-sortBy="@ViewData["SortBy"]"
+                                       asp-route-sortDirection="@ViewData["SortDirection"]">Previous</a>
+                                </li>
+                            }
+
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                    <a class="page-link" asp-action="List"
+                                       asp-route-pageNumber="@i"
+                                       asp-route-pageSize="@Model.PageSize"
+                                       asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                       asp-route-statusId="@ViewData["StatusId"]"
+                                       asp-route-sortBy="@ViewData["SortBy"]"
+                                       asp-route-sortDirection="@ViewData["SortDirection"]">@i</a>
+                                </li>
+                            }
+
+                            @if (Model.PageNumber < Model.TotalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="List"
+                                       asp-route-pageNumber="@(Model.PageNumber + 1)"
+                                       asp-route-pageSize="@Model.PageSize"
+                                       asp-route-studentReferenceNumber="@ViewData["StudentReference"]"
+                                       asp-route-statusId="@ViewData["StatusId"]"
+                                       asp-route-sortBy="@ViewData["SortBy"]"
+                                       asp-route-sortDirection="@ViewData["SortDirection"]">Next</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+
+            </div>
+
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@

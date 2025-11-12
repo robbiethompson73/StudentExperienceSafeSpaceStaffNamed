@@ -1,0 +1,208 @@
+﻿@model IEnumerable<SharedViewModelLibrary.Models.StudentExperienceFormViewModel>
+
+@{
+    var appName = ViewData["AppName"] as string ?? "App";
+    ViewData["Title"] = $"{appName} Information";
+}
+
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+@if (ViewData["SuccessMessage"] != null)
+{
+<div class="container py-1">
+    <div class="row">
+        <div class="col-12">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your submission was received and saved successfully. Thank you for completing the form!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+}
+
+
+
+
+<div class="container py-1">
+    <div class="row">
+        <div class="col-12">
+
+
+                <div class="accordion" id="siteInfoAccordion">
+
+
+                        <!-- Instructions / Guidance -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingInstructions">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructions" aria-expanded="true" aria-controls="collapseInstructions">
+                                <i class="fa-solid fa-angle-right me-2" aria-hidden="true"></i> Instructions / Guidance
+                            </button>
+                        </h2>
+                        <div id="collapseInstructions" class="accordion-collapse collapse show" aria-labelledby="headingInstructions" data-bs-parent="#siteInfoAccordion">
+                            <div class="accordion-body accordion-body-padding-bottom">
+                                <p>
+                                    <strong>How to Fill Forms:</strong><br>
+                                    Complete all required fields marked with * before submitting.
+                                </p>
+
+                                <p>
+                                    <strong>Estimated Time to Complete:</strong><br>
+                                    This form should take 5–10 minutes to complete.
+                                </p>
+
+                                <p>
+                                    <strong>Required Information:</strong><br>
+                                    You will need the student ID to complete the form. 
+                                </p>
+
+
+                                <div class="row mt-3">
+
+                                    <div class="col-md-3">
+
+                                        <a asp-Controller="MainForm" asp-action="Create"
+                                           class="btn custom-outline w-100 btn-sm text-purple border-purple"
+                                           title="Start a new form for Curriculum Discretionary Form"
+                                           aria-label="Start a new form for Curriculum Discretionary Form">
+                                            <i class="fa fa-pen-to-square me-1" aria-hidden="true"></i> Submit Record
+                                        </a>
+
+                                    </div>
+
+                                @* 
+                                    Wendy - commented out the View Previous Submissions button as it is not needed for now
+                                    <div class="col-md-3">
+
+                                        <a asp-Controller="MainForm" asp-action="List"
+                                           class="btn custom-outline w-100 btn-sm text-purple border-purple"
+                                           title="Start a new form for Curriculum Discretionary Form"
+                                           aria-label="Start a new form for Curriculum Discretionary Form">
+                                            <i class="fas fa-folder-open me-1" aria-hidden="true"></i> View Previous Submissions
+                                        </a>
+
+                                    </div>
+                                *@
+
+
+
+                                    @if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "BiisAdmin")
+                                    {
+                                        <div class="col-md-4 d-flex gap-2">
+
+                                            <a asp-controller="Admin" asp-action="List"
+                                               class="btn custom-outline btn-sm text-purple border-purple flex-fill"
+                                               style="min-width: 150px;"
+                                               title="Start a new form for Curriculum Discretionary Form"
+                                               aria-label="Start a new form for Curriculum Discretionary Form">
+                                                <i class="fas fa-magnifying-glass me-1" aria-hidden="true"></i> View All Records
+                                            </a>
+
+                                            <a asp-controller="Admin" asp-action="Index"
+                                               class="btn custom-outline btn-sm text-purple border-purple flex-fill"
+                                               style="min-width: 150px;"
+                                               title="Visit Admin Home"
+                                               aria-label="Visit Admin Home">
+                                                <i class="fas fa-user-shield me-1" aria-hidden="true"></i> Admin Home
+                                            </a>
+
+                                        </div>
+                                    }
+
+
+
+
+
+                                @if (ViewBag.UserRole == "BiisAdmin")
+                                {
+                                    <div class="col-md-4 d-flex gap-2">
+
+                                        <a asp-controller="BiisAdmin" asp-action="Index"
+                                           class="btn custom-outline btn-sm text-purple border-purple flex-fill"
+                                           style="min-width: 150px;"
+                                           title="Visit BIIS Admin Home"
+                                           aria-label="Visit BIIS Admin Home">
+                                            <i class="fas fa-code me-1" aria-hidden="true"></i> BIIS Admin Home
+                                        </a>
+
+                                    </div>
+                                }
+
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Confirmation & Follow-up -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingConfirmation">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseConfirmation" aria-expanded="false" aria-controls="collapseConfirmation">
+                                <i class="fa-solid fa-angle-right me-2" aria-hidden="true"></i> Confirmation & Follow-up
+                            </button>
+                        </h2>
+                        <div id="collapseConfirmation" class="accordion-collapse collapse" aria-labelledby="headingConfirmation" data-bs-parent="#siteInfoAccordion">
+                            <div class="accordion-body accordion-body-padding-bottom">
+                                <p>
+                                    <strong>What Happens After Submission:</strong><br>
+                                    You will receive a confirmation email. A member of Student Experience Admin will process the application or will get in touch if any further information is required.                                 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Support & Contact -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSupport">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSupport" aria-expanded="false" aria-controls="collapseSupport">
+                                <i class="fa-solid fa-angle-right me-2" aria-hidden="true"></i>  Support & Contact
+                            </button>
+                        </h2>
+                        <div id="collapseSupport" class="accordion-collapse collapse" aria-labelledby="headingSupport" data-bs-parent="#siteInfoAccordion">
+                            <div class="accordion-body accordion-body-padding-bottom">
+                            <p> Need help? Visit the @Html.ActionLink("Contact Us", "Index", "Contact", null, new { @class = "link-teal" }) page, email <a href="mailto:se@ayrshire.ac.uk" class="link-teal">se@ayrshire.ac.uk</a> or visit the Student Experience desk.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@

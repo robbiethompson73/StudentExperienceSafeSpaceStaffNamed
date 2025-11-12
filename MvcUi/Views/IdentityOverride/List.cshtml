@@ -1,0 +1,133 @@
+﻿@model IEnumerable<SharedViewModelLibrary.Models.IdentityOverrideViewModel>
+
+@{
+    ViewData["Title"] = "Identity Override View All";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb biisadmin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink("BIIS Admin Dashboard", "Index", "BiisAdmin")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle biisadmin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="container py-1">
+        <div class="row">
+            <div class="col-12">
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your submission was received and saved successfully. Thank you for completing the form!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div> @* <div class="col-12"> *@
+        </div> @* <div class="row"> *@
+    </div> @* <div class="container py-0"> *@
+}
+
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+
+            <a asp-controller="IdentityOverride"
+               asp-action="Create"
+               class="btn btn-biisadmin mb-3 w-md-auto"
+               role="button"
+               aria-label="create new record">
+                <i class="fa fa-pen-to-square me-2" aria-hidden="true"></i>
+                Create New Identity Override
+            </a>
+
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle ultra-sm-table table-sortable" aria-label="List of submitted records">
+                    <thead style="background-color: #f1f1f1; color: black;">
+                        <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RealWindowsUsername)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.RealFormattedName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EffectiveWindowsUsername)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EffectiveFormattedName)
+                                </th>
+                                <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model) {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RealWindowsUsername)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RealFormattedName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EffectiveWindowsUsername)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EffectiveFormattedName)
+                                </td>
+                                <td class="text-middle align-top">
+                                    <a asp-action="Update" asp-controller="IdentityOverride" asp-route-id="@item.Id" class="btn btn-biisadmin btn-sm btn btn-teal me-1">Update</a>
+                                    
+                                    <a asp-action="Delete" 
+                                       asp-controller="IdentityOverride" 
+                                       asp-route-id="@item.Id" 
+                                       class="btn btn-sm btn-outline-secondary"
+                                       onclick="return confirm('Are you sure you want to delete this record?');">
+                                       Delete</a>
+                                </td>
+                            </tr>
+                    }
+                        </tbody>
+                </table>
+            </div>
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+

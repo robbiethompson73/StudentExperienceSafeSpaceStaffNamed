@@ -1,0 +1,1098 @@
+﻿@model SharedViewModelLibrary.Models.MainFormViewModel
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+
+@{
+    ViewData["Title"] = "Submit Form";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+            <a asp-action="Index"
+               asp-controller="Home"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to home">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to Home
+            </a>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+
+<div class="container py-0">
+  <div class="row">
+    <div class="col-12">
+
+      <div class="alert bg-white no-border p-3 mb-4 d-flex align-items-start">
+        <div class="me-3" style="margin-top: -3px;">
+            <i class="fa-solid fa-circle-info text-info fa-2x"></i>
+        </div>
+        <div>
+          <h5 class="mb-3 text-black-sticky">Instructions</h5>
+          <p class="mb-2 text-black-sticky">Please fill out all required fields carefully. Fields marked with a red asterisk (<span class="text-danger"><strong>*</strong></span>) are mandatory. Make sure your entries are accurate and complete before submitting.</p>
+          <p class="mb-2 text-black-sticky">Once you've completed all required fields and made your selections, click the <em>Submit</em> button at the bottom of the form. If any errors are present, they will be highlighted for correction.</p>
+          <p class="mb-0 text-black-sticky"><strong>Accessibility:</strong> All fields include screen reader support. Validation messages are announced automatically for improved accessibility.</p>
+        </div>
+      </div>
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+<div class="container px-3 px-sm-4 px-md-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+
+                <div class="card-header teal-header">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-chevron-right"></i>
+                            Submit @ViewData["AppName"]
+                    </h5>
+                </div>
+
+                <div class="card-body px-3 px-md-4">
+
+                    @using (Html.BeginForm("Create", "MainForm", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+                        <!--
+                            Troubleshooting Only (Not for Production)
+                            The validation summary below is useful during development
+                            to quickly see all model binding/validation errors in one place.
+                            In production, consider either:
+                              - limiting this to model-level errors only (excludePropertyErrors: true), or
+                              - removing it entirely and relying on per-field ValidationMessageFor.
+                        -->
+
+                        @if (!ViewData.ModelState.IsValid)
+                            {
+                                @Html.ValidationSummary(
+                                excludePropertyErrors: false,
+                                message: "Please correct the following errors before submitting:",
+                                htmlAttributes: new { @class = "alert alert-danger" }
+                            )
+                        }
+
+                        <!-- TextBox Full Name -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.StudentFullName)
+
+                            @Html.TextBoxFor(m => m.StudentFullName, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "StudentFullName-validation" },
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["StudentFullName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                
+                                { "aria-autocomplete", "list" },    // accessibility
+                                { "aria-haspopup", "listbox" },     // accessibility
+                                { "aria-controls", "ui-id-1" },     // accessibility
+
+                                // Explicit ID for JS targeting
+                                { "id", "StudentFullName" }                      
+                            })
+
+                            <small class="form-text text-muted">
+                                Begin typing a student’s name to see matches from UNIT-e. Select the correct student from the list — their Student Reference Number and Date of Birth will be filled in automatically.
+                            </small>
+
+                            @Html.ValidationMessageFor(m => m.StudentFullName, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "StudentFullName-validation",               // unique id for validation message span
+                                        @aria_live = "assertive"                    // announce validation changes immediately
+                                    })
+                        </div>
+
+
+
+
+                        <!-- TextBox Student Reference Number -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.StudentReferenceNumber)
+
+                            <div class="input-group">
+
+                                @Html.TextBoxFor(m => m.StudentReferenceNumber, new Dictionary<string, object>
+                                {
+                                    // Apply Bootstrap styling to the input field for consistent UI design.
+                                    { "class", "form-control" },
+
+                                    // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                    // This improves accessibility for screen reader users.
+                                    { "aria-describedby", "StudentReferenceNumber-validation" },
+
+                                    // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                    // This allows screen readers to announce when a field has failed validation.
+                                    { "aria-invalid", (ViewData.ModelState["StudentReferenceNumber"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" },
+
+                                    { "aria-haspopup", "listbox" },     // accessibility
+                                    { "aria-controls", "ui-id-1" },     // accessibility
+
+                                    // Ensure the ID is explicitly set
+                                    { "id", "StudentReferenceNumber" }
+                                })
+
+                            </div>
+
+                            <small class="form-text text-muted">
+                                Format: <code>A1234567</code>
+                            </small>
+
+
+                            @Html.ValidationMessageFor(m => m.StudentReferenceNumber, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "StudentReferenceNumber-validation",               // unique id for validation message span
+                                        @aria_live = "assertive"                    // announce validation changes immediately
+                                    })
+                        </div>
+
+
+
+
+                        <!-- Student DOB - Date Picker -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.StudentDateOfBirth)
+
+                            @Html.TextBoxFor(m => m.StudentDateOfBirth, new Dictionary<string, object>
+                            {
+                                    { "type", "date" },                                 // HTML5 date picker
+                                    { "class", "form-control w-100 w-md-custom" },      // Apply Bootstrap styling to the input
+                                    { "aria-describedby", "StudentDateOfBirth-validation" },  // Link to help and validation message spans for screen readers
+                                    { "aria-invalid", (ViewData.ModelState["StudentDateOfBirth"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" },    // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                    { "id", "StudentDateOfBirth" }                      // Explicit ID for JS targeting
+                            })
+
+                            @Html.ValidationMessageFor(m => m.StudentDateOfBirth, "", new
+                            {
+                                    @class = "form-error-message",
+                                    id = "StudentDateOfBirth-validation",
+                                    @aria_live = "assertive"
+                            })
+                        </div>
+
+
+
+
+
+                        <!-- TextBox SampleTextbox -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextbox)
+
+                            @Html.TextBoxFor(m => m.SampleTextbox, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "SampleTextbox-validation" },      // Link this input to the associated validation message span for screen readers
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["SampleTextbox"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                { "id", "SampleTextbox" }                      // Explicit ID for JS targeting
+                            })
+
+                            @Html.ValidationMessageFor(m => m.SampleTextbox, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "SampleTextbox-validation",                // unique ID for validation
+                                @aria_live = "assertive"                   // screen readers announce changes
+                            })
+                        </div>
+
+
+
+
+
+                        <!-- SampleDate - Date Picker -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.SampleDate)
+
+                            @Html.TextBoxFor(m => m.SampleDate, new Dictionary<string, object>
+                            {
+                                { "type", "date" },                                 // HTML5 date picker
+                                { "class", "form-control w-100 w-md-custom" },      // Apply Bootstrap styling to the input
+                                { "aria-describedby", "SampleDate-validation" },  // Link to help and validation message spans for screen readers
+                                { "aria-invalid", (ViewData.ModelState["SampleDate"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }    // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            @Html.ValidationMessageFor(m => m.SampleDate, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "SampleDate-validation",
+                                @aria_live = "assertive"
+                            })
+                        </div>
+
+
+
+
+                        <!-- SampleTime - Time Picker -->
+                        <div class="form-group">
+
+                            @Html.LabelWithRequiredIndicatorFor(m => m.SampleTime)
+
+                            @Html.TextBoxFor(m => m.SampleTime, new Dictionary<string, object>
+                            {
+                                { "type", "time" },                                     // HTML5 time input
+                                { "class", "form-control w-100 w-md-custom" },          // Apply Bootstrap styling to the input
+                                { "aria-describedby", "SampleTime-validation" },      // Link to help and validation message spans for screen readers
+                                { "aria-invalid", (ViewData.ModelState["SampleTime"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            <small id="TimePickerHelp" class="form-text text-muted">
+                                Please enter a time in 24-hour format (e.g., 14:30 for 2:30 PM).
+                            </small>
+
+                            @Html.ValidationMessageFor(m => m.SampleTime, "", new
+                            {
+                                    @class = "form-error-message",
+                                    id = "SampleTime-validation",
+                                    @aria_live = "assertive"
+                            })
+                        </div>
+
+
+
+
+
+                        <!-- Cost - SampleCost -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.SampleCost)
+
+                            <div class="input-group">
+                                <span class="input-group-text" id="CostPrefix">£</span>
+
+                                @Html.TextBoxFor(m => m.SampleCost, new Dictionary<string, object>
+                                {
+                                    { "class", "form-control w-md-custom" },
+                                    { "type", "number" },
+                                    { "step", "0.01" },
+                                    { "min", "0.01" },
+
+                                    // Link to help and validation message spans for screen readers
+                                    { "aria-describedby", "CostPrefix SampleCost-validation" },
+
+                                    // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                    { "aria-invalid", (ViewData.ModelState["SampleCost"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }
+                                })
+                            </div>
+
+                            <small class="form-text text-muted">
+                                E.g. Sample cost details
+                            </small>
+
+                        @Html.ValidationMessageFor(m => m.SampleCost, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "SampleCost-validation",
+                                @aria_live = "assertive"
+                            })
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- Radio Button List - SampleRadio -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedSampleRadioId)
+
+                        <div data-radio-group="SelectedSampleRadioId"
+                             describedby="SelectedSampleRadioId-validation"
+                             aria-invalid="@(ViewData.ModelState["SelectedSampleRadioId"]?.Errors?.Count > 0 ? "true" : "false")"
+                             role="radiogroup">
+
+                            @for (int i = 0; i < Model.SampleRadioOptions.Count; i++)
+                            {
+                                var item = Model.SampleRadioOptions[i];
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.SelectedSampleRadioId, item.Value, new
+                                    {
+                                        @class = "form-check-input",
+                                        id = $"sampleradio_{item.Value}"
+                                    })
+                                    <label class="form-check-label" for="@($"sampleradio_{item.Value}")">
+                                        @item.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.SelectedSampleRadioId, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "SelectedSampleRadioId-validation",
+                            @aria_live = "assertive"
+                        })
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- TextArea SampleTextarea -->
+                        <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextarea)
+
+                        @Html.TextAreaFor(m => m.SampleTextarea, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Set number of visible rows
+                                { "rows", "4" },                                 
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "SampleTextarea-validation" },
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["SampleTextarea"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            @Html.ValidationMessageFor(m => m.SampleTextarea, "", new
+                                {
+                                    @class = "form-error-message",
+                                    id = "SampleTextarea-validation",               // Unique ID for aria-describedby
+                                    @aria_live = "assertive"                  // Ensures screen readers announce changes
+                                })
+                        </div>
+
+
+
+
+
+                        <!-- Drop Down List -  SampleDropdown -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.SampleDropdownId)
+
+                            @Html.DropDownListFor(m => m.SampleDropdownId, Model.SampleDropdownOptions, "Select an Option", new Dictionary<string, object>
+                            {
+                                // Applies Bootstrap styling and a validation class to ensure visual consistency and enable validation highlighting
+                                { "class", "form-select validate-dropdown" },
+
+                                // Links the dropdown to its corresponding validation message element for screen readers
+                                // This improves accessibility by providing assistive technology with the proper error context
+                                { "aria-describedby", "SampleDropdownId-validation" },
+
+                                // Dynamically sets the aria-invalid attribute to communicate the validation status
+                                // "true" if there are validation errors for this field; otherwise "false"
+                                // This supports accessibility by indicating whether the current value is invalid
+                                { "aria-invalid", (ViewData.ModelState["SampleDropdownId"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }
+                            })
+
+                            @Html.ValidationMessageFor(m => m.SampleDropdownId, "", new
+                                {
+                                    @class = "form-error-message",
+                                    id = "SampleDropdownId-validation",
+                                    @aria_live = "assertive"
+                                })
+                        </div>
+
+
+
+
+
+                           <!-- Checkbox Group - SampleCheckbox -->
+                        <div class="form-group" data-checkbox-group="SampleCheckbox">
+
+                            <fieldset aria-describedby="samplecheckbox-help samplecheckbox-validation" class="border-0 p-0 m-0">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    @Html.LabelWithRequiredIndicatorFor(m => m.SelectedSampleCheckboxIds) <span class="text-danger"> *</span>
+                                </legend>
+
+
+                                @for (int i = 0; i < Model.SampleCheckboxOptions.Count; i++)
+                                    {
+                                        var item = Model.SampleCheckboxOptions[i];
+                                        var checkboxId = $"samplecheckbox_{item.Value}";
+
+                                        <div class="form-check">
+                                            <input type="checkbox"
+                                                   id="@checkboxId"
+                                                   value="@item.Value"
+                                                   class="form-check-input checkbox-group"
+
+                                                   @* Name shared for model binding to List<int> *@
+                                                   name="SelectedSampleCheckboxIds"
+                                                   
+                                                   @* Group identifier for generic checkbox group validation *@
+                                                   data-group-name="SampleCheckbox"
+
+                                                   @* Links input to help text and validation message for screen readers *@
+                                                   aria-describedby="samplecheckbox-help samplecheckbox-validation"
+
+                                                   @* Dynamicaly sets aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false" *@
+                                                   aria-invalid="@((ViewData.ModelState["HasSelectedSampleCheckbox"]?.Errors?.Count ?? 0) > 0 ? "true" : "false")"
+                                                   
+                                                   @* Preserve checked state *@
+                                                   @(Model.SelectedSampleCheckboxIds.Contains(int.Parse(item.Value)) ? "checked" : "") />
+
+                                                <label class="form-check-label" for="@checkboxId">
+                                                    @item.Text
+                                                </label>
+                                        </div>
+                                    }
+
+                                    <!--
+                                        Hidden field used to store whether any checkbox in the group is selected.
+                                        This is necessary because model binding and validation attributes work with a scalar boolean
+                                        (HasSelectedFilms) rather than the list of selected IDs. The custom client-side script updates this field dynamically.
+                                    -->
+                                    @Html.HiddenFor(m => m.HasSelectedSampleCheckbox)
+
+                                    <!--
+                                        Validation message container:
+                                        - Displays validation errors related to the checkbox group.
+                                        - 'id' is linked in aria-describedby to inputs for screen reader users.
+                                        - 'data-valmsg-for' attribute allows client-side validation scripts to find and update this element.
+                                        - 'aria-live="assertive"' ensures screen readers announce error messages immediately when they change.
+                                    -->
+
+                                    <!-- Help text for screen readers and visual users -->
+                                    <span id="samplecheckbox-help" class="form-text text-muted">
+                                        Select at least one.
+                                    </span>
+
+                                    @Html.ValidationMessageFor(m => m.HasSelectedSampleCheckbox, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "samplecheckbox-validation",          // ID used by aria-describedby
+                                        data_valmsg_for = "HasSelectedSampleCheckbox", // Used for client-side lookup
+                                        @aria_live = "assertive"             // Announce validation changes immediately
+                                    })
+                            </fieldset>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        // Render a hidden input for StatusId using the value set in the model (e.g., StatusId = 1)
+                        @Html.HiddenFor(model => model.StatusId, new { @Value = 1 })
+
+
+                        <!-- Test Modal Button -->
+                        @* <button type="button" class="btn btn-secondary" onclick="showTestModal()">Test Modal</button> *@
+    
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="btn btn-teal w-100 w-md-auto"
+                                aria-label="Submit form to create item">
+                                Submit <i class="fas fa-angle-double-right fa-sm ms-1"></i> 
+                        </button>
+
+                        <!-- Clear Button -->
+                        <button type="reset"
+                                class="btn btn-secondary w-100 w-md-auto"
+                                aria-label="Clear form and reset values">
+                            Clear <i class="fas fa-eraser fa-sm ms-1"></i>
+                        </button>
+
+
+
+                    } @* // using *@
+
+                </div> <!-- Close card-body -->
+
+                <!-- Long Procesisng Modal  -->
+                <div class="modal fade" id="processingModal" tabindex="-1" aria-labelledby="processingModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content text-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="processingModalLabel" style="color: #00818a !important;">Form Submitting...</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="spinner-border text-primary mb-3" role="status" aria-hidden="true" style="color: #00818a !important;"></div>
+                                    <p style="color: #00818a !important;">
+                                        <strong>Submitting your form...</strong><br />
+                                        This may take a few moments.<br /> Please <em>wait until you see a confirmation message</em> before leaving the page.
+                                    </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div> <!-- Close card-shadow -->
+        </div>
+    </div>
+</div>  @* <div class="container px-3 px-sm-4 px-md-5"> *@
+
+
+
+
+
+
+@section Styles {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="~/css/form.css" asp-append-version="true" />
+}
+
+
+
+
+@section Scripts {
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+    <script>
+        const apiBaseUrl = '@ViewData["StudentLookupApiBaseUrl"]';
+        const apiKey = '@ViewData["StudentLookupApiKey"]';
+
+        $(function() {
+            // Initialize jQuery UI Autocomplete on the #StudentFullName input
+            $('#StudentFullName').autocomplete({
+                minLength: 5,   // Minimum number of characters typed before autocomplete triggers
+                delay: 300,     // Delay in milliseconds after the user stops typing before sending request
+
+                // Define the source of autocomplete suggestions
+                source: function(request, response) {
+                    // AJAX GET request to fetch matching student references based on the typed prefix
+                    $.ajax({
+                        url: `${getApiBaseUrl()}/autocomplete-by-student-name`,    // API endpoint for autocomplete data
+                        method: 'GET',
+                        data: { prefix: request.term },             // Send the typed term as 'prefix' query param
+                        headers: { 'X-API-Key': apiKey },           // API key for authentication
+
+                        success: function(data) {
+                            // Pass the returned data (array of suggestions) to autocomplete response handler
+                            response(data);
+                        },
+
+                        error: function() {
+                            // If the AJAX request fails, provide an empty list to autocomplete
+                            response([]);
+                        }
+                    });
+                },
+
+                open: function() {
+                    $('#StudentFullName').attr('aria-expanded', 'true');
+                },
+                close: function() {
+                    $('#StudentFullName').attr('aria-expanded', 'false');
+                    $('#StudentFullName').removeAttr('aria-activedescendant');
+                },
+
+                // Event fired when a suggestion is selected (via mouse click or keyboard)
+                select: function(event, ui) {
+                    // Set the input value to the selected item's value
+                    $('#StudentFullName').val(ui.item.value);
+
+                    // Populate other student details based on selected student reference
+                    populateStudentDetailsUsingFullName(ui.item.value);
+
+                    // Prevent the default behavior of the select event
+                    return false;
+                },
+
+                focus: function(event, ui) {
+                    // Do not overwrite the input value on hover/keyboard focus
+                    // Only manage accessibility (aria-activedescendant)
+                    if (ui.item && ui.item.id) {
+                        $('#StudentFullName').attr('aria-activedescendant', ui.item.id);
+                    } else {
+                        $('#StudentFullName').removeAttr('aria-activedescendant');
+                    }
+
+                    // Prevent default behaviour (which would insert the value)
+                    return false;
+                }
+
+            });
+        });
+
+
+        // Formats the input value as a UK sort code (e.g., 12-34-56) as the user types
+        function formatSortCode(input) {
+            // Remove all non-digit characters (e.g., dashes, spaces, letters)
+            let value = input.value.replace(/\D/g, '');
+
+            // Limit to a maximum of 6 digits (standard UK sort code length)
+            if (value.length > 6) value = value.slice(0, 6);
+
+            let formatted = '';
+
+            // Append the first two digits
+            if (value.length >= 1) {
+                formatted += value.substring(0, Math.min(2, value.length));
+            }
+
+            // If at least two digits are entered, append the first dash
+            if (value.length >= 2) {
+                formatted += '-';
+
+                // Append the next two digits (if present)
+                if (value.length > 2) {
+                    formatted += value.substring(2, Math.min(4, value.length));
+                }
+            }
+
+            // If at least four digits are entered, append the second dash
+            if (value.length >= 4) {
+                formatted += '-';
+
+                // Append the last two digits (if present)
+                if (value.length > 4) {
+                    formatted += value.substring(4, 6);
+                }
+            }
+
+            // Set the formatted value back to the input field
+            input.value = formatted;
+        }
+
+
+
+
+        $('#StudentFullName').on('keydown', function(e) {
+            if (e.key === "Escape") {
+                $(this).autocomplete('close');
+                $(this).val('');
+            }
+        });
+
+
+
+        // Define a new jQuery validation method called "nowhitespaceonly"
+        $.validator.addMethod("nowhitespaceonly", function (value, element) {
+            // Allow empty values if the field is not required (e.g., optional fields)
+            // Otherwise, trim the input and check that it's not just whitespace
+            return this.optional(element) || $.trim(value).length > 0;
+        });
+
+        // Register an unobtrusive adapter that connects the [NoWhitespaceOnly] attribute
+        // (which emits data-val-nowhitespaceonly="...") to the custom jQuery validation rule
+        $.validator.unobtrusive.adapters.addBool("nowhitespaceonly");
+
+
+        // Populate student details in the form based on the given Class Enrolment Id
+        function populateStudentDetailsUsingFullName(classEnrolmentId) {
+            // Log the student reference being fetched (useful for debugging)
+            console.log('Fetching details for:', classEnrolmentId);
+
+            // Make an AJAX GET request to the Student Lookup API to retrieve the student's details
+            $.ajax({
+                // Construct the API endpoint URL using the provided studentRef, ensuring it is URL-encoded
+                url: `${getApiBaseUrl()}/by-class-enrolment-id/${encodeURIComponent(classEnrolmentId)}`,
+                method: 'GET', // Use HTTP GET method
+                headers: { 'X-API-Key': apiKey },  // Include API key for authentication/authorization
+
+                success: function (student) {
+                    // Log the returned student object for debugging
+                    console.log('Student response:', student);
+
+                    // Extract the date part (YYYY-MM-DD) from the ISO 8601 date string (e.g., "2000-01-01T00:00:00")
+                    // If the date is missing or undefined, use an empty string as fallback
+                    const formattedDob = student.dateOfBirth?.split('T')[0] || '';
+
+
+                    // === Populate StudentFullName ===
+                    $('#StudentFullName')
+                        .val(student.forenames + ' ' + student.surname || '' )     // Set the field value (prefer API value, fallback to blank)
+                        .removeClass('input-validation-error')                 // Remove any validation error styling
+                        .attr('aria-invalid', 'false')                         // Update accessibility state
+                        .valid();                                              // Re-run jQuery validation for this field
+
+
+                    // === Populate Student Reference Number ===
+                    $('#StudentReferenceNumber')
+                        .val(student.studentReferenceNumber || studentRef)     // Set the field value (prefer API value, fallback to searched ref)
+                        .prop('readonly', true)                                // Make field read-only to prevent edits
+                        .addClass('bg-light')                                  // Apply light background styling to indicate non-editable
+                        .removeClass('input-validation-error')                 // Remove any validation error styling
+                        .attr('aria-invalid', 'false')                         // Update accessibility state
+                        .valid();                                              // Re-run jQuery validation for this field
+
+                    // === Populate Date of Birth ===
+                    $('#StudentDateOfBirth')
+                        .val(formattedDob)                                     // Set formatted date value
+                        .prop('readonly', true)                                // Make field read-only to prevent edits
+                        .addClass('bg-light')                                  // Apply light background styling to indicate non-editable
+                        .removeClass('input-validation-error')                 // Remove any validation error styling
+                        .attr('aria-invalid', 'false')                         // Update accessibility state
+                        .valid();                                              // Trigger validation update
+
+                },
+
+                error: function () {
+                    // Log a warning in the console if the request fails (e.g., student not found or API error)
+                    console.warn('Failed to fetch student details for', classEnrolmentId);
+                }
+            });
+        }
+
+
+
+
+        // --- Shows a Bootstrap modal to indicate form processing after successful validation
+        function showProcessingModal() {
+            const modal = new bootstrap.Modal(document.getElementById('processingModal'));
+            modal.show();
+        }
+
+
+
+        // Wait until the DOM is fully loaded before attaching event handlers
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Select the form element on the page (can change to specific ID if needed)
+            const form = document.querySelector('form');
+
+            // Add an event listener for the 'reset' event (e.g., when the user clicks the Clear button)
+            form.addEventListener('reset', function () {
+
+                // Define the input fields that need their background color and readonly status reset
+                const fieldsToReset = ['#StudentDateOfBirth', '#StudentReference'];
+
+                // Loop through each field selector
+                fieldsToReset.forEach(selector => {
+                    const field = document.querySelector(selector); // Get the input element
+
+                    if (field) {
+                        field.style.backgroundColor = '';     // Reset background color to default
+                        field.removeAttribute('readonly');    // Make field editable again
+                    }
+                });
+            });
+        });
+
+
+
+        // --- Get base API URL depending on environment
+        function getApiBaseUrl() {
+
+                const host = window.location.hostname.toLowerCase();
+
+                // Determine the base URL for the Student Lookup API depending on the environment
+                if (host === 'localhost' || host === '127.0.0.1') {
+                    // If running locally (e.g., during development), use the full URL from config (e.g., appsettings or a variable)
+                    // This ensures we bypass CORS issues and explicitly target the local API instance
+                    return apiBaseUrl;  // use URL from config for localhost
+                } else if (host === 'biis.ayrshire.ac.uk') {
+                    // If running on the production domain, use the relative path to the API
+                    // Assumes that the API is hosted on the same domain under a virtual application folder
+                    return '/StudentLookupApi/api/studentlookup';
+                } else {
+                    // Default fallback for other environments (e.g., test or staging)
+                    // Also uses relative path assuming similar hosting structure
+                    return '/StudentLookupApi/api/studentlookup';
+                }
+        }
+
+        $(function () {
+            let formSubmitted = false;
+            let submitInProgress = false;
+
+            // --- Custom jQuery Validation Method: mustbetrue for checkboxes
+            $.validator.unobtrusive.adapters.addBool("mustbetrue");
+            $.validator.unobtrusive.parse(document);
+
+
+            // Converts camel or Pascal case field names like "AwardType" to "Award Type"
+            function formatGroupName(input) {
+                return input
+                    .replace(/([a-z])([A-Z])/g, "$1 $2") // Add space before capital letters
+                    .replace(/^./, str => str.toUpperCase()); // Capitalize the first letter
+            }
+
+            // --- Checkbox Group Validation
+            function validateCheckboxGroups() {
+                let allValid = true;
+
+                $("[data-checkbox-group]").each(function () {
+                    const groupContainer = $(this);
+                    const group = groupContainer.data("checkbox-group");
+
+                    // Skip validation for Non-mandatory group
+                   if (group === "JourneyTicketType") return;
+
+                    const checkboxes = groupContainer.find(`.checkbox-group[data-group-name="${group}"]`);
+                    const anyChecked = checkboxes.is(":checked");
+
+                    groupContainer.find(`input[name="HasSelected${group}"], input[name="${group}Selected"]`).val(anyChecked ? "true" : "false");
+
+                    const validationSpan = groupContainer.find(`.form-error-message[data-valmsg-for="HasSelected${group}"]`);
+
+                    if (formSubmitted) {
+                        validationSpan
+                            .text(anyChecked ? "" : `Please select at least one ${formatGroupName(group)}.`)
+                            .toggleClass("field-validation-error", !anyChecked)
+                            .toggleClass("field-validation-valid", anyChecked);
+                    } else {
+                        validationSpan.text("").removeClass("field-validation-error").addClass("field-validation-valid");
+                    }
+
+                    checkboxes.attr("aria-invalid", (formSubmitted && !anyChecked));
+                    if (!anyChecked) allValid = false;
+                });
+
+                return allValid;
+            }
+
+            // --- Dropdown Validation
+            function validateDropdowns() {
+                let allValid = true;
+
+                $(".validate-dropdown").each(function () {
+                    const $dropdown = $(this);
+                    const val = $dropdown.val();
+                    const isValid = val !== null && val !== "";
+                    const msgSelector = $dropdown.data("validation-message");
+                    const $messageSpan = msgSelector ? $(msgSelector) : null;
+                    const requiredMessage = $dropdown.attr("data-val-required") || "This field is required.";
+
+                    $dropdown.attr("aria-invalid", !isValid);
+
+                    if ($messageSpan && $messageSpan.length) {
+                        $messageSpan
+                            .text(isValid ? "" : requiredMessage)
+                            .toggleClass("field-validation-error", !isValid)
+                            .toggleClass("field-validation-valid", isValid);
+                    }
+
+                    if (!isValid) allValid = false;
+                });
+
+                return allValid;
+            }
+
+            // --- Radio Group Validation
+            function validateRadioGroups() {
+                let allValid = true;
+
+                $("[data-radio-group]").each(function () {
+                    const groupContainer = $(this);
+                    const groupName = groupContainer.data("radio-group");
+
+                    // Select all radio buttons within this group
+                    const radios = groupContainer.find(`input[type="radio"][name="${groupName}"]`);
+                    const anySelected = radios.is(":checked");
+
+                    // Optionally update any hidden flags if used
+                    groupContainer.find(`input[name="HasSelected${groupName}"], input[name="${groupName}Selected"]`)
+                        .val(anySelected ? "true" : "false");
+
+                    // Find validation span
+                    const validationSpan = groupContainer.find(`.form-error-message[data-valmsg-for="HasSelected${groupName}"], .form-error-message[data-valmsg-for="${groupName}"]`);
+
+                    // Toggle validation messages
+                    if (formSubmitted) {
+                        validationSpan
+                            .text(anySelected ? "" : `Please select a ${groupName.toLowerCase()} option.`)
+                            .toggleClass("field-validation-error", !anySelected)
+                            .toggleClass("field-validation-valid", anySelected);
+                    } else {
+                        validationSpan.text("").removeClass("field-validation-error").addClass("field-validation-valid");
+                    }
+
+                    // Update accessibility state
+                    radios.attr("aria-invalid", formSubmitted && !anySelected);
+
+                    if (!anySelected) allValid = false;
+                });
+
+                return allValid;
+            }
+
+
+            // --- Revalidation on Change
+            function bindRevalidation() {
+                $(".validate-dropdown").on("change", validateDropdowns);
+
+                $("input[data-val='true'], select[data-val='true']").on("change", function () {
+                    $(this).valid();
+                });
+
+                $(".checkbox-group").on("change", function () {
+                    if (formSubmitted) validateCheckboxGroups();
+                });
+
+                $(".radio-group").on("change", function () {
+                    if (formSubmitted) validateRadioGroups();
+                });
+            }
+
+            bindRevalidation();
+
+
+            // --- Form Submit Handler
+            $("form").on("submit", function (e) {
+                if (submitInProgress) return false;
+                e.preventDefault();
+
+                const form = $(this);
+                formSubmitted = true;
+
+                const formValid = form.valid();
+                const checkboxesValid = validateCheckboxGroups();
+                const radiosValid = validateRadioGroups();
+                const dropdownsValid = validateDropdowns();
+
+                const allValid = formValid && checkboxesValid && radiosValid && dropdownsValid;
+
+                console.log("formValid:", formValid);
+                console.log("checkboxesValid:", checkboxesValid);
+                console.log("radiosValid:", radiosValid);
+                console.log("dropdownsValid:", dropdownsValid);
+
+                if (allValid) {
+                    submitInProgress = true;
+
+                    // Disable buttons to prevent multiple submissions
+                    $("button[type=submit], button[type=reset]").prop("disabled", true);
+
+                    // Show processing modal
+                    showProcessingModal();
+
+                    // Submit the form after a delay
+                    setTimeout(() => {
+                        console.log("submitting form...");  // This line logs right before form submit
+                        form.off("submit");                // Remove submit handler to avoid recursion
+                        form[0].submit();                  // Trigger native submit
+                    }, 2000);
+                } else {
+                    console.log("Form is not valid. Submission halted.");
+                }
+
+                return false;
+            });
+
+            /* -------------------------------------------------------------
+                * HOW TO ADD NEW FORM ELEMENTS FOR VALIDATION:
+                *
+                * 1. Checkbox Groups:
+                *    - data-checkbox-group="GroupName"
+                *    - class="checkbox-group", data-group-name="GroupName"
+                *    - hidden input: name="HasSelectedGroupName" or "GroupNameSelected"
+                *    - span: class="form-error-message", data-valmsg-for="HasSelectedGroupName"
+                *
+                * 2. File Inputs:
+                *    - class="validate-file"
+                *    - span: id="[fileInputId]ValidationMessage"
+                *    - (Optional) data-val-required="Message"
+                *
+                * 3. Dropdowns:
+                *    - class="validate-dropdown"
+                *    - data-validation-message="#msgSpan"
+                *    - (Optional) data-val-required="Message"
+                *
+                * 4. Other Inputs:
+                *    - data-val="true", data-val-required="Message"
+                *
+                * 5. Custom Rules:
+                *    - Use $.validator.addMethod + adapters
+                *    - Call manually if needed
+                *
+                * 6. Adding Validation Types:
+                *    - Create new validateXYZ() function
+                *    - Add to submit handler and bindRevalidation()
+                * ----------------------------------------------------------- */
+            });
+    </script>
+
+
+}
+
+
+

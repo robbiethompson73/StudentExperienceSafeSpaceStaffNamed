@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Server Error";
+}
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="alert bg-white no-border p-3 mb-1 d-flex align-items-start">
+                <div class="me-3" style="margin-top: -3px;">
+                    <i class="fas fa-exclamation-circle fa-2x text-danger"></i>
+                </div>
+                <div>
+                    <h5 class="mb-3 text-black-sticky">@ViewData["Title"] (500)</h5>
+                    <p class="mb-2 text-black-sticky">
+                        Sorry, something went wrong on our end while processing your request.
+                    </p>
+
+                    <p class="mb-2 text-black-sticky">
+                        If the problem continues, please contact Business Intelligence & Information Systems (BIIS) for assistance.
+                    </p>
+
+                    <p class="mb-2 text-black-sticky">
+                        When you reach out, please provide as much detail as possible, including:
+                        <ul>
+                            <li>What you were trying to do</li>
+                            <li>The approximate time the error occurred</li>
+                            <li>Any error messages or codes you received</li>
+                        </ul>
+                    </p>
+
+
+                    @await Html.PartialAsync("_ContactBiisSupport")
+
+                </div>
+            </div>
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@

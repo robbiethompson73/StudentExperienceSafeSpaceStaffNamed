@@ -1,0 +1,153 @@
+﻿@model IEnumerable<SharedViewModelLibrary.Models.AdminStaffViewModel>
+
+@{
+    ViewData["Title"] = "Admin Home";
+}
+
+
+<div class="container py-0">
+    <div class="row">
+        <div class="col-12">
+
+            <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
+                <ol class="breadcrumb custom-breadcrumb admin mb-3">
+                    <li class="breadcrumb-item text-nowrap">
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
+                    </li>
+
+                    <li class="breadcrumb-item text-nowrap">
+                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                    </li>
+
+                    <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+
+            <div class="pageTitle admin">
+                <h1 class="display-4">@ViewData["Title"]</h1>
+            </div>
+
+
+            <a asp-action="Index"
+               asp-controller="Home"
+               class="text-decoration-none d-inline-flex align-items-center mb-3 text-muted body-nav-link-small"
+               role="button"
+               aria-label="Go back to view all records">
+                <i class="fas fa-arrow-left me-2" aria-hidden="true"></i>
+                Back to @ViewData["AppName"]
+            </a>
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@
+
+
+
+
+
+<div class="container py-2 mb-4">
+    <div class="row">
+        <div class="col-12">
+
+            <a asp-controller="Admin"
+               asp-action="List"
+               class="btn btn-teal mb-3 w-md-auto"
+               role="button"
+               aria-label="View all records">
+                <i class="fas fa-magnifying-glass me-2" aria-hidden="true"></i>
+                View All Submitted Records
+            </a>
+
+            <a asp-controller="Admin"
+               asp-action="ExportToExcel"
+               class="btn btn-teal mb-3 w-md-auto"
+               role="button"
+               aria-label="Export Records to Excel">
+                <i class="fas fa-download me-2" aria-hidden="true"></i>
+                Export Records to Excel
+            </a>
+
+
+
+
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-2"> *@
+
+
+
+<div class="container py-1">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="pageTitle admin">
+                <h1 class="display-4">Student Experience Admins</h1>
+            </div>
+
+
+            <p>
+                <a href="@Url.Action("Create", "AdminStaff")" class="btn btn-teal mb-3 w-md-auto">
+                    <i class="fas fa-pen me-2"></i> Add Admin Staff Member
+                </a>
+            </p>
+
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong> Your submission was received and saved successfully. Thank you for completing the form!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+
+
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle ultra-sm-table" aria-label="List of admin staff member records">
+                    <thead style="background-color: #f1f1f1; color: #008080;">
+                        <tr>
+                            <!-- Always visible columns -->
+                            <th>Name</th>
+
+                            <!-- Columns hidden on small screens (mobile), shown on md+ screens -->
+                            <th class="d-none d-md-table-cell">@Html.DisplayNameFor(model => model.First().ContactEmail)</th>
+                            <th class="d-none d-md-table-cell">@Html.DisplayNameFor(model => model.First().Active)</th>
+                            <th class="d-none d-md-table-cell">@Html.DisplayNameFor(model => model.First().ReceiveEmail)</th>
+
+                            <!-- Always visible columns -->
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.FormattedName</td>
+
+                                <td class="d-none d-md-table-cell">@item.ContactEmail</td>
+                                <td class="d-none d-md-table-cell">@item.Active</td>
+                                <td class="d-none d-md-table-cell">@item.ReceiveEmail</td>
+
+                                <td class="text-end">
+                                    <a asp-action="Update" asp-controller="AdminStaff" asp-route-id="@item.Id" class="btn btn-sm btn-teal me-1">Edit</a>
+                                    <a asp-action="Details" asp-controller="AdminStaff" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Details</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+
+
+        </div> @* <div class="col-12"> *@
+    </div> @* <div class="row"> *@
+</div> @* <div class="container py-0"> *@

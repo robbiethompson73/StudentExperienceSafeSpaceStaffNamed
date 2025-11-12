@@ -1,0 +1,40 @@
+﻿@*   Expecting an anonymous object with FormattedUsername and IsAdmin *@
+@model dynamic
+
+
+
+@if (Model.IsBiisAdmin)
+{
+    <span>Welcome, @Model.FormattedUsername</span>
+
+    <span class="badge ms-2" style="background-color: #f8d7da; font-size: 0.75rem; vertical-align: text-bottom;">
+        <a href="@Url.Action("Index", "Admin")" class="text-decoration-none" style="color: #92363f; text-decoration: none;">
+            Student Experience Admin
+        </a>
+    </span>
+
+
+    <span class="badge ms-2" style="background-color: #ed6d3f; font-size: 0.75rem; vertical-align: text-bottom;">
+        <a href="@Url.Action("Index", "BiisAdmin")" class="text-white text-decoration-none" style="text-decoration: none;">
+            BIIS Admin
+        </a>
+    </span>
+
+}
+else if (Model.IsAdmin)
+{
+    <span>Welcome, @Model.FormattedUsername</span>
+
+    <span class="badge bg-danger ms-2" style="font-size: 0.75rem; vertical-align: text-bottom;">
+        <a href="@Url.Action("Index", "Admin")" class="text-white text-decoration-none" style="text-decoration: none;">
+            Admin
+        </a>
+    </span>
+}
+
+
+else
+{
+    @* Staff or Student *@
+    <span>Welcome, @Model.FormattedUsername (@Model.Role)</span>
+}

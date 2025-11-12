@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="EmailTemplates\AdminNotification_SubmissionCreate.cshtml" />
+    <Content Remove="EmailTemplates\UserNotification_SubmissionCreate.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommonModelsLibraryStudentExperience" Version="1.0.1" />
+    <PackageReference Include="InputProcessingLibrary" Version="1.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+    <PackageReference Include="PresentationFormattingLibrary" Version="1.0.5" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+    <PackageReference Include="UserIdentityLibrary" Version="3.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj" />
+    <ProjectReference Include="..\EmailLibrary\EmailLibrary.csproj" />
+    <ProjectReference Include="..\SharedServicesLibrary\SharedServicesLibrary.csproj" />
+    <ProjectReference Include="..\SharedViewModelLibrary\SharedViewModelLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="EmailTemplates\AdminNotification_SubmissionCreate.cshtml" />
+    <None Include="EmailTemplates\UserNotification_SubmissionCreate.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EmailTemplates\**\*.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

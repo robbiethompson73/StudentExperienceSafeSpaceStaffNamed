@@ -1,0 +1,72 @@
+﻿@using AyrshireCollege.Biis.PresentationFormattingLibrary.Date;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Submission Confirmation</title>
+</head>
+
+<body style="margin:0; padding:0; background-color:#ffffff; font-family: Arial, sans-serif;">
+
+    @if (!string.IsNullOrWhiteSpace(Model.OriginalRecipientUserEmail))
+    {
+        <p style="color: gray;"><strong>This is a Test Email. It was originally intended for:</strong> @Model.OriginalRecipientUserEmail</p>
+    }
+
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#ffffff; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="600"
+                       style="background-color:#00818a; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+
+                    <tr>
+                        <td style="background-color:#000; padding: 15px 40px; border-top-left-radius:16px; border-top-right-radius:16px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="width: 40px; vertical-align: middle; padding-right: 20px; background-color: #000;">
+                                        <img src="https://biis.ayrshire.ac.uk/StudentExperienceSharedAssetsSite/images/se_logo_40x40.png"
+                                             alt="Student Experience Logo" width="40" height="40" style="display: block;" />
+                                    </td>
+                                    <td style="vertical-align: middle; color: #fff; font-size: 20px; font-weight: bold; background-color: #000;">
+                                        Student Experience Forms
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 15px 40px 30px 40px; color: #e0f2f2; font-size: 16px; line-height: 1.5;">
+                            <p>Dear @Model.SubmittedByFirstNamesOnly,</p>
+
+                            <p>Thank you for your submission to the <strong>@Model.FormName</strong>. We’ve successfully received your form entry.</p>
+
+                            <p><strong><u>Submission Details:</u></strong></p>
+
+                            <p><strong>Form Title:</strong> @Model.FormName</p>
+
+                            <p><strong>Student Reference Number:</strong> @Model.StudentReferenceNumber</p>
+
+                            <p><strong>Submitted On:</strong> @DateFormatting.ToLongOrdinalDate(Model.SubmittedAt)</p>
+
+                            <p>If you have any questions about your submission, please contact us at: <strong>se@ayrshire.ac.uk</strong>.</p>
+
+                            <p>Thank you,</p>
+
+                            <p>Student Experience</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="background-color:#006a70; padding: 15px 40px; color: #b0d9db; font-size: 12px; text-align: center; border-bottom-left-radius:16px; border-bottom-right-radius:16px;">
+                            © 2025 Ayrshire College. All rights reserved.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
