@@ -212,6 +212,160 @@
 
 
 
+
+
+
+                        <!-- TextBox 1 - StaffFullName -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.StaffFullName)
+
+                            @Html.TextBoxFor(m => m.StaffFullName, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "StaffFullName-validation" },      // Link this input to the associated validation message span for screen readers
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["StaffFullName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                { "id", "StaffFullName" }                      // Explicit ID for JS targeting
+                            })
+
+                            @Html.ValidationMessageFor(m => m.StaffFullName, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "StaffFullName-validation",                // unique ID for validation
+                                @aria_live = "assertive"                   // screen readers announce changes
+                            })
+                        </div>
+
+
+                        <!-- TextBox 2 - StaffEmail -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.StaffEmail)
+
+                            @Html.TextBoxFor(m => m.StaffEmail, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "StaffEmail-validation" },      // Link this input to the associated validation message span for screen readers
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["StaffEmail"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                { "id", "StaffEmail" }                      // Explicit ID for JS targeting
+                            })
+
+                            @Html.ValidationMessageFor(m => m.StaffEmail, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "StaffEmail-validation",                // unique ID for validation
+                                @aria_live = "assertive"                   // screen readers announce changes
+                            })
+                        </div>
+
+
+
+                        <!-- TextBox 3 - StaffTelephoneNumber -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.StaffTelephoneNumber)
+
+                            @Html.TextBoxFor(m => m.StaffTelephoneNumber, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "StaffTelephoneNumber-validation" },      // Link this input to the associated validation message span for screen readers
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["StaffTelephoneNumber"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                { "id", "StaffTelephoneNumber" }                      // Explicit ID for JS targeting
+                            })
+
+                            @Html.ValidationMessageFor(m => m.StaffTelephoneNumber, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "StaffTelephoneNumber-validation",                // unique ID for validation
+                                @aria_live = "assertive"                   // screen readers announce changes
+                            })
+                        </div>
+
+
+
+
+                        <!-- TextBox 5 - IncidentPersonName -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.IncidentPersonName)
+
+                            @Html.TextBoxFor(m => m.IncidentPersonName, new Dictionary<string, object>
+                            {
+                                // Apply Bootstrap styling to the input field for consistent UI design.
+                                { "class", "form-control" },
+
+                                // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                // This improves accessibility for screen reader users.
+                                { "aria-describedby", "IncidentPersonName-validation" },      // Link this input to the associated validation message span for screen readers
+
+                                // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                // This allows screen readers to announce when a field has failed validation.
+                                { "aria-invalid", (ViewData.ModelState["IncidentPersonName"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                                { "id", "IncidentPersonName" }                      // Explicit ID for JS targeting
+                            })
+
+                            @Html.ValidationMessageFor(m => m.IncidentPersonName, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "IncidentPersonName-validation",                // unique ID for validation
+                                @aria_live = "assertive"                   // screen readers announce changes
+                            })
+                        </div>
+
+
+
+
+
+                        <!-- TextBox 9 IncidentDate - Date Picker -->
+                        <div class="form-group">
+                            @Html.LabelWithRequiredIndicatorFor(m => m.IncidentDate)
+
+                            @Html.TextBoxFor(m => m.IncidentDate, new Dictionary<string, object>
+                            {
+                                { "type", "date" },                                 // HTML5 date picker
+                                { "class", "form-control w-100 w-md-custom" },      // Apply Bootstrap styling to the input
+                                { "aria-describedby", "IncidentDate-validation" },  // Link to help and validation message spans for screen readers
+                                { "aria-invalid", (ViewData.ModelState["IncidentDate"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }    // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                            })
+
+                            @Html.ValidationMessageFor(m => m.IncidentDate, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "IncidentDate-validation",
+                                @aria_live = "assertive"
+                            })
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <!-- TextBox SampleTextbox -->
                         <div class="form-group">
                             @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextbox)
@@ -700,6 +854,17 @@
                 }
 
             });
+
+            // === Add this block anywhere inside this function ===
+            ['#StaffFullName', '#StaffEmail'].forEach(selector => {
+                const $field = $(selector);
+                if ($field.val().trim() !== '') {
+                    $field.prop('readonly', true)
+                        .addClass('bg-light')
+                        .css('cursor', 'not-allowed');
+                }
+            });
+
         });
 
 

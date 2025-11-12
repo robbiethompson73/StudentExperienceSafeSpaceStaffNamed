@@ -110,6 +110,12 @@ namespace DataAccessLibrary.DataServices
 
                         // Textboxes
                         StudentFullName = updated.StudentFullName,
+                        StaffFullName = updated.StaffFullName,
+                        StaffTelephoneNumber = updated.StaffTelephoneNumber,
+                        StaffEmail = updated.StaffEmail,
+                        IncidentPersonName = updated.IncidentPersonName,
+                        IncidentDate = updated.IncidentDate,
+
                         SampleTextbox = updated.SampleTextbox,
                         SampleDate = updated.SampleDate,
                         SampleTime = updated.SampleTime,
