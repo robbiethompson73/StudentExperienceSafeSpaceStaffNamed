@@ -230,6 +230,14 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             // Textboxes (input sanitization to prevent injection or formatting issues)
             entity.StudentFullName = _inputSanitizer.Sanitize(viewModel.StudentFullName);
+
+            entity.StaffFullName = _inputSanitizer.Sanitize(viewModel.StaffFullName);
+            entity.StaffTelephoneNumber = _inputSanitizer.Sanitize(viewModel.StaffTelephoneNumber);
+            entity.StaffEmail = _inputSanitizer.Sanitize(viewModel.StaffEmail);
+            entity.IncidentPersonName = _inputSanitizer.Sanitize(viewModel.IncidentPersonName);
+            entity.IncidentDate = viewModel.IncidentDate;
+
+
             entity.SampleTextbox = _inputSanitizer.Sanitize(viewModel.SampleTextbox);
             entity.SampleDate = viewModel.SampleDate;
             entity.SampleTime = viewModel.SampleTime;
@@ -296,7 +304,14 @@ namespace SharedServicesLibrary.FormHandlingServices
             vm.SampleDateAdmin = entityModel.SampleDateAdmin;
             vm.SampleCostAdmin = entityModel.SampleCostAdmin;
 
-            
+            vm.StaffFullName = _inputSanitizer.Sanitize(entityModel.StaffFullName);
+            vm.StaffTelephoneNumber = _inputSanitizer.Sanitize(entityModel.StaffTelephoneNumber);
+            vm.StaffEmail = _inputSanitizer.Sanitize(entityModel.StaffEmail);
+            vm.IncidentPersonName = _inputSanitizer.Sanitize(entityModel.IncidentPersonName);
+            vm.IncidentDate = entityModel.IncidentDate;
+
+
+
 
             // Textareas
             vm.AdminNote = _inputSanitizer.Sanitize(entityModel.AdminNote);
@@ -358,6 +373,15 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             // Textboxes (input sanitization to prevent injection or formatting issues)
             vm.StudentFullName = _inputSanitizer.Sanitize(entityModel.StudentFullName);
+
+            vm.StaffFullName = _inputSanitizer.Sanitize(entityModel.StaffFullName);
+            vm.StaffTelephoneNumber = _inputSanitizer.Sanitize(entityModel.StaffTelephoneNumber);
+            vm.StaffEmail = _inputSanitizer.Sanitize(entityModel.StaffEmail);
+            vm.IncidentPersonName = _inputSanitizer.Sanitize(entityModel.IncidentPersonName);
+            vm.IncidentDate = entityModel.IncidentDate;
+
+
+
             vm.SampleTextbox = _inputSanitizer.Sanitize(entityModel.SampleTextbox);
             vm.SampleDate = entityModel.SampleDate;
             vm.SampleTime = entityModel.SampleTime;

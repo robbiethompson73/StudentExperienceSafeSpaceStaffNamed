@@ -129,9 +129,14 @@ namespace MvcUi.Controllers
 
             ViewData["StudentLookupApiKey"] = _configuration["ApiKeys:StudentLookupApi"];
 
+            // Pre-populate Fields
+            mainFormViewModel.StaffFullName = await _identityService.GetFormattedUserNameAsync();
+            mainFormViewModel.StaffEmail = await _identityService.GetUnformattedUserNameAsync() + "@ayrshire.ac.uk";
 
             return View("Create", mainFormViewModel);
         }
+
+
 
 
         [HttpPost]

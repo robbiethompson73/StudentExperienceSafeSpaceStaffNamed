@@ -31,6 +31,50 @@ namespace SharedViewModelLibrary.Models
         public DateTime? StudentDateOfBirth { get; set; }
 
 
+        [Required(ErrorMessage = "Staff name is required.")]
+        [NoWhitespaceOnly]
+        [StringLength(100, ErrorMessage = "Staff name cannot exceed 100 characters.")]
+        [Display(Name = "Staff Full Name")]
+        public string StaffFullName { get; set; }
+
+        [Required(ErrorMessage = "Staff telephone number is required.")]
+        [NoWhitespaceOnly]
+        [StringLength(100, ErrorMessage = "Staff telephone number cannot exceed 100 characters.")]
+        [Display(Name = "Staff Telephone Number")]
+        public string StaffTelephoneNumber { get; set; }
+
+
+        [Required(ErrorMessage = "Staff Email address is required.")]
+        [StringLength(100, ErrorMessage = "Email address cannot exceed 100 characters.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
+        [RegularExpression(@"^[^@\s]+@ayrshire\.ac\.uk$", ErrorMessage = "Please enter a valid Ayrshire College email address (must end with @ayrshire.ac.uk).")]
+        [Display(Name = "Staff Email")]
+        public string StaffEmail { get; set; }
+
+
+        [Required(ErrorMessage = "Affected person name is required.")]
+        [NoWhitespaceOnly]
+        [StringLength(100, ErrorMessage = "Affected person name cannot exceed 100 characters.")]
+        [Display(Name = "If you know who this happened to, can you give us their name")]
+        public string IncidentPersonName { get; set; }
+
+
+        [Required(ErrorMessage = "Please select a Student Date of Birth.")]
+        [Display(Name = "When did the incident happen?")]
+        [DataType(DataType.Date)]
+        public DateTime? IncidentDate { get; set; }
+
+        
+
+
+
+
+
+
+
+
+
+
         [BindNever] // not included in ModalState.IsValid. BindNever reference types Must be nullable
         public string? SubmittedByWindowsUserName { get; set; }
 

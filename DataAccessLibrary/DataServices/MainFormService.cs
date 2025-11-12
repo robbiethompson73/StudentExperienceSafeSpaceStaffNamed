@@ -40,6 +40,12 @@ namespace DataAccessLibrary.DataServices
 
             // Textboxes
             p.Add("StudentFullName", mainFormEntityModel.StudentFullName);
+            p.Add("StaffFullName", mainFormEntityModel.StaffFullName);
+            p.Add("StaffTelephoneNumber", mainFormEntityModel.StaffTelephoneNumber);
+            p.Add("StaffEmail", mainFormEntityModel.StaffEmail);
+            p.Add("IncidentPersonName", mainFormEntityModel.IncidentPersonName);
+            p.Add("IncidentDate", mainFormEntityModel.IncidentDate);
+
             p.Add("SampleDate", mainFormEntityModel.SampleDate);
             p.Add("SampleTime", mainFormEntityModel.SampleTime);
             p.Add("SampleCost", mainFormEntityModel.SampleCost);

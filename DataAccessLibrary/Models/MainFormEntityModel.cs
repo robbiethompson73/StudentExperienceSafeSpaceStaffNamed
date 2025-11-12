@@ -16,6 +16,14 @@ namespace DataAccessLibrary.Models
         public DateTime? StudentDateOfBirth { get; set; }
         public string SubmittedByWindowsUserName { get; set; }
 
+        public string StaffFullName { get; set; }
+        public string StaffTelephoneNumber { get; set; }
+        public string StaffEmail { get; set; }
+        public string IncidentPersonName { get; set; }
+        public DateTime? IncidentDate { get; set; }
+     
+
+
         // Textboxes
         public string StudentFullName { get; set; }
 
