@@ -52,11 +52,10 @@ namespace SharedViewModelLibrary.Models
         public string StaffEmail { get; set; }
 
 
-        [Required(ErrorMessage = "Affected person name is required.")]
         [NoWhitespaceOnly]
         [StringLength(100, ErrorMessage = "Affected person name cannot exceed 100 characters.")]
         [Display(Name = "If you know who this happened to, can you give us their name")]
-        public string IncidentPersonName { get; set; }
+        public string? IncidentPersonName { get; set; }
 
 
         [Required(ErrorMessage = "Please select a Student Date of Birth.")]
@@ -140,12 +139,67 @@ namespace SharedViewModelLibrary.Models
 
 
 
-        // Radio - SampleRadio
+        // Radio - IncidentHappenedToOptions
+        [Required(ErrorMessage = "Please select an option.")]
+        [Display(Name = "Who did the incident happen to")]
+        public int? SelectedIncidentHappenedToId { get; set; } // Bound to radio buttons
+        public string? IncidentHappenedToName { get; set; }
+        public List<SelectListItem> IncidentHappenedToOptions { get; set; } = new();
+
+
+        [Required(ErrorMessage = "Please select an option.")]
+        [Display(Name = "How many people were impacted by this incident")]
+        public int? SelectedNumberOfPeopleImpactedId { get; set; } // Bound to radio buttons
+        public string? NumberOfPeopleImpactedName { get; set; }
+        public List<SelectListItem> NumberOfPeopleImpactedOptions { get; set; } = new();
+
+
+        [Required(ErrorMessage = "Please select an option.")]
+        [Display(Name = "How many people allegedly caused this incident")]
+        public int? SelectedNumberOfPeopleCausedIncidentId { get; set; } // Bound to radio buttons
+        public string? NumberOfPeopleCausedIncidentName { get; set; }
+        public List<SelectListItem> NumberOfPeopleCausedIncidentOptions { get; set; } = new();
+
+
+        [Required(ErrorMessage = "Please select an option.")]
+        [Display(Name = "Where did it happen")]
+        public int? SelectedIncidentLocationId { get; set; } // Bound to radio buttons
+        public string? IncidentLocationName { get; set; }
+        public List<SelectListItem> IncidentLocationOptions { get; set; } = new();
+
+
+        [Required(ErrorMessage = "Please select an option.")]
+        [Display(Name = "Has a similar incident happened before")]
+        public int? SelectedHasSimilarIncidentHappenedBeforeId { get; set; } // Bound to radio buttons
+        public string? HasSimilarIncidentHappenedBeforeName { get; set; }
+        public List<SelectListItem> HasSimilarIncidentHappenedBeforeOptions { get; set; } = new();
+
+
         [Required(ErrorMessage = "Please select an option.")]
         [Display(Name = "Sample Radio")]
         public int? SelectedSampleRadioId { get; set; } // Bound to radio buttons
         public string? SampleRadioName { get; set; }
         public List<SelectListItem> SampleRadioOptions { get; set; } = new();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -216,10 +270,26 @@ namespace SharedViewModelLibrary.Models
         // Base validation method called during model validation
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            // Validate that at least one checkbox is selected in each group (samplecheckbox)
+            // Only require IncidentPersonName if SelectedIncidentHappenedToId == 2
+            if (SelectedIncidentHappenedToId.HasValue && SelectedIncidentHappenedToId.Value == 2)
+            {
+                if (string.IsNullOrWhiteSpace(IncidentPersonName))
+                {
+                    yield return new ValidationResult(
+                        "Affected person name is required.",
+                        new[] { nameof(IncidentPersonName) }
+                    );
+                }
+            }
+
+
+            // Existing checkbox validation
             foreach (var result in ValidateCheckboxGroups())
                 yield return result;
         }
+
+
+
 
         // Shared checkbox group validation for reuse in derived classes
         protected IEnumerable<ValidationResult> ValidateCheckboxGroups()

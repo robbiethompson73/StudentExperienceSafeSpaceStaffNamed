@@ -62,6 +62,11 @@ namespace DataAccessLibrary.DataServices
 
 
             // Radios
+            p.Add("IncidentHappenedToId", mainFormEntityModel.IncidentHappenedToId);
+            p.Add("NumberOfPeopleImpactedId", mainFormEntityModel.NumberOfPeopleImpactedId);
+            p.Add("NumberOfPeopleCausedIncidentId", mainFormEntityModel.NumberOfPeopleCausedIncidentId);
+            p.Add("IncidentLocationId", mainFormEntityModel.IncidentLocationId);
+            p.Add("HasSimilarIncidentHappenedBeforeId", mainFormEntityModel.HasSimilarIncidentHappenedBeforeId);
             p.Add("SampleRadioId", mainFormEntityModel.SampleRadioId);
 
 
@@ -153,6 +158,91 @@ namespace DataAccessLibrary.DataServices
             // return a single BiisStaffModel
             return rows.FirstOrDefault();
         }
+
+
+        public async Task<int> GetIncidentHappenedToIdByMainFormId(int submissionId)
+        {
+            var parameters = new { Id = submissionId };
+
+            var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
+                                        "dbo.spMainForm_GetIncidentHappenedToIdByMainFormId",
+                                        parameters,
+                                        _connectionStringData.SqlConnectionName);
+            // rows is a Task of List<> of type BiisStaffModel 
+            // return a single BiisStaffModel
+            return rows.FirstOrDefault();
+        }
+
+
+        public async Task<int> GetNumberOfPeopleImpactedIdByMainFormId(int submissionId)
+        {
+            var parameters = new { Id = submissionId };
+
+            var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
+                                        "dbo.spMainForm_NumberOfPeopleImpactedIdByMainFormId",
+                                        parameters,
+                                        _connectionStringData.SqlConnectionName);
+            // rows is a Task of List<> of type BiisStaffModel 
+            // return a single BiisStaffModel
+            return rows.FirstOrDefault();
+        }
+
+
+
+        public async Task<int> GetNumberOfPeopleCausedIncidentIdByMainFormId(int submissionId)
+        {
+            var parameters = new { Id = submissionId };
+
+            var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
+                                        "dbo.spMainForm_NumberOfPeopleCausedIncidentIdByMainFormId",
+                                        parameters,
+                                        _connectionStringData.SqlConnectionName);
+            // rows is a Task of List<> of type BiisStaffModel 
+            // return a single BiisStaffModel
+            return rows.FirstOrDefault();
+        }
+
+
+        public async Task<int> GetIncidentLocationIdByMainFormId(int submissionId)
+        {
+            var parameters = new { Id = submissionId };
+
+            var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
+                                        "dbo.spMainForm_IncidentLocationIdByMainFormId",
+                                        parameters,
+                                        _connectionStringData.SqlConnectionName);
+            // rows is a Task of List<> of type BiisStaffModel 
+            // return a single BiisStaffModel
+            return rows.FirstOrDefault();
+        }
+
+
+        public async Task<int> GetHasSimilarIncidentHappenedBeforeIdByMainFormId(int submissionId)
+        {
+            var parameters = new { Id = submissionId };
+
+            var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
+                                        "dbo.spMainForm_HasSimilarIncidentHappenedBeforeIdByMainFormId",
+                                        parameters,
+                                        _connectionStringData.SqlConnectionName);
+            // rows is a Task of List<> of type BiisStaffModel 
+            // return a single BiisStaffModel
+            return rows.FirstOrDefault();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

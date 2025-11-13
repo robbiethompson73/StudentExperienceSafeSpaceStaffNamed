@@ -39,7 +39,15 @@ namespace DataAccessLibrary.Models
 
 
         // Radios
+        public int IncidentHappenedToId { get; set; }
+        public int NumberOfPeopleImpactedId { get; set; }
+        public int NumberOfPeopleCausedIncidentId { get; set; }
+        public int IncidentLocationId { get; set; }
+        public int HasSimilarIncidentHappenedBeforeId { get; set; }
         public int SampleRadioId { get; set; }
+
+
+
 
 
 

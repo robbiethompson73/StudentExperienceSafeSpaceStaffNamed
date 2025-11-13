@@ -30,6 +30,11 @@ namespace SharedServicesLibrary.FormHandlingServices
         private readonly ISampleRadioService _sampleRadioService;
         private readonly ISampleRadioAdminService _sampleRadioAdminService;
         private readonly IMainFormSampleCheckboxAdminService _mainFormSampleCheckboxAdminService;
+        private readonly IIncidentHappenedToService _incidentHappenedToService;
+        private readonly INumberOfPeopleImpactedService _numberOfPeopleImpactedService;
+        private readonly INumberOfPeopleCausedIncidentService _numberOfPeopleCausedIncidentService;
+        private readonly IIncidentLocationService _incidentLocationService;
+        private readonly IHasSimilarIncidentHappenedBeforeService _hasSimilarIncidentHappenedBeforeService;
         private readonly ISampleCheckboxAdminService _sampleCheckboxAdminService;
         private readonly ISampleDropdownAdminService _sampleDropdownAdminService;
 
@@ -43,7 +48,14 @@ namespace SharedServicesLibrary.FormHandlingServices
                                    IMainFormSampleCheckboxService mainFormSampleCheckboxService,
                                    ISampleRadioService sampleRadioService,
                                    ISampleRadioAdminService sampleRadioAdminService,
-                                   IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService
+                                   IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService,
+
+                                    IIncidentHappenedToService incidentHappenedToService,
+                                    INumberOfPeopleImpactedService numberOfPeopleImpactedService,
+                                    INumberOfPeopleCausedIncidentService numberOfPeopleCausedIncidentService,
+                                    IIncidentLocationService incidentLocationService,
+                                    IHasSimilarIncidentHappenedBeforeService hasSimilarIncidentHappenedBeforeService
+
                                    )
         {
             _sampleCheckboxService = sampleCheckboxService;
@@ -55,6 +67,11 @@ namespace SharedServicesLibrary.FormHandlingServices
             _sampleRadioService = sampleRadioService;
             _sampleRadioAdminService = sampleRadioAdminService;
             _mainFormSampleCheckboxAdminService = mainFormSampleCheckboxAdminService;
+            _incidentHappenedToService = incidentHappenedToService;
+            _numberOfPeopleImpactedService = numberOfPeopleImpactedService;
+            _numberOfPeopleCausedIncidentService = numberOfPeopleCausedIncidentService;
+            _incidentLocationService = incidentLocationService;
+            _hasSimilarIncidentHappenedBeforeService = hasSimilarIncidentHappenedBeforeService;
             _sampleCheckboxAdminService = sampleCheckboxAdminService;
             _sampleDropdownAdminService = sampleDropdownAdminService;
         }
@@ -107,6 +124,11 @@ namespace SharedServicesLibrary.FormHandlingServices
             // @Html.DropDownListFor(m => m.Selected[Entity]Id, Model.[Entity]Options, "Select an option")
 
             // Radios
+            viewModel.IncidentHappenedToOptions = await _incidentHappenedToService.GetAllActiveSelectListAsync();
+            viewModel.NumberOfPeopleImpactedOptions = await _numberOfPeopleImpactedService.GetAllActiveSelectListAsync();
+            viewModel.NumberOfPeopleCausedIncidentOptions = await _numberOfPeopleCausedIncidentService.GetAllActiveSelectListAsync();
+            viewModel.IncidentLocationOptions = await _incidentLocationService.GetAllActiveSelectListAsync();
+            viewModel.HasSimilarIncidentHappenedBeforeOptions = await _hasSimilarIncidentHappenedBeforeService.GetAllActiveSelectListAsync();
             viewModel.SampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
 
 
@@ -118,17 +140,66 @@ namespace SharedServicesLibrary.FormHandlingServices
             // by searching the associated SelectList.
             // This allows the application to display a human-readable label (e.g., on Details views or in emails)
             // instead of just showing the underlying ID value.
-            if (viewModel.SelectedSampleRadioId.HasValue)
+            if (viewModel.SelectedIncidentHappenedToId.HasValue)
             {
                 // Find the matching SelectListItem using the selected ID (converted to string for comparison),
                 // as SelectListItem.Value is always a string.
-                var selectedSampleRadio = viewModel.SampleRadioOptions
-                    .FirstOrDefault(option => option.Value == viewModel.SelectedSampleRadioId.Value.ToString());
+                var selectedIncidentHappenedTo = viewModel.IncidentHappenedToOptions
+                    .FirstOrDefault(option => option.Value == viewModel.SelectedIncidentHappenedToId.Value.ToString());
 
                 // If a matching item is found, assign its display text to ItemName.
                 // This is used in Details views to show the human-readable item name.
+                viewModel.IncidentHappenedToName = selectedIncidentHappenedTo?.Text;
+            }
+
+
+
+            if (viewModel.SelectedNumberOfPeopleImpactedId.HasValue)
+            {
+                var selectedNumberOfPeopleImpacted = viewModel.NumberOfPeopleImpactedOptions
+                    .FirstOrDefault(option => option.Value == viewModel.SelectedNumberOfPeopleImpactedId.Value.ToString());
+                viewModel.NumberOfPeopleImpactedName = selectedNumberOfPeopleImpacted?.Text;
+            }
+
+
+            if (viewModel.SelectedNumberOfPeopleCausedIncidentId.HasValue)
+            {
+                var selectedNumberOfPeopleCausedIncident = viewModel.NumberOfPeopleCausedIncidentOptions
+                    .FirstOrDefault(option => option.Value == viewModel.SelectedNumberOfPeopleCausedIncidentId.Value.ToString());
+                viewModel.NumberOfPeopleCausedIncidentName = selectedNumberOfPeopleCausedIncident?.Text;
+            }
+
+            if (viewModel.SelectedIncidentLocationId.HasValue)
+            {
+                var selectedIncidentLocation = viewModel.IncidentLocationOptions
+                    .FirstOrDefault(option => option.Value == viewModel.SelectedIncidentLocationId.Value.ToString());
+                viewModel.IncidentLocationName = selectedIncidentLocation?.Text;
+            }
+
+            if (viewModel.SelectedHasSimilarIncidentHappenedBeforeId.HasValue)
+            {
+                var selectedHasSimilarIncidentHappenedBefore = viewModel.HasSimilarIncidentHappenedBeforeOptions
+                    .FirstOrDefault(option => option.Value == viewModel.SelectedHasSimilarIncidentHappenedBeforeId.Value.ToString());
+                viewModel.HasSimilarIncidentHappenedBeforeName = selectedHasSimilarIncidentHappenedBefore?.Text;
+            }
+
+
+            if (viewModel.SelectedSampleRadioId.HasValue)
+            {
+                var selectedSampleRadio = viewModel.SampleRadioOptions
+                    .FirstOrDefault(option => option.Value == viewModel.SelectedSampleRadioId.Value.ToString());
                 viewModel.SampleRadioName = selectedSampleRadio?.Text;
             }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -149,6 +220,11 @@ namespace SharedServicesLibrary.FormHandlingServices
         public async Task<MainFormAdminViewModel> PopulateDropdownsAndListsAdmin(MainFormAdminViewModel viewModel)
         {
             // Radios
+            viewModel.IncidentHappenedToOptions = await _incidentHappenedToService.GetAllActiveSelectListAsync();
+            viewModel.NumberOfPeopleImpactedOptions = await _numberOfPeopleImpactedService.GetAllActiveSelectListAsync();
+            viewModel.NumberOfPeopleCausedIncidentOptions = await _numberOfPeopleCausedIncidentService.GetAllActiveSelectListAsync();
+            viewModel.IncidentLocationOptions = await _incidentLocationService.GetAllActiveSelectListAsync();
+            viewModel.HasSimilarIncidentHappenedBeforeOptions = await _hasSimilarIncidentHappenedBeforeService.GetAllActiveSelectListAsync();
             viewModel.SampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
             viewModel.SampleRadioAdminOptions = await _sampleRadioAdminService.GetAllActiveSelectListAsync();
 
@@ -190,8 +266,7 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Radios
-            entity.SampleRadioAdminId = viewModel.SelectedSampleRadioAdminId
-                                                    ?? throw new InvalidOperationException("SampleRadioadminId is required");
+            entity.SampleRadioAdminId = viewModel.SelectedSampleRadioAdminId ?? throw new InvalidOperationException("SampleRadioadminId is required");
 
 
             // Dropdown Lists
@@ -249,8 +324,12 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Radios (throw if not selected — these are required fields)
-            entity.SampleRadioId = viewModel.SelectedSampleRadioId
-                ?? throw new InvalidOperationException("SampleRadioId is required");
+            entity.IncidentHappenedToId = viewModel.SelectedIncidentHappenedToId ?? throw new InvalidOperationException("IncidentHappenedToId is required");
+            entity.NumberOfPeopleImpactedId = viewModel.SelectedNumberOfPeopleImpactedId ?? throw new InvalidOperationException("NumberOfPeopleImpactedId is required");
+            entity.NumberOfPeopleCausedIncidentId = viewModel.SelectedNumberOfPeopleCausedIncidentId ?? throw new InvalidOperationException("NumberOfPeopleCausedIncidentId is required");
+            entity.IncidentLocationId = viewModel.SelectedIncidentLocationId ?? throw new InvalidOperationException("IncidentLocationId is required");
+            entity.HasSimilarIncidentHappenedBeforeId = viewModel.SelectedHasSimilarIncidentHappenedBeforeId ?? throw new InvalidOperationException("HasSimilarIncidentHappenedBeforeId is required");
+            entity.SampleRadioId = viewModel.SelectedSampleRadioId ?? throw new InvalidOperationException("SampleRadioId is required");
 
 
             // Dropdown Lists
@@ -392,6 +471,26 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Radios
+            vm.SelectedIncidentHappenedToId = entityModel.IncidentHappenedToId;
+            vm.IncidentHappenedToName = context.SelectedIncidentHappenedToName;
+            vm.IncidentHappenedToOptions = context.IncidentHappenedToOptions;
+
+            vm.SelectedNumberOfPeopleImpactedId = entityModel.NumberOfPeopleImpactedId;
+            vm.NumberOfPeopleImpactedName = context.SelectedNumberOfPeopleImpactedName;
+            vm.NumberOfPeopleImpactedOptions = context.NumberOfPeopleImpactedOptions;
+
+            vm.SelectedNumberOfPeopleCausedIncidentId = entityModel.NumberOfPeopleCausedIncidentId;
+            vm.NumberOfPeopleCausedIncidentName = context.SelectedNumberOfPeopleCausedIncidentName;
+            vm.NumberOfPeopleCausedIncidentOptions = context.NumberOfPeopleCausedIncidentOptions;
+
+            vm.SelectedIncidentLocationId = entityModel.IncidentLocationId;
+            vm.IncidentLocationName = context.SelectedIncidentLocationName;
+            vm.IncidentLocationOptions = context.IncidentLocationOptions;
+
+            vm.SelectedHasSimilarIncidentHappenedBeforeId = entityModel.HasSimilarIncidentHappenedBeforeId;
+            vm.HasSimilarIncidentHappenedBeforeName = context.SelectedHasSimilarIncidentHappenedBeforeName;
+            vm.HasSimilarIncidentHappenedBeforeOptions = context.HasSimilarIncidentHappenedBeforeOptions;
+
             vm.SelectedSampleRadioId = entityModel.SampleRadioId;
             vm.SampleRadioName = context.SelectedSampleRadioName;
             vm.SampleRadioOptions = context.SampleRadioOptions;

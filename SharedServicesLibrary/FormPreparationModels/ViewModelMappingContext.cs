@@ -10,9 +10,37 @@ namespace SharedServicesLibrary.FormPreparationModels
     public class ViewModelMappingContext
     {
         // Radios
+        public List<SelectListItem> IncidentHappenedToOptions { get; set; }
+        public int? SelectedIncidentHappenedToId { get; set; }
+        public string? SelectedIncidentHappenedToName { get; set; }
+
+
+        public List<SelectListItem> NumberOfPeopleImpactedOptions { get; set; }
+        public int? SelectedNumberOfPeopleImpactedId { get; set; }
+        public string? SelectedNumberOfPeopleImpactedName { get; set; }
+
+
+        public List<SelectListItem> NumberOfPeopleCausedIncidentOptions { get; set; }
+        public int? SelectedNumberOfPeopleCausedIncidentId { get; set; }
+        public string? SelectedNumberOfPeopleCausedIncidentName { get; set; }
+
+
+        public List<SelectListItem> IncidentLocationOptions { get; set; }
+        public int? SelectedIncidentLocationId { get; set; }
+        public string? SelectedIncidentLocationName { get; set; }
+
+
+        public List<SelectListItem> HasSimilarIncidentHappenedBeforeOptions { get; set; }
+        public int? SelectedHasSimilarIncidentHappenedBeforeId { get; set; }
+        public string? SelectedHasSimilarIncidentHappenedBeforeName { get; set; }
+
+
         public List<SelectListItem> SampleRadioOptions { get; set; }
         public int? SelectedSampleRadioId { get; set; }
         public string? SelectedSampleRadioName { get; set; }
+
+
+
 
 
         // DropDownLists
