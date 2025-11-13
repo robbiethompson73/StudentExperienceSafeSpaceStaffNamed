@@ -401,27 +401,34 @@
 
 
                                     <!-- TextBox StudentFullName -->
-                                    <div class="form-group">
                                         @Html.HiddenFor(m => m.StudentFullName)
-                                    </div>
 
 
                                     <!-- TextBox StudentReferenceNumber -->
-                                    <div class="form-group">
                                         @Html.HiddenFor(m => m.StudentReferenceNumber)
-                                    </div>
 
 
                                     <!-- StudentDateOfBirth - Date Picker -->
-                                    <div class="form-group">
                                         @Html.HiddenFor(m => m.StudentDateOfBirth)
-                                    </div>
+
+
+
+
 
 
                                     <!-- TextBox SampleTextbox -->
-                                    <div class="form-group">
-                                        @Html.HiddenFor(m => m.SampleTextbox)
-                                    </div>
+                                    @Html.HiddenFor(m => m.StaffFullName)
+                                    @Html.HiddenFor(m => m.StaffTelephoneNumber)
+                                    @Html.HiddenFor(m => m.StaffEmail)
+                                    @Html.HiddenFor(m => m.IncidentPersonName)
+                                    @Html.HiddenFor(m => m.IncidentDate)
+                                    @Html.HiddenFor(m => m.SampleTextbox)
+
+
+
+
+
+
 
 
                                     <!-- SampleDate - Date Picker -->
@@ -449,9 +456,14 @@
 
 
                                     <!-- Radio Button List - SampleRadioId -->
-                                    <div class="form-group">
-                                        @Html.HiddenFor(m => m.SelectedSampleRadioId)
-                                    </div>
+                                    @Html.HiddenFor(m => m.SelectedIncidentHappenedToId)
+                                    @Html.HiddenFor(m => m.SelectedNumberOfPeopleImpactedId)
+                                    @Html.HiddenFor(m => m.SelectedNumberOfPeopleCausedIncidentId)
+                                    @Html.HiddenFor(m => m.SelectedIncidentLocationId)
+                                    @Html.HiddenFor(m => m.SelectedHasSimilarIncidentHappenedBeforeId)
+                                    @Html.HiddenFor(m => m.SelectedSampleRadioId)
+
+
 
 
                                     <!-- Drop Down List - SampleDropdown -->

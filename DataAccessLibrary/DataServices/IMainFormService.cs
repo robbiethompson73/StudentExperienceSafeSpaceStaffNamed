@@ -8,6 +8,11 @@ namespace DataAccessLibrary.DataServices
         Task<List<MainFormEntityModel>> GetAll();
         Task<MainFormEntityModel> GetById(int submissionId);
         Task<List<MainFormEntityModel>> GetBySubmittedByWindowsUserName(string windowsName);
+        Task<int> GetHasSimilarIncidentHappenedBeforeIdByMainFormId(int submissionId);
+        Task<int> GetIncidentHappenedToIdByMainFormId(int submissionId);
+        Task<int> GetIncidentLocationIdByMainFormId(int submissionId);
+        Task<int> GetNumberOfPeopleCausedIncidentIdByMainFormId(int submissionId);
+        Task<int> GetNumberOfPeopleImpactedIdByMainFormId(int submissionId);
         Task<int> GetSampleRadioIdByMainFormId(int submissionId);
     }
 }

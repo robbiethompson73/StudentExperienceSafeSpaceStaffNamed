@@ -50,21 +50,30 @@
   <div class="row">
     <div class="col-12">
 
+
       <div class="alert bg-white no-border p-3 mb-4 d-flex align-items-start">
         <div class="me-3" style="margin-top: -3px;">
             <i class="fa-solid fa-circle-info text-info fa-2x"></i>
         </div>
         <div>
-          <h5 class="mb-3 text-black-sticky">Instructions</h5>
-          <p class="mb-2 text-black-sticky">Please fill out all required fields carefully. Fields marked with a red asterisk (<span class="text-danger"><strong>*</strong></span>) are mandatory. Make sure your entries are accurate and complete before submitting.</p>
-          <p class="mb-2 text-black-sticky">Once you've completed all required fields and made your selections, click the <em>Submit</em> button at the bottom of the form. If any errors are present, they will be highlighted for correction.</p>
-          <p class="mb-0 text-black-sticky"><strong>Accessibility:</strong> All fields include screen reader support. Validation messages are announced automatically for improved accessibility.</p>
+          <p class="mb-2 text-black-sticky">
+                        Please note that this form will be picked up during normal working hours and should not be used to report an emergency or a serious safeguarding concern which requires immediate action. If you need to report a serious incident, or you believe that yourself, or someone else, is at risk of imminent harm, please contact the Police on 999.
+          </p>
         </div>
       </div>
 
         </div> @* <div class="col-12"> *@
     </div> @* <div class="row"> *@
 </div> @* <div class="container py-0"> *@
+
+
+<!-- Centered Logo -->
+<div class="text-center mb-0">
+    <img src="@Url.Content("~/images/safe-space-logo-teal.png")"
+         alt="Safe Space Logo"
+         class="img-fluid"
+         style="max-height:150px;">
+</div>
 
 
 
@@ -299,6 +308,41 @@
                             })
                         </div>
 
+                           
+
+                    <!-- Radio Button List  - 4 - IncidentHappenedTo -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedIncidentHappenedToId)
+
+                        <div data-radio-group="SelectedIncidentHappenedToId"
+                             describedby="SelectedIncidentHappenedToId-validation"
+                             aria-invalid="@(ViewData.ModelState["SelectedIncidentHappenedToId"]?.Errors?.Count > 0 ? "true" : "false")"
+                             role="radiogroup">
+
+                            @for (int i = 0; i < Model.IncidentHappenedToOptions.Count; i++)
+                            {
+                                var item = Model.IncidentHappenedToOptions[i];
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.SelectedIncidentHappenedToId, item.Value, new
+                                    {
+                                        @class = "form-check-input",
+                                        id = $"incidenthappenedto_{item.Value}"
+                                    })
+                                    <label class="form-check-label" for="@($"incidenthappenedto_{item.Value}")">
+                                        @item.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.SelectedIncidentHappenedToId, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "SelectedIncidentHappenedToId-validation",
+                            @aria_live = "assertive"
+                        })
+                    </div>
 
 
 
@@ -333,6 +377,81 @@
 
 
 
+                    <!-- Radio Button List - 6 - NumberOfPeopleImpacted -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedNumberOfPeopleImpactedId)
+
+                        <div data-radio-group="SelectedNumberOfPeopleImpactedId"
+                             describedby="SelectedNumberOfPeopleImpactedId-validation"
+                             aria-invalid="@(ViewData.ModelState["SelectedNumberOfPeopleImpactedId"]?.Errors?.Count > 0 ? "true" : "false")"
+                             role="radiogroup">
+
+                            @for (int i = 0; i < Model.NumberOfPeopleImpactedOptions.Count; i++)
+                            {
+                                var item = Model.NumberOfPeopleImpactedOptions[i];
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.SelectedNumberOfPeopleImpactedId, item.Value, new
+                                    {
+                                        @class = "form-check-input",
+                                        id = $"numberofpeopleimpacted_{item.Value}"
+                                    })
+                                    <label class="form-check-label" for="@($"numberofpeopleimpacted_{item.Value}")">
+                                        @item.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.SelectedNumberOfPeopleImpactedId, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "SelectedNumberOfPeopleImpactedId-validation",
+                            @aria_live = "assertive"
+                        })
+                    </div>
+
+
+
+
+
+                    <!-- Radio Button List - 7 - NumberOfPeopleCausedIncident -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedNumberOfPeopleCausedIncidentId)
+
+                        <div data-radio-group="SelectedNumberOfPeopleCausedIncidentId"
+                             describedby="SelectedNumberOfPeopleCausedIncidentId-validation"
+                             aria-invalid="@(ViewData.ModelState["SelectedNumberOfPeopleCausedIncidentId"]?.Errors?.Count > 0 ? "true" : "false")"
+                             role="radiogroup">
+
+                            @for (int i = 0; i < Model.NumberOfPeopleCausedIncidentOptions.Count; i++)
+                            {
+                                var item = Model.NumberOfPeopleCausedIncidentOptions[i];
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.SelectedNumberOfPeopleCausedIncidentId, item.Value, new
+                                    {
+                                        @class = "form-check-input",
+                                        id = $"numberofpeoplecausedincident_{item.Value}"
+                                    })
+                                    <label class="form-check-label" for="@($"numberofpeoplecausedincident_{item.Value}")">
+                                        @item.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.SelectedNumberOfPeopleCausedIncidentId, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "SelectedNumberOfPeopleCausedIncidentId-validation",
+                            @aria_live = "assertive"
+                        })
+                    </div>
+
+
+
+
                         <!-- TextBox 9 IncidentDate - Date Picker -->
                         <div class="form-group">
                             @Html.LabelWithRequiredIndicatorFor(m => m.IncidentDate)
@@ -352,6 +471,102 @@
                                 @aria_live = "assertive"
                             })
                         </div>
+
+
+
+
+                    <!-- Radio Button List - 10 - IncidentLocation -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedIncidentLocationId)
+
+                        <div data-radio-group="SelectedIncidentLocationId"
+                             describedby="SelectedIncidentLocationId-validation"
+                             aria-invalid="@(ViewData.ModelState["SelectedIncidentLocationId"]?.Errors?.Count > 0 ? "true" : "false")"
+                             role="radiogroup">
+
+                            @for (int i = 0; i < Model.IncidentLocationOptions.Count; i++)
+                            {
+                                var item = Model.IncidentLocationOptions[i];
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.SelectedIncidentLocationId, item.Value, new
+                                    {
+                                        @class = "form-check-input",
+                                        id = $"incidentlocation_{item.Value}"
+                                    })
+                                    <label class="form-check-label" for="@($"incidentlocation_{item.Value}")">
+                                        @item.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.SelectedIncidentLocationId, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "SelectedIncidentLocationId-validation",
+                            @aria_live = "assertive"
+                        })
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- Radio Button List - 13 - HasSimilarIncidentHappenedBefore -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedHasSimilarIncidentHappenedBeforeId)
+
+                        <div data-radio-group="SelectedHasSimilarIncidentHappenedBeforeId"
+                             describedby="SelectedHasSimilarIncidentHappenedBeforeId-validation"
+                             aria-invalid="@(ViewData.ModelState["SelectedHasSimilarIncidentHappenedBeforeId"]?.Errors?.Count > 0 ? "true" : "false")"
+                             role="radiogroup">
+
+                            @for (int i = 0; i < Model.HasSimilarIncidentHappenedBeforeOptions.Count; i++)
+                            {
+                                var item = Model.HasSimilarIncidentHappenedBeforeOptions[i];
+                                <div class="form-check">
+                                    @Html.RadioButtonFor(m => m.SelectedHasSimilarIncidentHappenedBeforeId, item.Value, new
+                                    {
+                                        @class = "form-check-input",
+                                        id = $"hassimilarincidenthappenedbefore_{item.Value}"
+                                    })
+                                    <label class="form-check-label" for="@($"hassimilarincidenthappenedbefore_{item.Value}")">
+                                        @item.Text
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+
+                        @Html.ValidationMessageFor(m => m.SelectedHasSimilarIncidentHappenedBeforeId, "", new
+                        {
+                            @class = "form-error-message",
+                            id = "SelectedHasSimilarIncidentHappenedBeforeId-validation",
+                            @aria_live = "assertive"
+                        })
+                    </div>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1223,39 +1438,64 @@
                 return false;
             });
 
-            /* -------------------------------------------------------------
-                * HOW TO ADD NEW FORM ELEMENTS FOR VALIDATION:
-                *
-                * 1. Checkbox Groups:
-                *    - data-checkbox-group="GroupName"
-                *    - class="checkbox-group", data-group-name="GroupName"
-                *    - hidden input: name="HasSelectedGroupName" or "GroupNameSelected"
-                *    - span: class="form-error-message", data-valmsg-for="HasSelectedGroupName"
-                *
-                * 2. File Inputs:
-                *    - class="validate-file"
-                *    - span: id="[fileInputId]ValidationMessage"
-                *    - (Optional) data-val-required="Message"
-                *
-                * 3. Dropdowns:
-                *    - class="validate-dropdown"
-                *    - data-validation-message="#msgSpan"
-                *    - (Optional) data-val-required="Message"
-                *
-                * 4. Other Inputs:
-                *    - data-val="true", data-val-required="Message"
-                *
-                * 5. Custom Rules:
-                *    - Use $.validator.addMethod + adapters
-                *    - Call manually if needed
-                *
-                * 6. Adding Validation Types:
-                *    - Create new validateXYZ() function
-                *    - Add to submit handler and bindRevalidation()
-                * ----------------------------------------------------------- */
-            });
-    </script>
 
+        (function () {
+            const $incidentPersonName = $('#IncidentPersonName');
+            const $radios = $('input[name="SelectedIncidentHappenedToId"]');
+            const validator = $("form").data("validator"); // existing validator instance
+
+            function toggleIncidentPersonName(readonly) {
+                $incidentPersonName.prop('readonly', readonly);
+
+                if (readonly) {
+                    $incidentPersonName
+                        .addClass('bg-light')
+                        .css('cursor', 'not-allowed')
+                        .val('');
+
+                    // Remove required rule dynamically
+                    $incidentPersonName.rules('remove', 'required');
+
+                    // Clear any existing validation error and message
+                    if (validator) {
+                        validator.resetForm();
+                        validator.element($incidentPersonName); // recheck field
+                    }
+                } else {
+                    $incidentPersonName
+                        .removeClass('bg-light')
+                        .css('cursor', '');
+
+                    // Add required rule dynamically
+                    $incidentPersonName.rules('add', { required: true });
+
+                    // Clear and re-validate
+                    if (validator) {
+                        validator.resetForm();
+                        validator.element($incidentPersonName);
+                    }
+                }
+            }
+
+            function updateTextboxState() {
+                const selectedValue = $radios.filter(':checked').val();
+                if (selectedValue === '1') {
+                    toggleIncidentPersonName(true); // "You" selected
+                } else if (selectedValue === '2') {
+                    toggleIncidentPersonName(false); // "Someone else" selected
+                } else {
+                    toggleIncidentPersonName(true); // default before selection
+                }
+            }
+
+            updateTextboxState();
+            $radios.on('change', updateTextboxState);
+        })();
+
+
+
+    });
+    </script>
 
 }
 

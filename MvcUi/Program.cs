@@ -170,6 +170,12 @@ builder.Services.AddScoped<IMainFormSampleCheckboxService, MainFormSampleCheckbo
 builder.Services.AddScoped<ISampleCheckboxAdminService, SampleCheckboxAdminService>();
 builder.Services.AddScoped<IMainFormSampleCheckboxAdminService, MainFormSampleCheckboxAdminService>();
 
+
+builder.Services.AddScoped<IIncidentHappenedToService, IncidentHappenedToService>();
+builder.Services.AddScoped<INumberOfPeopleImpactedService, NumberOfPeopleImpactedService>();
+builder.Services.AddScoped<INumberOfPeopleCausedIncidentService, NumberOfPeopleCausedIncidentService>();
+builder.Services.AddScoped<IIncidentLocationService, IncidentLocationService>();
+builder.Services.AddScoped<IHasSimilarIncidentHappenedBeforeService, HasSimilarIncidentHappenedBeforeService>();
 builder.Services.AddScoped<ISampleRadioService, SampleRadioService>();
 builder.Services.AddScoped<ISampleRadioAdminService, SampleRadioAdminService>();
 
