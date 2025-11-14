@@ -105,7 +105,7 @@ namespace MvcUi.Controllers
         /// Optionally shows a success message if redirected after an update or creation.
         /// </summary>
         /// <param name="id">Optional ID used to trigger success message display.</param>
-        /// <param name="studentReferenceNumber">Optional filter to search by student reference number.</param>
+        /// <param name="staffFullName">Optional filter to search by student reference number.</param>
         /// <param name="statusId">Optional filter to filter by status (e.g., Open, Closed).</param>
         /// <param name="sortBy">Column to sort by. Defaults to "DateSubmitted".</param>
         /// <param name="sortDirection">Sort direction: "ASC" or "DESC". Defaults to "DESC".</param>
@@ -114,7 +114,7 @@ namespace MvcUi.Controllers
         /// <returns>List view with paged result set and filter/sort context.</returns>
         [HttpGet]
         public async Task<IActionResult> List(int? id,
-                                              string? studentReferenceNumber,
+                                              string? staffFullName,
                                               int? statusId,
                                               string? sortBy,
                                               string? sortDirection,
@@ -122,7 +122,7 @@ namespace MvcUi.Controllers
                                               int pageSize = 50)
         {
             // Set ViewData values to preserve user inputs and maintain context between requests (e.g., sorting, filtering, paging)
-            ViewData["StudentReference"] = studentReferenceNumber ?? string.Empty;
+            ViewData["StaffFullName"] = staffFullName ?? string.Empty;
             ViewData["StatusId"] = statusId;
             ViewData["AppName"] = _globalSettings.MyGlobalName;
             ViewData["SortBy"] = sortBy ?? "DateSubmitted";      // Default sort column
@@ -132,7 +132,7 @@ namespace MvcUi.Controllers
 
             // Prepare the paged, filtered, and sorted list of submissions via a service class
             var pagedResult = await _mainFormAdminViewModelPreparationService.PreparePagedListAdminViewModelAsync(
-                studentReferenceNumber,
+                staffFullName,
                 statusId,
                 sortBy,
                 sortDirection,
@@ -187,6 +187,8 @@ namespace MvcUi.Controllers
             }
 
             ViewData["AppName"] = _globalSettings.MyGlobalName;
+
+            mainFormAdminViewModel.StaffMemberAssignedAdmin = await _identityService.GetFormattedUserNameAsync();
 
             return View("Update", mainFormAdminViewModel);
         }

@@ -132,6 +132,12 @@ namespace SharedViewModelLibrary.Models
 
 
         // Textarea
+        [Required(ErrorMessage = "Incident Details is required.")]
+        [StringLength(40000, ErrorMessage = "Incident Details cannot exceed 40000 characters.")]
+        [Display(Name = "Please tell us as much as you can about this incident")]
+        public string IncidentDetails { get; set; }
+
+
         [Required(ErrorMessage = "SampleTextarea is required.")]
         [StringLength(20000, ErrorMessage = "SampleTextarea cannot exceed 20000 characters.")]
         [Display(Name = "Sample Textarea")]

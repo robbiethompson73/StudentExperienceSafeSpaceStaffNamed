@@ -63,6 +63,7 @@ namespace DataAccessLibrary.DataServices
 
 
             // Textareas
+            p.Add("IncidentDetails", mainFormEntityModel.IncidentDetails);
             p.Add("SampleTextarea", mainFormEntityModel.SampleTextarea);
 
 
@@ -191,7 +192,7 @@ namespace DataAccessLibrary.DataServices
             var parameters = new { Id = submissionId };
 
             var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
-                                        "dbo.spMainForm_NumberOfPeopleImpactedIdByMainFormId",
+                                        "dbo.spMainForm_GetNumberOfPeopleImpactedIdByMainFormId",
                                         parameters,
                                         _connectionStringData.SqlConnectionName);
             // rows is a Task of List<> of type BiisStaffModel 
@@ -206,7 +207,7 @@ namespace DataAccessLibrary.DataServices
             var parameters = new { Id = submissionId };
 
             var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
-                                        "dbo.spMainForm_NumberOfPeopleCausedIncidentIdByMainFormId",
+                                        "dbo.spMainForm_GetNumberOfPeopleCausedIncidentIdByMainFormId",
                                         parameters,
                                         _connectionStringData.SqlConnectionName);
             // rows is a Task of List<> of type BiisStaffModel 
@@ -220,7 +221,7 @@ namespace DataAccessLibrary.DataServices
             var parameters = new { Id = submissionId };
 
             var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
-                                        "dbo.spMainForm_IncidentLocationIdByMainFormId",
+                                        "dbo.spMainForm_GetIncidentLocationIdByMainFormId",
                                         parameters,
                                         _connectionStringData.SqlConnectionName);
             // rows is a Task of List<> of type BiisStaffModel 
@@ -234,7 +235,7 @@ namespace DataAccessLibrary.DataServices
             var parameters = new { Id = submissionId };
 
             var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
-                                        "dbo.spMainForm_HasSimilarIncidentHappenedBeforeIdByMainFormId",
+                                        "dbo.spMainForm_GetHasSimilarIncidentHappenedBeforeIdByMainFormId",
                                         parameters,
                                         _connectionStringData.SqlConnectionName);
             // rows is a Task of List<> of type BiisStaffModel 

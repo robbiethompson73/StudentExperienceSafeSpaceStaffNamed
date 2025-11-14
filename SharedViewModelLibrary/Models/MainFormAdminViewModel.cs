@@ -17,6 +17,13 @@ namespace SharedViewModelLibrary.Models
         }
 
         // Textboxes
+        [Required(ErrorMessage = "Name of Admin is required.")]
+        [NoWhitespaceOnly]
+        [StringLength(100, ErrorMessage = "Admin name cannot exceed 100 characters.")]
+        [Display(Name = "Name of Admin")]
+        public string StaffMemberAssignedAdmin { get; set; }
+
+
         [Required(ErrorMessage = "SampleTextboxAdmin is required.")]
         [NoWhitespaceOnly]
         [StringLength(50, ErrorMessage = "SampleTextboxAdmin cannot exceed 50 characters.")]
@@ -57,6 +64,11 @@ namespace SharedViewModelLibrary.Models
         // Textareas
         [Display(Name = "Admin Notes")]
         public string? AdminNote { get; set; }
+
+        [Required(ErrorMessage = "Details of action taken is required.")]
+        [StringLength(40000, ErrorMessage = "Action details cannot exceed 40000 characters.")]
+        [Display(Name = "Details of action taken")]
+        public string ActionTakenByCollegeAdmin { get; set; }
 
 
         [Required(ErrorMessage = "SampleTextareaAdmin is required.")]

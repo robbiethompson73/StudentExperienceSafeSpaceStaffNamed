@@ -40,7 +40,7 @@ namespace SharedServicesLibrary.FormPreparationServices
 
 
         public async Task<PagedResult<MainFormAdminViewModel>> PreparePagedListAdminViewModelAsync(
-                                                        string? studentReferenceNumber,
+                                                        string? staffFullName,
                                                         int? statusId,
                                                         string? sortBy,
                                                         string? sortDirection,
@@ -49,7 +49,7 @@ namespace SharedServicesLibrary.FormPreparationServices
         {
             // Step 1: Get paged items and total count from the same stored procedure call
             var (submissionEntityList, totalRecords) = await _mainFormAdminService.GetAllOrByFilterAsync(
-                studentReferenceNumber, statusId, sortBy, sortDirection, pageNumber, pageSize);
+                staffFullName, statusId, sortBy, sortDirection, pageNumber, pageSize);
 
             var viewModelList = new List<MainFormAdminViewModel>();
 
