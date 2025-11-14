@@ -131,7 +131,7 @@
             <!-- Student Information Section -->
             <div class="card mt-3 shadow-sm">
                 <div class="card-header teal-header text-white">
-                    <i class="fas fa-user-graduate me-2"></i>Student Information
+                    <i class="fas fa-user-graduate me-2"></i>Staff Information
                 </div>
                 <div class="card-body">
 
@@ -139,31 +139,31 @@
                     <!-- Full Name -->
                     <div class="row pt-2 pb-0 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">
-                            Full Name
+                            Staff Name
                         </div>
                         <div class="col-sm-8 col-md-9">
-                            @Html.DisplayFor(model => model.StudentFullName)
+                            @Html.DisplayFor(model => model.StaffFullName)
                         </div>
                     </div>
 
 
-                    <!-- Student Reference -->
+                    <!-- Staff Email -->
                     <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">
-                            Student Reference
+                            Staff Email
                         </div>
                         <div class="col-sm-8 col-md-9">
-                            @Html.DisplayFor(model => model.StudentReferenceNumber)
+                            @Html.DisplayFor(model => model.StaffEmail)
                         </div>
                     </div>
 
-                    <!-- Student Date of Birth -->
+                    <!-- Staff Telephone Number -->
                     <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">
-                            @Html.DisplayNameFor(model => model.StudentDateOfBirth)
+                            @Html.DisplayNameFor(model => model.StaffTelephoneNumber)
                         </div>
                         <div class="col-sm-8 col-md-9">
-                            @Html.DisplayFor(model => model.StudentDateOfBirth)
+                            @Html.DisplayFor(model => model.StaffTelephoneNumber)
                         </div>
                     </div>
 
@@ -186,7 +186,7 @@
                 <div class="@cardHeaderClass">
 
 
-                    <i class="fas fa-pen-to-square me-2"></i>Form Details
+                    <i class="fas fa-pen-to-square me-2"></i>Incident Details
                 </div>
 
                 <div class="card-body">
@@ -214,20 +214,297 @@
                         </div>
                     </div>
 
-                    <!-- Submitted By -->
+
+
+
+                    <!-- Radio - 4 - IncidentHappenedTo - incidenthappenedto -->
                     <div class="row py-2 bg-light">
-                        <div class="col-sm-4 col-md-3 fw-bold">Submitted By</div>
-                        <div class="col-sm-8 col-md-9">@Model.SubmittedByDisplayName</div>
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedIncidentHappenedToId)</div>
+                        <div class="col-sm-8 col-md-9">
+
+                            <div class="form-check">
+                                @for (int i = 0; i < Model.IncidentHappenedToOptions.Count; i++)
+                                {
+                                    var item = Model.IncidentHappenedToOptions[i];
+                                    var itemId = int.Parse(item.Value);
+                                    var isChecked = Model.SelectedIncidentHappenedToId == itemId;
+
+                                    if (isChecked)
+                                    {
+                                        <div class="form-check mb-2 ps-0 ms-0">
+                                            <input type="radio"
+                                                   name="IncidentHappenedTo"
+                                                   id="incidenthappenedto_@item.Value"
+                                                   class="form-check-input"
+                                                   value="@item.Value"
+                                                   disabled
+                                                   @(isChecked ? "checked" : null) />
+                                            <label class="form-check-label" for="incidenthappenedto_@item.Value">
+                                                @item.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                            @(Model.IncidentHappenedToName == "Someone Else"
+                                                        ? @Model.IncidentPersonName
+                                                        : "")
+                            
+
+
+                        </div>
                     </div>
 
-                    <!-- Date Submitted -->
+
+                    <!-- Radio - 6 - NumberOfPeopleImpacted - numberofpeopleimpacted -->
                     <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedNumberOfPeopleImpactedId)</div>
+                        <div class="col-sm-8 col-md-9">
+
+
+                            <div class="form-check">
+                                @for (int i = 0; i < Model.NumberOfPeopleImpactedOptions.Count; i++)
+                                {
+                                    var item = Model.NumberOfPeopleImpactedOptions[i];
+                                    var itemId = int.Parse(item.Value);
+                                    var isChecked = Model.SelectedNumberOfPeopleImpactedId == itemId;
+
+                                    if (isChecked)
+                                    {
+                                        <div class="form-check mb-2 ps-0 ms-0">
+                                            <input type="radio"
+                                                   name="NumberOfPeopleImpacted"
+                                                   id="numberofpeopleimpacted_@item.Value"
+                                                   class="form-check-input"
+                                                   value="@item.Value"
+                                                   disabled
+                                                   @(isChecked ? "checked" : null) />
+                                            <label class="form-check-label" for="numberofpeopleimpacted_@item.Value">
+                                                @item.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- Radio - 7 - NumberOfPeopleCausedIncident - numberofpeoplecausedincident -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedNumberOfPeopleCausedIncidentId)</div>
+                        <div class="col-sm-8 col-md-9">
+
+
+                            <div class="form-check">
+                                @for (int i = 0; i < Model.NumberOfPeopleCausedIncidentOptions.Count; i++)
+                                {
+                                    var item = Model.NumberOfPeopleCausedIncidentOptions[i];
+                                    var itemId = int.Parse(item.Value);
+                                    var isChecked = Model.SelectedNumberOfPeopleCausedIncidentId == itemId;
+
+                                    if (isChecked)
+                                    {
+                                        <div class="form-check mb-2 ps-0 ms-0">
+                                            <input type="radio"
+                                                   name="NumberOfPeopleCausedIncident"
+                                                   id="numberofpeoplecausedincident_@item.Value"
+                                                   class="form-check-input"
+                                                   value="@item.Value"
+                                                   disabled
+                                                   @(isChecked ? "checked" : null) />
+                                            <label class="form-check-label" for="numberofpeoplecausedincident_@item.Value">
+                                                @item.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Checkbox - 8 ImpactedPersonType -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">Persons impacted by incident were:</div>
+                        <div class="col-sm-8 col-md-9">
+                            @foreach (var item in Model.ImpactedPersonTypeOptions)
+                            {
+                                var itemId = int.Parse(item.Value);
+                                var isChecked = Model.SelectedImpactedPersonTypeIds.Contains(itemId);
+
+                                if (isChecked)
+                                {
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" disabled checked />
+                                        <label class="form-check-label">@item.Text</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+
+                    <!-- Datepicker Textbox - 9 - IncidentDate -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.IncidentDate)</div>
+                        <div class="col-sm-8 col-md-9">
+                            @DateFormatting.ToLongOrdinalDate(Model.IncidentDate)
+                        </div>
+                    </div>
+
+
+
+                    <!-- Radio - 10 - IncidentLocation - incidentlocation -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedIncidentLocationId)</div>
+                        <div class="col-sm-8 col-md-9">
+
+
+                            <div class="form-check">
+                                @for (int i = 0; i < Model.IncidentLocationOptions.Count; i++)
+                                {
+                                    var item = Model.IncidentLocationOptions[i];
+                                    var itemId = int.Parse(item.Value);
+                                    var isChecked = Model.SelectedIncidentLocationId == itemId;
+
+                                    if (isChecked)
+                                    {
+                                        <div class="form-check mb-2 ps-0 ms-0">
+                                            <input type="radio"
+                                                   name="IncidentLocation"
+                                                   id="incidentlocation_@item.Value"
+                                                   class="form-check-input"
+                                                   value="@item.Value"
+                                                   disabled
+                                                   @(isChecked ? "checked" : null) />
+                                            <label class="form-check-label" for="incidentlocation_@item.Value">
+                                                @item.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- Checkbox - 11 - IncidentBehaviourType -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">Did the incident involve any of the following:</div>
+                        <div class="col-sm-8 col-md-9">
+                            @foreach (var item in Model.IncidentBehaviourTypeOptions)
+                            {
+                                var itemId = int.Parse(item.Value);
+                                var isChecked = Model.SelectedIncidentBehaviourTypeIds.Contains(itemId);
+
+                                if (isChecked)
+                                {
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" disabled checked />
+                                        <label class="form-check-label">@item.Text</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+
+
+                    <!-- Checkbox - 11 - IncidentMotivationType -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">Do you believe the incident was motivated by any of the following:</div>
+                        <div class="col-sm-8 col-md-9">
+                            @foreach (var item in Model.IncidentMotivationTypeOptions)
+                            {
+                                var itemId = int.Parse(item.Value);
+                                var isChecked = Model.SelectedIncidentMotivationTypeIds.Contains(itemId);
+
+                                if (isChecked)
+                                {
+                                    <div class="form-check mb-2">
+                                        <input type="checkbox" class="form-check-input" disabled checked />
+                                        <label class="form-check-label">@item.Text</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+
+
+                    <!-- Radio - 13 - HasSimilarIncidentHappenedBefore - hassimilarincidenthappenedbefore -->
+                    <div class="row py-2 bg-light">
+                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedHasSimilarIncidentHappenedBeforeId)</div>
+                        <div class="col-sm-8 col-md-9">
+
+
+                            <div class="form-check">
+                                @for (int i = 0; i < Model.HasSimilarIncidentHappenedBeforeOptions.Count; i++)
+                                {
+                                    var item = Model.HasSimilarIncidentHappenedBeforeOptions[i];
+                                    var itemId = int.Parse(item.Value);
+                                    var isChecked = Model.SelectedHasSimilarIncidentHappenedBeforeId == itemId;
+
+                                    if (isChecked)
+                                    {
+                                        <div class="form-check mb-2 ps-0 ms-0">
+                                            <input type="radio"
+                                                   name="HasSimilarIncidentHappenedBefore"
+                                                   id="hassimilarincidenthappenedbefore_@item.Value"
+                                                   class="form-check-input"
+                                                   value="@item.Value"
+                                                   disabled
+                                                   @(isChecked ? "checked" : null) />
+                                            <label class="form-check-label" for="hassimilarincidenthappenedbefore_@item.Value">
+                                                @item.Text
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Textarea - IncidentDetails -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">Incident Details</div>
+                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.IncidentDetails)</div>
+                    </div>
+
+
+
+
+
+                    <!-- Date Submitted -->
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.DateSubmitted)</div>
                         <div class="col-sm-8 col-md-9">
                             @DateFormatting.ToLongOrdinalDate(Model.DateSubmitted)
                             at @DateFormatting.ToShortTime(Model.DateSubmitted)
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
 
                     <!-- SampleTextbox -->
                     <div class="row py-2 bg-light">
@@ -450,9 +727,8 @@
 
 
                                     <!-- Textarea SampleTextarea -->
-                                    <div class="form-group">
-                                        @Html.HiddenFor(m => m.SampleTextarea)
-                                    </div>
+                                    @Html.HiddenFor(m => m.IncidentDetails)
+                                    @Html.HiddenFor(m => m.SampleTextarea)
 
 
                                     <!-- Radio Button List - SampleRadioId -->
@@ -472,13 +748,26 @@
                                     </div>
 
 
-                                    <!-- Checkbox Group - SampleCheckbox -->
-                                   <div class="form-group">
-                                        @foreach (var id in Model.SelectedSampleCheckboxIds)
-                                        {
-                                            @Html.Hidden("SelectedSampleCheckboxIds", id)
-                                        }
-                                    </div>
+                                    <!-- Checkbox Group -->
+                                    @foreach (var id in Model.SelectedImpactedPersonTypeIds)
+                                    {
+                                        @Html.Hidden("SelectedImpactedPersonTypeIds", id)
+                                    }
+
+                                    @foreach (var id in Model.SelectedIncidentBehaviourTypeIds)
+                                    {
+                                        @Html.Hidden("SelectedIncidentBehaviourTypeIds", id)
+                                    }
+
+                                    @foreach (var id in Model.SelectedIncidentMotivationTypeIds)
+                                    {
+                                    @Html.Hidden("SelectedIncidentMotivationTypeIds", id)
+                                    }
+
+                                    @foreach (var id in Model.SelectedSampleCheckboxIds)
+                                    {
+                                        @Html.Hidden("SelectedSampleCheckboxIds", id)
+                                    }
 
 
 
@@ -508,6 +797,99 @@
                                             @aria_live = "assertive"
                                         })
                                     </div>
+
+
+
+
+                                    <!-- TextBox StaffMemberAssignedAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.StaffMemberAssignedAdmin)
+
+                                        @Html.TextBoxFor(m => m.StaffMemberAssignedAdmin, new Dictionary<string, object>
+                                        {
+                                            // Apply Bootstrap styling to the input field for consistent UI design.
+                                            { "class", "form-control" },
+
+                                            // Connects this input to its corresponding validation message span using the 'id' attribute.
+                                            // This improves accessibility for screen reader users.
+                                            { "aria-describedby", "StaffMemberAssignedAdmin-validation" },
+
+                                            // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                                            // This allows screen readers to announce when a field has failed validation.
+                                            { "aria-invalid", (ViewData.ModelState["StaffMemberAssignedAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+
+                                            // Explicit ID for JS targeting
+                                            { "id", "StaffMemberAssignedAdmin" }                      
+                                        })
+
+
+                                        @Html.ValidationMessageFor(m => m.StaffMemberAssignedAdmin, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "StaffMemberAssignedAdmin-validation",               // unique id for validation message span
+                                            @aria_live = "assertive"                    // announce validation changes immediately
+                                        })
+                                    </div>
+
+
+
+                                    <!-- Textarea ActionTakenByCollegeAdmin -->
+                                    <div class="form-group">
+                                        @Html.LabelWithRequiredIndicatorFor(m => m.ActionTakenByCollegeAdmin)
+                                        @Html.TextAreaFor(m => m.ActionTakenByCollegeAdmin, new Dictionary<string, object>
+                                        {
+                                            { "class", "form-control" },                        // Apply Bootstrap styling and fixed height
+                                            { "rows", "4" },                                    // Set number of visible rows
+                                            { "id", Html.IdFor(m => m.ActionTakenByCollegeAdmin) },         // Ensure ID is consistent with the label 'for' attribute
+                                            { "aria-describedby", "ActionTakenByCollegeAdmin-validation" }, // Link to validation message span for screen readers
+                                            { "aria-invalid", (ViewData.ModelState["ActionTakenByCollegeAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Indicate whether the field has a validation error
+                                        })
+
+                                        @Html.ValidationMessageFor(m => m.ActionTakenByCollegeAdmin, "", new
+                                        {
+                                            @class = "form-error-message",
+                                            id = "ActionTakenByCollegeAdmin-validation",               // unique id for validation message span
+                                            @aria_live = "assertive"                    // announce validation changes immediately
+                                        })
+
+                                    </div>
+
+
+
+
+                                    <!-- Admin Comments -->
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.AdminNote)  <!-- no required indicator for optional field -->
+                                        @Html.TextAreaFor(m => m.AdminNote, new Dictionary<string, object>
+                                        {
+                                            { "class", "form-control" },                        // Apply Bootstrap styling and fixed height
+                                            { "rows", "4" },                                    // Set number of visible rows
+                                            { "id", Html.IdFor(m => m.AdminNote) },         // Ensure ID is consistent with the label 'for' attribute
+                                            { "aria-describedby", "AdminNote-validation" }, // Link to validation message span for screen readers
+                                            { "aria-invalid", (ViewData.ModelState["AdminNote"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Indicate whether the field has a validation error
+                                        })
+
+                                        <small class="form-text text-muted">
+                                            Use this field to record active notes or ongoing comments related to this record.
+                                        </small>
+
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     <!-- TextBox SampleTextboxAdmin -->
                                     <div class="form-group">
@@ -773,24 +1155,6 @@
 
 
 
-                                    <!-- Admin Comments -->
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.AdminNote)  <!-- no required indicator for optional field -->
-                                        @Html.TextAreaFor(m => m.AdminNote, new Dictionary<string, object>
-                                        {
-                                            { "class", "form-control" },                        // Apply Bootstrap styling and fixed height
-                                            { "rows", "4" },                                    // Set number of visible rows
-                                            { "id", Html.IdFor(m => m.AdminNote) },         // Ensure ID is consistent with the label 'for' attribute
-                                            { "aria-describedby", "AdminNote-validation" }, // Link to validation message span for screen readers
-                                            { "aria-invalid", (ViewData.ModelState["AdminNote"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Indicate whether the field has a validation error
-                                        })
-
-                                        <small class="form-text text-muted">
-                                            Use this field to record active notes or ongoing comments related to this record.
-                                        </small>
-
-                                    </div>
-
 
 
 
@@ -933,6 +1297,17 @@
         $(function () {
             let formSubmitted = false;
             let submitInProgress = false;
+
+
+            ['#StaffMemberAssignedAdmin'].forEach(selector => {
+                const $field = $(selector);
+                if ($field.val().trim() !== '') {
+                    $field.prop('readonly', true)
+                        .addClass('bg-light')
+                        .css('cursor', 'not-allowed');
+                }
+            });
+
 
             // --- Checkbox Group Validation
             function validateCheckboxGroups() {

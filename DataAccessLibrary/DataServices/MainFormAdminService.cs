@@ -16,30 +16,40 @@ namespace DataAccessLibrary.DataServices
     public class MainFormAdminService : IMainFormAdminService
     {
         private readonly IDataAccess _dataAccess;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxServices;
+        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
         private readonly ConnectionStringData _connectionStringData;
         private readonly IConfiguration _configuration;
         private readonly IMainFormSampleCheckboxAdminService _mainFormSampleCheckboxAdminService;
+        private readonly IMainFormImpactedPersonTypeService _mainFormImpactedPersonTypeService;
+        private readonly IMainFormIncidentBehaviourTypeService _mainFormIncidentBehaviourTypeService;
+        private readonly IMainFormIncidentMotivationTypeService _mainFormIncidentMotivationTypeService;
 
         public MainFormAdminService(IDataAccess dataAccess,
-                                         IMainFormSampleCheckboxService mainFormSampleCheckboxServices,
                                          ConnectionStringData connectionStringData,
                                          IConfiguration configuration,
                                          IMainFormSampleCheckboxService mainFormSampleCheckboxService,
-                                         IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService)
+                                         IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService,
+
+                                         IMainFormImpactedPersonTypeService mainFormImpactedPersonTypeService,
+                                         IMainFormIncidentBehaviourTypeService mainFormIncidentBehaviourTypeService,
+                                         IMainFormIncidentMotivationTypeService mainFormIncidentMotivationTypeService
+                                         )
         {
             _dataAccess = dataAccess;
-            _mainFormSampleCheckboxServices = mainFormSampleCheckboxServices;
+            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
             _connectionStringData = connectionStringData;
             _configuration = configuration;
             _mainFormSampleCheckboxAdminService = mainFormSampleCheckboxAdminService;
+            _mainFormImpactedPersonTypeService = mainFormImpactedPersonTypeService;
+            _mainFormIncidentBehaviourTypeService = mainFormIncidentBehaviourTypeService;
+            _mainFormIncidentMotivationTypeService = mainFormIncidentMotivationTypeService;
         }
 
 
 
 
         public async Task<(List<MainFormAdminEntityModel> Items, int TotalCount)> GetAllOrByFilterAsync(
-                                                                                        string? studentReferenceNumber,
+                                                                                        string? staffFullName,
                                                                                         int? statusId,
                                                                                         string? sortBy,
                                                                                         string? sortDirection,
@@ -51,7 +61,7 @@ namespace DataAccessLibrary.DataServices
             );
 
             var parameters = new DynamicParameters();
-            parameters.Add("@StudentReferenceNumber", studentReferenceNumber);
+            parameters.Add("@StaffFullName", staffFullName);
             parameters.Add("@StatusId", statusId);
             parameters.Add("@SortBy", sortBy ?? "DateSubmitted");
             parameters.Add("@SortDirection", sortDirection ?? "DESC");
@@ -115,6 +125,7 @@ namespace DataAccessLibrary.DataServices
                         StaffEmail = updated.StaffEmail,
                         IncidentPersonName = updated.IncidentPersonName,
                         IncidentDate = updated.IncidentDate,
+                        StaffMemberAssignedAdmin = updated.StaffMemberAssignedAdmin,
 
                         SampleTextbox = updated.SampleTextbox,
                         SampleDate = updated.SampleDate,
@@ -126,9 +137,11 @@ namespace DataAccessLibrary.DataServices
 
 
                         // Textareas
+                        IncidentDetails = updated.IncidentDetails,
+                        ActionTakenByCollegeAdmin = updated.ActionTakenByCollegeAdmin,
+                        AdminNote = updated.AdminNote,
                         SampleTextarea = updated.SampleTextarea,
                         SampleTextareaAdmin = updated.SampleTextareaAdmin,
-                        AdminNote = updated.AdminNote,
 
 
                         // DropDownList
@@ -138,6 +151,11 @@ namespace DataAccessLibrary.DataServices
 
 
                         // Radios
+                        IncidentHappenedToId = updated.IncidentHappenedToId,
+                        NumberOfPeopleImpactedId = updated.NumberOfPeopleImpactedId,
+                        NumberOfPeopleCausedIncidentId = updated.NumberOfPeopleCausedIncidentId,
+                        IncidentLocationId = updated.IncidentLocationId,
+                        HasSimilarIncidentHappenedBeforeId = updated.HasSimilarIncidentHappenedBeforeId,
                         SampleRadioId = updated.SampleRadioId,
                         SampleRadioAdminId = updated.SampleRadioAdminId,
 
@@ -161,7 +179,10 @@ namespace DataAccessLibrary.DataServices
             }
 
             // Update selections in bridging tables
-            await _mainFormSampleCheckboxServices.CreateAndDeleteAsync(updated.Id, updated.SelectedSampleCheckboxIds);
+            await _mainFormImpactedPersonTypeService.CreateAndDeleteAsync(updated.Id, updated.SelectedImpactedPersonTypeIds);
+            await _mainFormIncidentBehaviourTypeService.CreateAndDeleteAsync(updated.Id, updated.SelectedIncidentBehaviourTypeIds);
+            await _mainFormIncidentMotivationTypeService.CreateAndDeleteAsync(updated.Id, updated.SelectedIncidentMotivationTypeIds);
+            await _mainFormSampleCheckboxService.CreateAndDeleteAsync(updated.Id, updated.SelectedSampleCheckboxIds);
             await _mainFormSampleCheckboxAdminService.CreateAndDeleteAsync(updated.Id, updated.SelectedSampleCheckboxAdminIds);
 
             return updated.Id;

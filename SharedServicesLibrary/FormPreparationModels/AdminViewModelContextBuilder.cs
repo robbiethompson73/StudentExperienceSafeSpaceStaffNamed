@@ -19,6 +19,11 @@ namespace SharedServicesLibrary.FormPreparationModels
         private readonly ISampleRadioAdminService _sampleRadioAdminService;
         private readonly ISampleCheckboxAdminService _sampleCheckboxAdminService;
         private readonly ISampleDropdownAdminService _sampleDropdownAdminService;
+        private readonly IIncidentHappenedToService _incidentHappenedToService;
+        private readonly INumberOfPeopleImpactedService _numberOfPeopleImpactedService;
+        private readonly INumberOfPeopleCausedIncidentService _numberOfPeopleCausedIncidentService;
+        private readonly IIncidentLocationService _incidentLocationService;
+        private readonly IHasSimilarIncidentHappenedBeforeService _hasSimilarIncidentHappenedBeforeService;
 
         public AdminViewModelContextBuilder(IViewModelContextBuilder baseBuilder,
                                             IAuditLogService auditLogService,
@@ -27,7 +32,13 @@ namespace SharedServicesLibrary.FormPreparationModels
                                             ISampleRadioService sampleRadioService,
                                             ISampleRadioAdminService sampleRadioAdminService,
                                             ISampleCheckboxAdminService sampleCheckboxAdminService,
-                                            ISampleDropdownAdminService sampleDropdownAdminService
+                                            ISampleDropdownAdminService sampleDropdownAdminService,
+
+                                            IIncidentHappenedToService incidentHappenedToService,
+                                            INumberOfPeopleImpactedService numberOfPeopleImpactedService,
+                                            INumberOfPeopleCausedIncidentService numberOfPeopleCausedIncidentService,
+                                            IIncidentLocationService incidentLocationService,
+                                            IHasSimilarIncidentHappenedBeforeService hasSimilarIncidentHappenedBeforeService
                                             )
         {
             _baseBuilder = baseBuilder;
@@ -38,6 +49,11 @@ namespace SharedServicesLibrary.FormPreparationModels
             _sampleRadioAdminService = sampleRadioAdminService;
             _sampleCheckboxAdminService = sampleCheckboxAdminService;
             _sampleDropdownAdminService = sampleDropdownAdminService;
+            _incidentHappenedToService = incidentHappenedToService;
+            _numberOfPeopleImpactedService = numberOfPeopleImpactedService;
+            _numberOfPeopleCausedIncidentService = numberOfPeopleCausedIncidentService;
+            _incidentLocationService = incidentLocationService;
+            _hasSimilarIncidentHappenedBeforeService = hasSimilarIncidentHappenedBeforeService;
 
             //_adminMetadataService = adminMetadataService;
         }
@@ -53,19 +69,47 @@ namespace SharedServicesLibrary.FormPreparationModels
 
             // Radios
             // User
-                var sampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
-                var selectedSampleRadioId = await _mainFormService.GetSampleRadioIdByMainFormId(submissionId);
+                var incidentHappenedToOptions = await _incidentHappenedToService.GetAllActiveSelectListAsync();
+                var selectedIncidentHappenedToId = await _mainFormService.GetIncidentHappenedToIdByMainFormId(submissionId);
 
                 // Find the matching option by comparing IDs
-                var selectedSampleRadio = sampleRadioOptions
-                    .FirstOrDefault(c => c.Value == selectedSampleRadioId.ToString());
+                var selectedIncidentHappenedTo = incidentHappenedToOptions
+                    .FirstOrDefault(c => c.Value == selectedIncidentHappenedToId.ToString());
 
                 // Get the option name (text), or null if not found
+                var selectedIncidentHappenedToName = selectedIncidentHappenedTo?.Text;
+
+
+                var numberOfPeopleImpactedOptions = await _numberOfPeopleImpactedService.GetAllActiveSelectListAsync();
+                var selectedNumberOfPeopleImpactedId = await _mainFormService.GetNumberOfPeopleImpactedIdByMainFormId(submissionId);
+                var selectedNumberOfPeopleImpacted = numberOfPeopleImpactedOptions.FirstOrDefault(c => c.Value == selectedNumberOfPeopleImpactedId.ToString());
+                var selectedNumberOfPeopleImpactedName = selectedNumberOfPeopleImpacted?.Text;
+
+
+                var numberOfPeopleCausedIncidentOptions = await _numberOfPeopleCausedIncidentService.GetAllActiveSelectListAsync();
+                var selectedNumberOfPeopleCausedIncidentId = await _mainFormService.GetNumberOfPeopleCausedIncidentIdByMainFormId(submissionId);
+                var selectedNumberOfPeopleCausedIncident = numberOfPeopleCausedIncidentOptions.FirstOrDefault(c => c.Value == selectedNumberOfPeopleCausedIncidentId.ToString());
+                var selectedNumberOfPeopleCausedIncidentName = selectedNumberOfPeopleCausedIncident?.Text;
+
+                var incidentLocationOptions = await _incidentLocationService.GetAllActiveSelectListAsync();
+                var selectedIncidentLocationId = await _mainFormService.GetIncidentLocationIdByMainFormId(submissionId);
+                var selectedIncidentLocation = incidentLocationOptions.FirstOrDefault(c => c.Value == selectedIncidentLocationId.ToString());
+                var selectedIncidentLocationName = selectedIncidentLocation?.Text;
+
+                var hasSimilarIncidentHappenedBeforeOptions = await _hasSimilarIncidentHappenedBeforeService.GetAllActiveSelectListAsync();
+                var selectedHasSimilarIncidentHappenedBeforeId = await _mainFormService.GetHasSimilarIncidentHappenedBeforeIdByMainFormId(submissionId);
+                var selectedHasSimilarIncidentHappenedBefore = hasSimilarIncidentHappenedBeforeOptions.FirstOrDefault(c => c.Value == selectedHasSimilarIncidentHappenedBeforeId.ToString());
+                var selectedHasSimilarIncidentHappenedBeforeName = selectedHasSimilarIncidentHappenedBefore?.Text;
+
+                var sampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
+                var selectedSampleRadioId = await _mainFormService.GetSampleRadioIdByMainFormId(submissionId);
+                var selectedSampleRadio = sampleRadioOptions.FirstOrDefault(c => c.Value == selectedSampleRadioId.ToString());
                 var selectedSampleRadioName = selectedSampleRadio?.Text;
+
 
             // Radios
             // Admin
-                var sampleRadioAdminOptions = await _sampleRadioAdminService.GetAllActiveSelectListAsync();
+            var sampleRadioAdminOptions = await _sampleRadioAdminService.GetAllActiveSelectListAsync();
                 int? selectedSampleRadioAdminId = await _mainFormAdminService.GetSampleRadioAdminIdByMainFormId(submissionId);
 
                 // Find the matching option by comparing IDs
@@ -103,9 +147,30 @@ namespace SharedServicesLibrary.FormPreparationModels
             {
 
                 // Radios
+                IncidentHappenedToOptions = incidentHappenedToOptions,
+                SelectedIncidentHappenedToId = selectedIncidentHappenedToId,
+                SelectedIncidentHappenedToName = selectedIncidentHappenedToName,
+
+                NumberOfPeopleImpactedOptions = numberOfPeopleImpactedOptions,
+                SelectedNumberOfPeopleImpactedId = selectedNumberOfPeopleImpactedId,
+                SelectedNumberOfPeopleImpactedName = selectedNumberOfPeopleImpactedName,
+
+                NumberOfPeopleCausedIncidentOptions = numberOfPeopleCausedIncidentOptions,
+                SelectedNumberOfPeopleCausedIncidentId = selectedNumberOfPeopleCausedIncidentId,
+                SelectedNumberOfPeopleCausedIncidentName = selectedNumberOfPeopleCausedIncidentName,
+
+                IncidentLocationOptions = incidentLocationOptions,
+                SelectedIncidentLocationId = selectedIncidentLocationId,
+                SelectedIncidentLocationName = selectedIncidentLocationName,
+
+                HasSimilarIncidentHappenedBeforeOptions = hasSimilarIncidentHappenedBeforeOptions,
+                SelectedHasSimilarIncidentHappenedBeforeId = selectedHasSimilarIncidentHappenedBeforeId,
+                SelectedHasSimilarIncidentHappenedBeforeName = selectedHasSimilarIncidentHappenedBeforeName,
+
                 SampleRadioOptions = sampleRadioOptions,
                 SelectedSampleRadioId = selectedSampleRadioId,
                 SelectedSampleRadioName = selectedSampleRadioName,
+
 
                 SampleRadioAdminOptions = sampleRadioAdminOptions,
                 SelectedSampleRadioAdminId = selectedSampleRadioAdminId,
@@ -119,6 +184,15 @@ namespace SharedServicesLibrary.FormPreparationModels
 
 
                 // Checkboxes
+                ImpactedPersonTypeOptions = baseContext.ImpactedPersonTypeOptions,
+                SelectedImpactedPersonTypeNames = baseContext.SelectedImpactedPersonTypeNames,
+
+                IncidentBehaviourTypeOptions = baseContext.IncidentBehaviourTypeOptions,
+                SelectedIncidentBehaviourTypeNames = baseContext.SelectedIncidentBehaviourTypeNames,
+
+                IncidentMotivationTypeOptions = baseContext.IncidentMotivationTypeOptions,
+                SelectedIncidentMotivationTypeNames = baseContext.SelectedIncidentMotivationTypeNames,
+
                 SampleCheckboxOptions = baseContext.SampleCheckboxOptions,
                 SelectedSampleCheckboxNames = baseContext.SelectedSampleCheckboxNames,
 

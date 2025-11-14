@@ -805,6 +805,35 @@
 
 
 
+                    <!-- TextArea - 14 - IncidentDetails -->
+                    <div class="form-group">
+                        @Html.LabelWithRequiredIndicatorFor(m => m.IncidentDetails)
+
+                        @Html.TextAreaFor(m => m.IncidentDetails, new Dictionary<string, object>
+                        {
+                            // Apply Bootstrap styling to the input field for consistent UI design.
+                            { "class", "form-control" },
+
+                            // Set number of visible rows
+                            { "rows", "4" },                                 
+
+                            // Connects this input to its corresponding validation message span using the 'id' attribute.
+                            // This improves accessibility for screen reader users.
+                            { "aria-describedby", "IncidentDetails-validation" },
+
+                            // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
+                            // This allows screen readers to announce when a field has failed validation.
+                            { "aria-invalid", (ViewData.ModelState["IncidentDetails"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
+                        })
+
+                        @Html.ValidationMessageFor(m => m.IncidentDetails, "", new
+                            {
+                                @class = "form-error-message",
+                                id = "IncidentDetails-validation",               // Unique ID for aria-describedby
+                                @aria_live = "assertive"                  // Ensures screen readers announce changes
+                            })
+                    </div>
+
 
 
 

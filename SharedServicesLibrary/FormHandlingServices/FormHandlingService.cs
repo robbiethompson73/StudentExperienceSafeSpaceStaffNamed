@@ -273,12 +273,14 @@ namespace SharedServicesLibrary.FormHandlingServices
             var entity = MapSharedFieldsViewToEntity(viewModel, new MainFormAdminEntityModel());
 
             // Textboxes
+            entity.StaffMemberAssignedAdmin = _inputSanitizer.Sanitize(viewModel.StaffMemberAssignedAdmin);
             entity.SampleTextboxAdmin = _inputSanitizer.Sanitize(viewModel.SampleTextboxAdmin);
             entity.SampleDateAdmin = viewModel.SampleDateAdmin;
             entity.SampleCostAdmin = viewModel.SampleCostAdmin;
 
 
             // Textareas
+            entity.ActionTakenByCollegeAdmin = _inputSanitizer.Sanitize(viewModel.ActionTakenByCollegeAdmin);
             entity.AdminNote = _inputSanitizer.Sanitize(viewModel.AdminNote);
             entity.SampleTextareaAdmin = _inputSanitizer.Sanitize(viewModel.SampleTextareaAdmin);
 
@@ -326,7 +328,7 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             entity.StaffFullName = _inputSanitizer.Sanitize(viewModel.StaffFullName);
             entity.StaffTelephoneNumber = _inputSanitizer.Sanitize(viewModel.StaffTelephoneNumber);
-            entity.StaffEmail = _inputSanitizer.Sanitize(viewModel.StaffEmail);
+            entity.StaffEmail = viewModel.StaffEmail;
             entity.IncidentPersonName = _inputSanitizer.Sanitize(viewModel.IncidentPersonName);
             entity.IncidentDate = viewModel.IncidentDate;
 
@@ -337,6 +339,7 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Textareas
+            entity.IncidentDetails = _inputSanitizer.Sanitize(viewModel.IncidentDetails);
             entity.SampleTextarea = _inputSanitizer.Sanitize(viewModel.SampleTextarea);
 
 
@@ -399,20 +402,22 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Textboxes
+
+            vm.StaffFullName = _inputSanitizer.Sanitize(entityModel.StaffFullName);
+            vm.StaffTelephoneNumber = _inputSanitizer.Sanitize(entityModel.StaffTelephoneNumber);
+            vm.StaffEmail = entityModel.StaffEmail;
+            vm.IncidentPersonName = _inputSanitizer.Sanitize(entityModel.IncidentPersonName);
+            vm.IncidentDate = entityModel.IncidentDate;
+
+            vm.StaffMemberAssignedAdmin = _inputSanitizer.Sanitize(entityModel.StaffMemberAssignedAdmin);
             vm.SampleTextboxAdmin = _inputSanitizer.Sanitize(entityModel.SampleTextboxAdmin);
             vm.SampleDateAdmin = entityModel.SampleDateAdmin;
             vm.SampleCostAdmin = entityModel.SampleCostAdmin;
 
-            vm.StaffFullName = _inputSanitizer.Sanitize(entityModel.StaffFullName);
-            vm.StaffTelephoneNumber = _inputSanitizer.Sanitize(entityModel.StaffTelephoneNumber);
-            vm.StaffEmail = _inputSanitizer.Sanitize(entityModel.StaffEmail);
-            vm.IncidentPersonName = _inputSanitizer.Sanitize(entityModel.IncidentPersonName);
-            vm.IncidentDate = entityModel.IncidentDate;
-
-
 
 
             // Textareas
+            vm.ActionTakenByCollegeAdmin = _inputSanitizer.Sanitize(entityModel.ActionTakenByCollegeAdmin);
             vm.AdminNote = _inputSanitizer.Sanitize(entityModel.AdminNote);
             vm.SampleTextareaAdmin = _inputSanitizer.Sanitize(entityModel.SampleTextareaAdmin);
 
@@ -475,11 +480,9 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             vm.StaffFullName = _inputSanitizer.Sanitize(entityModel.StaffFullName);
             vm.StaffTelephoneNumber = _inputSanitizer.Sanitize(entityModel.StaffTelephoneNumber);
-            vm.StaffEmail = _inputSanitizer.Sanitize(entityModel.StaffEmail);
+            vm.StaffEmail = entityModel.StaffEmail;
             vm.IncidentPersonName = _inputSanitizer.Sanitize(entityModel.IncidentPersonName);
             vm.IncidentDate = entityModel.IncidentDate;
-
-
 
             vm.SampleTextbox = _inputSanitizer.Sanitize(entityModel.SampleTextbox);
             vm.SampleDate = entityModel.SampleDate;
@@ -487,6 +490,7 @@ namespace SharedServicesLibrary.FormHandlingServices
             vm.SampleCost = entityModel.SampleCost;
 
             // Textareas
+            vm.IncidentDetails = _inputSanitizer.Sanitize(entityModel.IncidentDetails);
             vm.SampleTextarea = _inputSanitizer.Sanitize(entityModel.SampleTextarea);
 
 

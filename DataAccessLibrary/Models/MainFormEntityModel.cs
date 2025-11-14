@@ -34,6 +34,7 @@ namespace DataAccessLibrary.Models
 
 
         // Textareas
+        public string IncidentDetails { get; set; }
         public string SampleTextarea { get; set; }
 
 
