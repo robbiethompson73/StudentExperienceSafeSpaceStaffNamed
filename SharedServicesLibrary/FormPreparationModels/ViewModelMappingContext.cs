@@ -48,10 +48,32 @@ namespace SharedServicesLibrary.FormPreparationModels
 
 
 
+
         // Checkboxes
+        public List<int> SelectedImpactedPersonTypeIds { get; set; }
+        public List<SelectListItem> ImpactedPersonTypeOptions { get; set; }
+        public List<string> SelectedImpactedPersonTypeNames { get; set; }
+
+        public List<int> SelectedIncidentBehaviourTypeIds { get; set; }
+        public List<SelectListItem> IncidentBehaviourTypeOptions { get; set; }
+        public List<string> SelectedIncidentBehaviourTypeNames { get; set; }
+
+
+        public List<int> SelectedIncidentMotivationTypeIds { get; set; }
+        public List<SelectListItem> IncidentMotivationTypeOptions { get; set; }
+        public List<string> SelectedIncidentMotivationTypeNames { get; set; }
+
+
         public List<int> SelectedSampleCheckboxIds { get; set; }
         public List<SelectListItem> SampleCheckboxOptions { get; set; }
         public List<string> SelectedSampleCheckboxNames { get; set; }
+
+
+
+
+
+
+
 
 
 

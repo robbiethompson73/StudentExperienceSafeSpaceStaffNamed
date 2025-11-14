@@ -35,6 +35,12 @@ namespace SharedServicesLibrary.FormHandlingServices
         private readonly INumberOfPeopleCausedIncidentService _numberOfPeopleCausedIncidentService;
         private readonly IIncidentLocationService _incidentLocationService;
         private readonly IHasSimilarIncidentHappenedBeforeService _hasSimilarIncidentHappenedBeforeService;
+        private readonly IImpactedPersonTypeService _impactedPersonTypeService;
+        private readonly IIncidentBehaviourTypeService _incidentBehaviourTypeService;
+        private readonly IIncidentMotivationTypeService _incidentMotivationTypeService;
+        private readonly IMainFormImpactedPersonTypeService _mainFormImpactedPersonTypeService;
+        private readonly IMainFormIncidentBehaviourTypeService _mainFormIncidentBehaviourTypeService;
+        private readonly IMainFormIncidentMotivationTypeService _mainFormIncidentMotivationTypeService;
         private readonly ISampleCheckboxAdminService _sampleCheckboxAdminService;
         private readonly ISampleDropdownAdminService _sampleDropdownAdminService;
 
@@ -54,7 +60,16 @@ namespace SharedServicesLibrary.FormHandlingServices
                                     INumberOfPeopleImpactedService numberOfPeopleImpactedService,
                                     INumberOfPeopleCausedIncidentService numberOfPeopleCausedIncidentService,
                                     IIncidentLocationService incidentLocationService,
-                                    IHasSimilarIncidentHappenedBeforeService hasSimilarIncidentHappenedBeforeService
+                                    IHasSimilarIncidentHappenedBeforeService hasSimilarIncidentHappenedBeforeService,
+
+                                    IImpactedPersonTypeService impactedPersonTypeService,
+                                    IIncidentBehaviourTypeService incidentBehaviourTypeService,
+                                    IIncidentMotivationTypeService incidentMotivationTypeService,
+
+                                   IMainFormImpactedPersonTypeService mainFormImpactedPersonTypeService,
+                                   IMainFormIncidentBehaviourTypeService mainFormIncidentBehaviourTypeService,
+                                   IMainFormIncidentMotivationTypeService mainFormIncidentMotivationTypeService
+
 
                                    )
         {
@@ -72,6 +87,12 @@ namespace SharedServicesLibrary.FormHandlingServices
             _numberOfPeopleCausedIncidentService = numberOfPeopleCausedIncidentService;
             _incidentLocationService = incidentLocationService;
             _hasSimilarIncidentHappenedBeforeService = hasSimilarIncidentHappenedBeforeService;
+            _impactedPersonTypeService = impactedPersonTypeService;
+            _incidentBehaviourTypeService = incidentBehaviourTypeService;
+            _incidentMotivationTypeService = incidentMotivationTypeService;
+            _mainFormImpactedPersonTypeService = mainFormImpactedPersonTypeService;
+            _mainFormIncidentBehaviourTypeService = mainFormIncidentBehaviourTypeService;
+            _mainFormIncidentMotivationTypeService = mainFormIncidentMotivationTypeService;
             _sampleCheckboxAdminService = sampleCheckboxAdminService;
             _sampleDropdownAdminService = sampleDropdownAdminService;
         }
@@ -194,19 +215,13 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
 
-
-
-
-
-
-
-
-
-
             // Checkbox group
             // Because the selected values are processed and displayed directly in the view
             // by comparing Selected[Entity]Ids to the SelectListItems, there is no need
             // to separately resolve and store the human-readable names on the server.
+            viewModel.ImpactedPersonTypeOptions = await _impactedPersonTypeService.GetAllActiveSelectListAsync();
+            viewModel.IncidentBehaviourTypeOptions = await _incidentBehaviourTypeService.GetAllActiveSelectListAsync();
+            viewModel.IncidentMotivationTypeOptions = await _incidentMotivationTypeService.GetAllActiveSelectListAsync();
             viewModel.SampleCheckboxOptions = await _sampleCheckboxService.GetAllActiveSelectListAsync();
 
 
@@ -236,6 +251,9 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Checkbox Groups
+            viewModel.ImpactedPersonTypeOptions = await _impactedPersonTypeService.GetAllActiveSelectListAsync();
+            viewModel.IncidentBehaviourTypeOptions = await _incidentBehaviourTypeService.GetAllActiveSelectListAsync();
+            viewModel.IncidentMotivationTypeOptions = await _incidentMotivationTypeService.GetAllActiveSelectListAsync();
             viewModel.SampleCheckboxOptions = await _sampleCheckboxService.GetAllActiveSelectListAsync();
             viewModel.SampleCheckboxAdminOptions = await _sampleCheckboxAdminService.GetAllActiveSelectListAsync();
 
@@ -312,7 +330,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             entity.IncidentPersonName = _inputSanitizer.Sanitize(viewModel.IncidentPersonName);
             entity.IncidentDate = viewModel.IncidentDate;
 
-
             entity.SampleTextbox = _inputSanitizer.Sanitize(viewModel.SampleTextbox);
             entity.SampleDate = viewModel.SampleDate;
             entity.SampleTime = viewModel.SampleTime;
@@ -337,6 +354,9 @@ namespace SharedServicesLibrary.FormHandlingServices
 
 
             // Checkboxes (stored as list of selected IDs)
+            entity.SelectedImpactedPersonTypeIds = viewModel.SelectedImpactedPersonTypeIds;
+            entity.SelectedIncidentBehaviourTypeIds = viewModel.SelectedIncidentBehaviourTypeIds;
+            entity.SelectedIncidentMotivationTypeIds = viewModel.SelectedIncidentMotivationTypeIds;
             entity.SelectedSampleCheckboxIds = viewModel.SelectedSampleCheckboxIds;
 
 
@@ -513,13 +533,28 @@ namespace SharedServicesLibrary.FormHandlingServices
             // SelectedSampleCheckboxIds come directly from the entity model.
             // These represent the raw, persisted user selections (domain data),
             // and should be mapped as-is during the entity-to-view model conversion.
-            vm.SelectedSampleCheckboxIds = await _mainFormSampleCheckboxService.GetSelectedSampleCheckboxIdsByMainFormIdAsync(entityModel.Id);
-            // SampleCheckboxOptions are loaded from the lookup service and provided by the context.
+            vm.SelectedImpactedPersonTypeIds = await _mainFormImpactedPersonTypeService.GetSelectedImpactedPersonTypeIdsByMainFormIdAsync(entityModel.Id);
+            // ImpactedPersonTypeOptions are loaded from the lookup service and provided by the context.
             // These are used to populate the checkbox list in the UI and are not stored in the entity.
-            vm.SampleCheckboxOptions = context.SampleCheckboxOptions;
-            // SelectedSampleCheckboxNames are derived by matching the selected IDs against the lookup options.
+            vm.ImpactedPersonTypeOptions = context.ImpactedPersonTypeOptions;
+            // SelectedImpactedPersonTypeNames are derived by matching the selected IDs against the lookup options.
             // This is purely for display purposes (e.g., showing a summary of selected names) and is also provided by the context.
+            vm.SelectedImpactedPersonTypeNames = context.SelectedImpactedPersonTypeNames;
+
+
+
+            vm.SelectedIncidentBehaviourTypeIds = await _mainFormIncidentBehaviourTypeService.GetSelectedIncidentBehaviourTypeIdsByMainFormIdAsync(entityModel.Id);
+            vm.IncidentBehaviourTypeOptions = context.IncidentBehaviourTypeOptions;
+            vm.SelectedIncidentBehaviourTypeNames = context.SelectedIncidentBehaviourTypeNames;
+
+            vm.SelectedIncidentMotivationTypeIds = await _mainFormIncidentMotivationTypeService.GetSelectedIncidentMotivationTypeIdsByMainFormIdAsync(entityModel.Id);
+            vm.IncidentMotivationTypeOptions = context.IncidentMotivationTypeOptions;
+            vm.SelectedIncidentMotivationTypeNames = context.SelectedIncidentMotivationTypeNames;
+
+            vm.SelectedSampleCheckboxIds = await _mainFormSampleCheckboxService.GetSelectedSampleCheckboxIdsByMainFormIdAsync(entityModel.Id);
+            vm.SampleCheckboxOptions = context.SampleCheckboxOptions;
             vm.SelectedSampleCheckboxNames = context.SelectedSampleCheckboxNames;
+
 
 
 
@@ -571,7 +606,31 @@ namespace SharedServicesLibrary.FormHandlingServices
             }
 
             // Checkboxes
-            // SampleCheckbox: If options exist, find all names corresponding to selected checkbox IDs
+            // ImpactedPersonType: If options exist, find all names corresponding to selected checkbox IDs
+            if (viewModel.ImpactedPersonTypeOptions?.Any() == true)
+            {
+                viewModel.SelectedImpactedPersonTypeNames = viewModel.ImpactedPersonTypeOptions
+                    .Where(x => viewModel.SelectedImpactedPersonTypeIds.Contains(int.Parse(x.Value)))
+                    .Select(x => x.Text)
+                    .ToList();
+            }
+
+            if (viewModel.IncidentBehaviourTypeOptions?.Any() == true)
+            {
+                viewModel.SelectedIncidentBehaviourTypeNames = viewModel.IncidentBehaviourTypeOptions
+                    .Where(x => viewModel.SelectedIncidentBehaviourTypeIds.Contains(int.Parse(x.Value)))
+                    .Select(x => x.Text)
+                    .ToList();
+            }
+
+            if (viewModel.IncidentMotivationTypeOptions?.Any() == true)
+            {
+                viewModel.SelectedIncidentMotivationTypeNames = viewModel.IncidentMotivationTypeOptions
+                    .Where(x => viewModel.SelectedIncidentMotivationTypeIds.Contains(int.Parse(x.Value)))
+                    .Select(x => x.Text)
+                    .ToList();
+            }
+            
             if (viewModel.SampleCheckboxOptions?.Any() == true)
             {
                 viewModel.SelectedSampleCheckboxNames = viewModel.SampleCheckboxOptions
@@ -623,7 +682,31 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             // Checkboxes
 
-            // If SampleCheckbox options exist, filter by the selected IDs and collect their names
+            // ImpactedPersonType: If options exist, find all names corresponding to selected checkbox IDs
+            if (viewModel.ImpactedPersonTypeOptions?.Any() == true)
+            {
+                viewModel.SelectedImpactedPersonTypeNames = viewModel.ImpactedPersonTypeOptions
+                    .Where(x => viewModel.SelectedImpactedPersonTypeIds.Contains(int.Parse(x.Value)))
+                    .Select(x => x.Text)
+                    .ToList();
+            }
+
+            if (viewModel.IncidentBehaviourTypeOptions?.Any() == true)
+            {
+                viewModel.SelectedIncidentBehaviourTypeNames = viewModel.IncidentBehaviourTypeOptions
+                    .Where(x => viewModel.SelectedIncidentBehaviourTypeIds.Contains(int.Parse(x.Value)))
+                    .Select(x => x.Text)
+                    .ToList();
+            }
+
+            if (viewModel.IncidentMotivationTypeOptions?.Any() == true)
+            {
+                viewModel.SelectedIncidentMotivationTypeNames = viewModel.IncidentMotivationTypeOptions
+                    .Where(x => viewModel.SelectedIncidentMotivationTypeIds.Contains(int.Parse(x.Value)))
+                    .Select(x => x.Text)
+                    .ToList();
+            }
+
             if (viewModel.SampleCheckboxOptions?.Any() == true)
             {
                 viewModel.SelectedSampleCheckboxNames = viewModel.SampleCheckboxOptions

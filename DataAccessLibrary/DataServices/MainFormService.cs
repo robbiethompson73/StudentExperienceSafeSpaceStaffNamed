@@ -14,17 +14,26 @@ namespace DataAccessLibrary.DataServices
     {
         private readonly IDataAccess _dataAccess;
         private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
+        private readonly IMainFormImpactedPersonTypeService _mainFormImpactedPersonTypeService;
+        private readonly IMainFormIncidentBehaviourTypeService _mainFormIncidentBehaviourTypeService;
+        private readonly IMainFormIncidentMotivationTypeService _mainFormIncidentMotivationTypeService;
         private readonly IStatusService _statusService;
         private readonly ConnectionStringData _connectionStringData;
 
         public MainFormService(IDataAccess dataAccess,
                                ConnectionStringData connectionStringData,
                                IStatusService statusService,
-                               IMainFormSampleCheckboxService mainFormSampleCheckboxService
+                               IMainFormSampleCheckboxService mainFormSampleCheckboxService,
+                               IMainFormImpactedPersonTypeService mainFormImpactedPersonTypeService,
+                               IMainFormIncidentBehaviourTypeService mainFormIncidentBehaviourTypeService,
+                               IMainFormIncidentMotivationTypeService mainFormIncidentMotivationTypeService
                                )
         {
             _dataAccess = dataAccess;
             _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
+            _mainFormImpactedPersonTypeService = mainFormImpactedPersonTypeService;
+            _mainFormIncidentBehaviourTypeService = mainFormIncidentBehaviourTypeService;
+            _mainFormIncidentMotivationTypeService = mainFormIncidentMotivationTypeService;
             _statusService = statusService;
             _connectionStringData = connectionStringData;
         }
@@ -85,6 +94,9 @@ namespace DataAccessLibrary.DataServices
             // Checkbox Bridging Tables
 
             // Insert records into bridging table tblMainFormSampleCheckbox
+            await _mainFormImpactedPersonTypeService.CreateAsync(submissionId, mainFormEntityModel.SelectedImpactedPersonTypeIds);
+            await _mainFormIncidentBehaviourTypeService.CreateAsync(submissionId, mainFormEntityModel.SelectedIncidentBehaviourTypeIds);
+            await _mainFormIncidentMotivationTypeService.CreateAsync(submissionId, mainFormEntityModel.SelectedIncidentMotivationTypeIds);
             await _mainFormSampleCheckboxService.CreateAsync(submissionId, mainFormEntityModel.SelectedSampleCheckboxIds);
 
 

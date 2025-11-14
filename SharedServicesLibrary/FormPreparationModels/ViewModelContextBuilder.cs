@@ -31,6 +31,9 @@ namespace SharedServicesLibrary.FormPreparationModels
         private readonly INumberOfPeopleCausedIncidentService _numberOfPeopleCausedIncidentService;
         private readonly IIncidentLocationService _incidentLocationService;
         private readonly IHasSimilarIncidentHappenedBeforeService _hasSimilarIncidentHappenedBeforeService;
+        private readonly IImpactedPersonTypeService _impactedPersonTypeService;
+        private readonly IIncidentBehaviourTypeService _incidentBehaviourTypeService;
+        private readonly IIncidentMotivationTypeService _incidentMotivationTypeService;
 
         public ViewModelContextBuilder(ISampleCheckboxService sampleCheckboxService,
                                        IStatusService statusServices,
@@ -44,7 +47,11 @@ namespace SharedServicesLibrary.FormPreparationModels
                                        INumberOfPeopleImpactedService numberOfPeopleImpactedService,
                                        INumberOfPeopleCausedIncidentService numberOfPeopleCausedIncidentService,
                                        IIncidentLocationService incidentLocationService,
-                                       IHasSimilarIncidentHappenedBeforeService hasSimilarIncidentHappenedBeforeService
+                                       IHasSimilarIncidentHappenedBeforeService hasSimilarIncidentHappenedBeforeService,
+
+                                       IImpactedPersonTypeService impactedPersonTypeService,
+                                       IIncidentBehaviourTypeService incidentBehaviourTypeService,
+                                       IIncidentMotivationTypeService incidentMotivationTypeService
                                        )
         {
             _sampleCheckboxService = sampleCheckboxService;
@@ -59,6 +66,9 @@ namespace SharedServicesLibrary.FormPreparationModels
             _numberOfPeopleCausedIncidentService = numberOfPeopleCausedIncidentService;
             _incidentLocationService = incidentLocationService;
             _hasSimilarIncidentHappenedBeforeService = hasSimilarIncidentHappenedBeforeService;
+            _impactedPersonTypeService = impactedPersonTypeService;
+            _incidentBehaviourTypeService = incidentBehaviourTypeService;
+            _incidentMotivationTypeService = incidentMotivationTypeService;
         }
 
         /// <summary>
@@ -136,11 +146,39 @@ namespace SharedServicesLibrary.FormPreparationModels
             // This preserves separation of concerns: the context builder enriches UI data (e.g., option lists and display names),
             // while the entity mapping method handles domain data like selected IDs.
 
+            var impactedPersonTypeOptions = await _impactedPersonTypeService.GetAllActiveSelectListAsync();
+            var selectedImpactedPersonTypeNames = impactedPersonTypeOptions
+                .Where(f => existingSubmission.SelectedImpactedPersonTypeIds.Contains(int.Parse(f.Value)))
+                .Select(f => f.Text)
+                .ToList();
+
+
+            var incidentBehaviourTypeOptions = await _incidentBehaviourTypeService.GetAllActiveSelectListAsync();
+            var selectedIncidentBehaviourTypeNames = incidentBehaviourTypeOptions
+                .Where(f => existingSubmission.SelectedIncidentBehaviourTypeIds.Contains(int.Parse(f.Value)))
+                .Select(f => f.Text)
+                .ToList();
+
+
+            var incidentMotivationTypeOptions = await _incidentMotivationTypeService.GetAllActiveSelectListAsync();
+            var selectedIncidentMotivationTypeNames = incidentMotivationTypeOptions
+                .Where(f => existingSubmission.SelectedIncidentMotivationTypeIds.Contains(int.Parse(f.Value)))
+                .Select(f => f.Text)
+                .ToList();
+
+
             var sampleCheckboxOptions = await _sampleCheckboxService.GetAllActiveSelectListAsync();
             var selectedSampleCheckboxNames = sampleCheckboxOptions
                 .Where(f => existingSubmission.SelectedSampleCheckboxIds.Contains(int.Parse(f.Value)))
                 .Select(f => f.Text)
                 .ToList();
+
+
+
+
+
+
+
 
 
             var statusOptions = await _statusServices.GetStatusAllActiveSelectListAsync();
@@ -162,8 +200,20 @@ namespace SharedServicesLibrary.FormPreparationModels
                 SampleDropdownOptions = sampleDropdownOptions,
 
                 // Checkboxes
+                ImpactedPersonTypeOptions = impactedPersonTypeOptions,
+                SelectedImpactedPersonTypeNames = selectedImpactedPersonTypeNames,
+
+                IncidentBehaviourTypeOptions = incidentBehaviourTypeOptions,
+                SelectedIncidentBehaviourTypeNames = selectedIncidentBehaviourTypeNames,
+
+                IncidentMotivationTypeOptions = incidentMotivationTypeOptions,
+                SelectedIncidentMotivationTypeNames = selectedIncidentMotivationTypeNames,
+
                 SampleCheckboxOptions = sampleCheckboxOptions,
                 SelectedSampleCheckboxNames = selectedSampleCheckboxNames,
+
+
+
 
                 // Predefined
                 StatusOptions = statusOptions

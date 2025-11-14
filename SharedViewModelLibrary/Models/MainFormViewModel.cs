@@ -192,17 +192,6 @@ namespace SharedViewModelLibrary.Models
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         // Dropdown Lists
         [Required(ErrorMessage = "SampleDropdown is required.")]
         [Display(Name = "SampleDropdown")]
@@ -215,6 +204,60 @@ namespace SharedViewModelLibrary.Models
         public string SampleDropdownDisplayName { get; set; } = string.Empty;
 
 
+
+
+
+
+
+
+
+
+
+
+        // Checkbox Group read from tblImpactedPersonType
+        [Display(Name = "Do you know whether the person/persons impacted by this incident were")]
+        public List<int> SelectedImpactedPersonTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
+
+        // Holds the list of checkbox <options> (Id and Name) that render as checkboxes in the view
+        public List<SelectListItem> ImpactedPersonTypeOptions { get; set; } = new();
+
+        // Store the Names (not IDs) of the options selected by the user
+        public List<string> SelectedImpactedPersonTypeNames { get; set; } = new(); // To display on the view
+
+        // Server-Side validation helper to check whether the user selected at least one checkbox from a group
+        public bool HasSelectedImpactedPersonType { get; set; }
+
+
+
+
+
+        // Checkbox Group read from tblIncidentBehaviourType
+        [Display(Name = "Did the incident involve any of the following")]
+        public List<int> SelectedIncidentBehaviourTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
+
+        // Holds the list of checkbox <options> (Id and Name) that render as checkboxes in the view
+        public List<SelectListItem> IncidentBehaviourTypeOptions { get; set; } = new();
+
+        // Store the Names (not IDs) of the options selected by the user
+        public List<string> SelectedIncidentBehaviourTypeNames { get; set; } = new(); // To display on the view
+
+        // Server-Side validation helper to check whether the user selected at least one checkbox from a group
+        public bool HasSelectedIncidentBehaviourType { get; set; }
+
+
+
+        // Checkbox Group read from tblIncidentMotivationType
+        [Display(Name = "Do you believe the incident was motivated by any of the following")]
+        public List<int> SelectedIncidentMotivationTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
+
+        // Holds the list of checkbox <options> (Id and Name) that render as checkboxes in the view
+        public List<SelectListItem> IncidentMotivationTypeOptions { get; set; } = new();
+
+        // Store the Names (not IDs) of the options selected by the user
+        public List<string> SelectedIncidentMotivationTypeNames { get; set; } = new(); // To display on the view
+
+        // Server-Side validation helper to check whether the user selected at least one checkbox from a group
+        public bool HasSelectedIncidentMotivationType { get; set; }
 
 
 
@@ -294,6 +337,28 @@ namespace SharedViewModelLibrary.Models
         // Shared checkbox group validation for reuse in derived classes
         protected IEnumerable<ValidationResult> ValidateCheckboxGroups()
         {
+
+            if (SelectedImpactedPersonTypeIds == null || SelectedImpactedPersonTypeIds.Count == 0)
+            {
+                yield return new ValidationResult("Please select at least one Impacted Person Type option.", new[] { nameof(HasSelectedImpactedPersonType) });
+            }
+
+
+            if (SelectedIncidentBehaviourTypeIds == null || SelectedIncidentBehaviourTypeIds.Count == 0)
+            {
+                yield return new ValidationResult("Please select at least one Incident Behaviour Type option.", new[] { nameof(HasSelectedIncidentBehaviourType) });
+            }
+
+
+            if (SelectedIncidentMotivationTypeIds == null || SelectedIncidentMotivationTypeIds.Count == 0)
+            {
+                yield return new ValidationResult("Please select at least one Incident Motivation Type option.", new[] { nameof(HasSelectedIncidentMotivationType) });
+            }
+
+
+
+
+
 
             // Validate that at least one SampleCheckbox is selected
             if (SelectedSampleCheckboxIds == null || SelectedSampleCheckboxIds.Count == 0)
