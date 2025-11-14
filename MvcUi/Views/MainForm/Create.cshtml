@@ -452,6 +452,91 @@
 
 
 
+
+
+                           <!-- Checkbox Group - 8 - ImpactedPersonType - impactedpersontype -->
+                        <div class="form-group" data-checkbox-group="ImpactedPersonType">
+
+                            <fieldset aria-describedby="samplecheckbox-help samplecheckbox-validation" class="border-0 p-0 m-0">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    @Html.LabelWithRequiredIndicatorFor(m => m.SelectedImpactedPersonTypeIds) <span class="text-danger"> *</span>
+                                </legend>
+
+
+                                @for (int i = 0; i < Model.ImpactedPersonTypeOptions.Count; i++)
+                                    {
+                                        var item = Model.ImpactedPersonTypeOptions[i];
+                                        var checkboxId = $"impactedpersontype_{item.Value}";
+
+                                        <div class="form-check">
+                                            <input type="checkbox"
+                                                   id="@checkboxId"
+                                                   value="@item.Value"
+                                                   class="form-check-input checkbox-group"
+
+                                                   @* Name shared for model binding to List<int> *@
+                                                   name="SelectedImpactedPersonTypeIds"
+                                                   
+                                                   @* Group identifier for generic checkbox group validation *@
+                                                   data-group-name="ImpactedPersonType"
+
+                                                   @* Links input to help text and validation message for screen readers *@
+                                                   aria-describedby="impactedpersontype-help impactedpersontype-validation"
+
+                                                   @* Dynamicaly sets aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false" *@
+                                                   aria-invalid="@((ViewData.ModelState["HasSelectedImpactedPersonType"]?.Errors?.Count ?? 0) > 0 ? "true" : "false")"
+                                                   
+                                                   @* Preserve checked state *@
+                                                   @(Model.SelectedImpactedPersonTypeIds.Contains(int.Parse(item.Value)) ? "checked" : "") />
+
+                                                <label class="form-check-label" for="@checkboxId">
+                                                    @item.Text
+                                                </label>
+                                        </div>
+                                    }
+
+                                    <!--
+                                        Hidden field used to store whether any checkbox in the group is selected.
+                                        This is necessary because model binding and validation attributes work with a scalar boolean
+                                        (HasSelectedFilms) rather than the list of selected IDs. The custom client-side script updates this field dynamically.
+                                    -->
+                                    @Html.HiddenFor(m => m.HasSelectedImpactedPersonType)
+
+                                    <!--
+                                        Validation message container:
+                                        - Displays validation errors related to the checkbox group.
+                                        - 'id' is linked in aria-describedby to inputs for screen reader users.
+                                        - 'data-valmsg-for' attribute allows client-side validation scripts to find and update this element.
+                                        - 'aria-live="assertive"' ensures screen readers announce error messages immediately when they change.
+                                    -->
+
+                                    <!-- Help text for screen readers and visual users -->
+                                    <span id="impactedpersontype-help" class="form-text text-muted">
+                                        Select at least one.
+                                    </span>
+
+                                    @Html.ValidationMessageFor(m => m.HasSelectedImpactedPersonType, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "impactedpersontype-validation",          // ID used by aria-describedby
+                                        data_valmsg_for = "HasSelectedImpactedPersonType", // Used for client-side lookup
+                                        @aria_live = "assertive"             // Announce validation changes immediately
+                                    })
+                            </fieldset>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <!-- TextBox 9 IncidentDate - Date Picker -->
                         <div class="form-group">
                             @Html.LabelWithRequiredIndicatorFor(m => m.IncidentDate)
@@ -508,6 +593,163 @@
                             @aria_live = "assertive"
                         })
                     </div>
+
+
+
+
+
+
+
+                           <!-- Checkbox Group - 11 - IncidentBehaviourType - incidentbehaviourtype -->
+                        <div class="form-group" data-checkbox-group="IncidentBehaviourType">
+
+                            <fieldset aria-describedby="samplecheckbox-help samplecheckbox-validation" class="border-0 p-0 m-0">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    @Html.LabelWithRequiredIndicatorFor(m => m.SelectedIncidentBehaviourTypeIds) <span class="text-danger"> *</span>
+                                </legend>
+
+
+                                @for (int i = 0; i < Model.IncidentBehaviourTypeOptions.Count; i++)
+                                    {
+                                        var item = Model.IncidentBehaviourTypeOptions[i];
+                                        var checkboxId = $"incidentbehaviourtype_{item.Value}";
+
+                                        <div class="form-check">
+                                            <input type="checkbox"
+                                                   id="@checkboxId"
+                                                   value="@item.Value"
+                                                   class="form-check-input checkbox-group"
+
+                                                   @* Name shared for model binding to List<int> *@
+                                                   name="SelectedIncidentBehaviourTypeIds"
+                                                   
+                                                   @* Group identifier for generic checkbox group validation *@
+                                                   data-group-name="IncidentBehaviourType"
+
+                                                   @* Links input to help text and validation message for screen readers *@
+                                                   aria-describedby="incidentbehaviourtype-help incidentbehaviourtype-validation"
+
+                                                   @* Dynamicaly sets aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false" *@
+                                                   aria-invalid="@((ViewData.ModelState["HasSelectedIncidentBehaviourType"]?.Errors?.Count ?? 0) > 0 ? "true" : "false")"
+                                                   
+                                                   @* Preserve checked state *@
+                                                   @(Model.SelectedIncidentBehaviourTypeIds.Contains(int.Parse(item.Value)) ? "checked" : "") />
+
+                                                <label class="form-check-label" for="@checkboxId">
+                                                    @item.Text
+                                                </label>
+                                        </div>
+                                    }
+
+                                    <!--
+                                        Hidden field used to store whether any checkbox in the group is selected.
+                                        This is necessary because model binding and validation attributes work with a scalar boolean
+                                        (HasSelectedFilms) rather than the list of selected IDs. The custom client-side script updates this field dynamically.
+                                    -->
+                                    @Html.HiddenFor(m => m.HasSelectedIncidentBehaviourType)
+
+                                    <!--
+                                        Validation message container:
+                                        - Displays validation errors related to the checkbox group.
+                                        - 'id' is linked in aria-describedby to inputs for screen reader users.
+                                        - 'data-valmsg-for' attribute allows client-side validation scripts to find and update this element.
+                                        - 'aria-live="assertive"' ensures screen readers announce error messages immediately when they change.
+                                    -->
+
+                                    <!-- Help text for screen readers and visual users -->
+                                    <span id="incidentbehaviourtype-help" class="form-text text-muted">
+                                        Select at least one.
+                                    </span>
+
+                                    @Html.ValidationMessageFor(m => m.HasSelectedIncidentBehaviourType, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "incidentbehaviourtype-validation",          // ID used by aria-describedby
+                                        data_valmsg_for = "HasSelectedIncidentBehaviourType", // Used for client-side lookup
+                                        @aria_live = "assertive"             // Announce validation changes immediately
+                                    })
+                            </fieldset>
+                        </div>
+
+
+
+
+
+
+
+                           <!-- Checkbox Group - 12 - IncidentMotivationType - incidentmotivationtype -->
+                        <div class="form-group" data-checkbox-group="IncidentMotivationType">
+
+                            <fieldset aria-describedby="samplecheckbox-help samplecheckbox-validation" class="border-0 p-0 m-0">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    @Html.LabelWithRequiredIndicatorFor(m => m.SelectedIncidentMotivationTypeIds) <span class="text-danger"> *</span>
+                                </legend>
+
+
+                                @for (int i = 0; i < Model.IncidentMotivationTypeOptions.Count; i++)
+                                    {
+                                        var item = Model.IncidentMotivationTypeOptions[i];
+                                        var checkboxId = $"incidentmotivationtype_{item.Value}";
+
+                                        <div class="form-check">
+                                            <input type="checkbox"
+                                                   id="@checkboxId"
+                                                   value="@item.Value"
+                                                   class="form-check-input checkbox-group"
+
+                                                   @* Name shared for model binding to List<int> *@
+                                                   name="SelectedIncidentMotivationTypeIds"
+                                                   
+                                                   @* Group identifier for generic checkbox group validation *@
+                                                   data-group-name="IncidentMotivationType"
+
+                                                   @* Links input to help text and validation message for screen readers *@
+                                                   aria-describedby="incidentmotivationtype-help incidentmotivationtype-validation"
+
+                                                   @* Dynamicaly sets aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false" *@
+                                                   aria-invalid="@((ViewData.ModelState["HasSelectedIncidentMotivationType"]?.Errors?.Count ?? 0) > 0 ? "true" : "false")"
+                                                   
+                                                   @* Preserve checked state *@
+                                                   @(Model.SelectedIncidentMotivationTypeIds.Contains(int.Parse(item.Value)) ? "checked" : "") />
+
+                                                <label class="form-check-label" for="@checkboxId">
+                                                    @item.Text
+                                                </label>
+                                        </div>
+                                    }
+
+                                    <!--
+                                        Hidden field used to store whether any checkbox in the group is selected.
+                                        This is necessary because model binding and validation attributes work with a scalar boolean
+                                        (HasSelectedFilms) rather than the list of selected IDs. The custom client-side script updates this field dynamically.
+                                    -->
+                                    @Html.HiddenFor(m => m.HasSelectedIncidentMotivationType)
+
+                                    <!--
+                                        Validation message container:
+                                        - Displays validation errors related to the checkbox group.
+                                        - 'id' is linked in aria-describedby to inputs for screen reader users.
+                                        - 'data-valmsg-for' attribute allows client-side validation scripts to find and update this element.
+                                        - 'aria-live="assertive"' ensures screen readers announce error messages immediately when they change.
+                                    -->
+
+                                    <!-- Help text for screen readers and visual users -->
+                                    <span id="incidentmotivationtype-help" class="form-text text-muted">
+                                        Select at least one.
+                                    </span>
+
+                                    @Html.ValidationMessageFor(m => m.HasSelectedIncidentMotivationType, "", new
+                                    {
+                                        @class = "form-error-message",
+                                        id = "incidentmotivationtype-validation",          // ID used by aria-describedby
+                                        data_valmsg_for = "HasSelectedIncidentMotivationType", // Used for client-side lookup
+                                        @aria_live = "assertive"             // Announce validation changes immediately
+                                    })
+                            </fieldset>
+                        </div>
+
+
+
 
 
 

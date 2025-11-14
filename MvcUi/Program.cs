@@ -164,8 +164,16 @@ builder.Services.AddSingleton<IDataAccess, SqlDataAccess>();
 builder.Services.AddScoped<IMainFormService, MainFormService>();
 builder.Services.AddScoped<IMainFormAdminService, MainFormAdminService>();
 
+builder.Services.AddScoped<IImpactedPersonTypeService, ImpactedPersonTypeService>();
+builder.Services.AddScoped<IIncidentBehaviourTypeService, IncidentBehaviourTypeService>();
+builder.Services.AddScoped<IIncidentMotivationTypeService, IncidentMotivationTypeService>();
 builder.Services.AddScoped<ISampleCheckboxService, SampleCheckboxService>();
+
+builder.Services.AddScoped<IMainFormImpactedPersonTypeService, MainFormImpactedPersonTypeService>();
+builder.Services.AddScoped<IMainFormIncidentBehaviourTypeService, MainFormIncidentBehaviourTypeService>();
+builder.Services.AddScoped<IMainFormIncidentMotivationTypeService, MainFormIncidentMotivationTypeService>();
 builder.Services.AddScoped<IMainFormSampleCheckboxService, MainFormSampleCheckboxService>();
+
 
 builder.Services.AddScoped<ISampleCheckboxAdminService, SampleCheckboxAdminService>();
 builder.Services.AddScoped<IMainFormSampleCheckboxAdminService, MainFormSampleCheckboxAdminService>();

@@ -57,6 +57,9 @@ namespace DataAccessLibrary.Models
 
   
         // Checkboxes
+        public List<int> SelectedImpactedPersonTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
+        public List<int> SelectedIncidentBehaviourTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
+        public List<int> SelectedIncidentMotivationTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
         public List<int> SelectedSampleCheckboxIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
 
 
