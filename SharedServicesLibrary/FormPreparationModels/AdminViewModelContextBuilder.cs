@@ -15,10 +15,6 @@ namespace SharedServicesLibrary.FormPreparationModels
         private readonly IAuditLogService _auditLogService;
         private readonly IMainFormService _mainFormService;
         private readonly IMainFormAdminService _mainFormAdminService;
-        private readonly ISampleRadioService _sampleRadioService;
-        private readonly ISampleRadioAdminService _sampleRadioAdminService;
-        private readonly ISampleCheckboxAdminService _sampleCheckboxAdminService;
-        private readonly ISampleDropdownAdminService _sampleDropdownAdminService;
         private readonly IIncidentHappenedToService _incidentHappenedToService;
         private readonly INumberOfPeopleImpactedService _numberOfPeopleImpactedService;
         private readonly INumberOfPeopleCausedIncidentService _numberOfPeopleCausedIncidentService;
@@ -29,10 +25,6 @@ namespace SharedServicesLibrary.FormPreparationModels
                                             IAuditLogService auditLogService,
                                             IMainFormService mainFormService,
                                             IMainFormAdminService mainFormAdminService,
-                                            ISampleRadioService sampleRadioService,
-                                            ISampleRadioAdminService sampleRadioAdminService,
-                                            ISampleCheckboxAdminService sampleCheckboxAdminService,
-                                            ISampleDropdownAdminService sampleDropdownAdminService,
 
                                             IIncidentHappenedToService incidentHappenedToService,
                                             INumberOfPeopleImpactedService numberOfPeopleImpactedService,
@@ -45,10 +37,6 @@ namespace SharedServicesLibrary.FormPreparationModels
             _auditLogService = auditLogService;
             _mainFormService = mainFormService;
             _mainFormAdminService = mainFormAdminService;
-            _sampleRadioService = sampleRadioService;
-            _sampleRadioAdminService = sampleRadioAdminService;
-            _sampleCheckboxAdminService = sampleCheckboxAdminService;
-            _sampleDropdownAdminService = sampleDropdownAdminService;
             _incidentHappenedToService = incidentHappenedToService;
             _numberOfPeopleImpactedService = numberOfPeopleImpactedService;
             _numberOfPeopleCausedIncidentService = numberOfPeopleCausedIncidentService;
@@ -101,39 +89,18 @@ namespace SharedServicesLibrary.FormPreparationModels
                 var selectedHasSimilarIncidentHappenedBefore = hasSimilarIncidentHappenedBeforeOptions.FirstOrDefault(c => c.Value == selectedHasSimilarIncidentHappenedBeforeId.ToString());
                 var selectedHasSimilarIncidentHappenedBeforeName = selectedHasSimilarIncidentHappenedBefore?.Text;
 
-                var sampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
-                var selectedSampleRadioId = await _mainFormService.GetSampleRadioIdByMainFormId(submissionId);
-                var selectedSampleRadio = sampleRadioOptions.FirstOrDefault(c => c.Value == selectedSampleRadioId.ToString());
-                var selectedSampleRadioName = selectedSampleRadio?.Text;
-
 
             // Radios
             // Admin
-            var sampleRadioAdminOptions = await _sampleRadioAdminService.GetAllActiveSelectListAsync();
-                int? selectedSampleRadioAdminId = await _mainFormAdminService.GetSampleRadioAdminIdByMainFormId(submissionId);
-
-                // Find the matching option by comparing IDs
-                var selectedSampleRadioAdmin = sampleRadioAdminOptions
-                    .FirstOrDefault(c => c.Value == selectedSampleRadioAdminId.ToString());
-
-                // Get the option name (text), or null if not found
-                var selectedSampleRadioAdminName = selectedSampleRadioAdmin?.Text;
 
 
             // Dropdown Lists
-            var sampleDropdownAdminOptions = await _sampleDropdownAdminService.GetAllActiveSelectListAsync();
-
+            
 
 
 
 
             // Checkboxes
-            var sampleCheckboxAdminOptions = await _sampleCheckboxAdminService.GetAllActiveSelectListAsync();
-            var selectedSampleCheckboxAdminNames = sampleCheckboxAdminOptions
-                .Where(f => existingSubmission.SelectedSampleCheckboxAdminIds.Contains(int.Parse(f.Value)))
-                .Select(f => f.Text)
-                .ToList();
-
 
 
             // Get and format audit logs
@@ -167,20 +134,9 @@ namespace SharedServicesLibrary.FormPreparationModels
                 SelectedHasSimilarIncidentHappenedBeforeId = selectedHasSimilarIncidentHappenedBeforeId,
                 SelectedHasSimilarIncidentHappenedBeforeName = selectedHasSimilarIncidentHappenedBeforeName,
 
-                SampleRadioOptions = sampleRadioOptions,
-                SelectedSampleRadioId = selectedSampleRadioId,
-                SelectedSampleRadioName = selectedSampleRadioName,
-
-
-                SampleRadioAdminOptions = sampleRadioAdminOptions,
-                SelectedSampleRadioAdminId = selectedSampleRadioAdminId,
-                SelectedSampleRadioAdminName = selectedSampleRadioAdminName,
-
-
 
                 // DropdownLists
                 SampleDropdownOptions = baseContext.SampleDropdownOptions,
-                SampleDropdownAdminOptions = sampleDropdownAdminOptions,
 
 
                 // Checkboxes
@@ -195,10 +151,6 @@ namespace SharedServicesLibrary.FormPreparationModels
 
                 SampleCheckboxOptions = baseContext.SampleCheckboxOptions,
                 SelectedSampleCheckboxNames = baseContext.SelectedSampleCheckboxNames,
-
-                SampleCheckboxAdminOptions = sampleCheckboxAdminOptions,
-                SelectedSampleCheckboxAdminNames = selectedSampleCheckboxAdminNames,
-
 
 
 

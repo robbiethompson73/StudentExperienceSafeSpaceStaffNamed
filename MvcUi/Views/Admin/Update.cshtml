@@ -148,7 +148,7 @@
 
 
                     <!-- Staff Email -->
-                    <div class="row py-2 bg-light">
+                    <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">
                             Staff Email
                         </div>
@@ -158,7 +158,7 @@
                     </div>
 
                     <!-- Staff Telephone Number -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">
                             @Html.DisplayNameFor(model => model.StaffTelephoneNumber)
                         </div>
@@ -192,14 +192,10 @@
                 <div class="card-body">
 
 
-                    <!-- Record ID -->
-                    <div class="row py-2 bg-light">
-                        <div class="col-sm-4 col-md-3 fw-bold">Record ID</div>
-                        <div class="col-sm-8 col-md-9">@Model.Id</div>
-                    </div>
+
 
                     <!-- Status -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.StatusId)</div>
                         <div class="col-sm-8 col-md-9">
                             @{
@@ -218,7 +214,7 @@
 
 
                     <!-- Radio - 4 - IncidentHappenedTo - incidenthappenedto -->
-                    <div class="row py-2 bg-light">
+                    <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedIncidentHappenedToId)</div>
                         <div class="col-sm-8 col-md-9">
 
@@ -258,7 +254,7 @@
 
 
                     <!-- Radio - 6 - NumberOfPeopleImpacted - numberofpeopleimpacted -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedNumberOfPeopleImpactedId)</div>
                         <div class="col-sm-8 col-md-9">
 
@@ -296,7 +292,7 @@
 
 
                     <!-- Radio - 7 - NumberOfPeopleCausedIncident - numberofpeoplecausedincident -->
-                    <div class="row py-2 bg-light">
+                    <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedNumberOfPeopleCausedIncidentId)</div>
                         <div class="col-sm-8 col-md-9">
 
@@ -333,7 +329,7 @@
 
 
                     <!-- Checkbox - 8 ImpactedPersonType -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">Persons impacted by incident were:</div>
                         <div class="col-sm-8 col-md-9">
                             @foreach (var item in Model.ImpactedPersonTypeOptions)
@@ -354,7 +350,7 @@
 
 
                     <!-- Datepicker Textbox - 9 - IncidentDate -->
-                    <div class="row py-2 bg-light">
+                    <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.IncidentDate)</div>
                         <div class="col-sm-8 col-md-9">
                             @DateFormatting.ToLongOrdinalDate(Model.IncidentDate)
@@ -364,7 +360,7 @@
 
 
                     <!-- Radio - 10 - IncidentLocation - incidentlocation -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedIncidentLocationId)</div>
                         <div class="col-sm-8 col-md-9">
 
@@ -400,7 +396,7 @@
 
 
                     <!-- Checkbox - 11 - IncidentBehaviourType -->
-                    <div class="row py-2 bg-light">
+                    <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">Did the incident involve any of the following:</div>
                         <div class="col-sm-8 col-md-9">
                             @foreach (var item in Model.IncidentBehaviourTypeOptions)
@@ -422,7 +418,7 @@
 
 
                     <!-- Checkbox - 11 - IncidentMotivationType -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">Do you believe the incident was motivated by any of the following:</div>
                         <div class="col-sm-8 col-md-9">
                             @foreach (var item in Model.IncidentMotivationTypeOptions)
@@ -444,7 +440,7 @@
 
 
                     <!-- Radio - 13 - HasSimilarIncidentHappenedBefore - hassimilarincidenthappenedbefore -->
-                    <div class="row py-2 bg-light">
+                    <div class="row py-2">
                         <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedHasSimilarIncidentHappenedBeforeId)</div>
                         <div class="col-sm-8 col-md-9">
 
@@ -479,14 +475,18 @@
 
 
                     <!-- Textarea - IncidentDetails -->
-                    <div class="row py-2">
+                    <div class="row py-2 bg-light">
                         <div class="col-sm-4 col-md-3 fw-bold">Incident Details</div>
                         <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.IncidentDetails)</div>
                     </div>
 
 
 
-
+                    <!-- Record ID -->
+                    <div class="row py-2">
+                        <div class="col-sm-4 col-md-3 fw-bold">Record ID</div>
+                        <div class="col-sm-8 col-md-9">@Model.Id</div>
+                    </div>
 
                     <!-- Date Submitted -->
                     <div class="row py-2 bg-light">
@@ -497,114 +497,6 @@
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-
-
-                    <!-- SampleTextbox -->
-                    <div class="row py-2 bg-light">
-                        <div class="col-sm-4 col-md-3 fw-bold">SampleTextbox</div>
-                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleTextbox)</div>
-                    </div>
-
-                    <!-- SampleTextarea -->
-                    <div class="row py-2">
-                        <div class="col-sm-4 col-md-3 fw-bold">SampleTextarea</div>
-                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleTextarea)</div>
-                    </div>
-
-                    <!-- SampleDate -->
-                    <div class="row py-2 bg-light">
-                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleDate)</div>
-                        <div class="col-sm-8 col-md-9">
-                            @if (Model.SampleDate.HasValue)
-                            {
-                                @DateFormatting.ToLongOrdinalDate(Model.SampleDate.Value)
-                            }
-                        </div>
-                    </div>
-
-                    <!-- SampleTime -->
-                    <div class="row py-2">
-                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleTime)</div>
-                        <div class="col-sm-8 col-md-9">
-                            @(Model.SampleTime.HasValue? Model.SampleTime.Value.ToString(@"hh\:mm") : "-")
-                        </div>
-                    </div>
-
-
-                    <!-- SampleCost -->
-                    <div class="row py-2 bg-light">
-                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleCost)</div>
-                        <div class="col-sm-8 col-md-9">@Html.DisplayFor(model => model.SampleCost)</div>
-                    </div>
-
-                    <!-- SampleDropdown -->
-                    <div class="row py-2">
-                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SampleDropdownId)</div>
-                        <div class="col-sm-8 col-md-9">@Model.SampleDropdownDisplayName</div>
-                    </div>
-
-                    <!-- SampleRadio -->
-                    <div class="row py-2 bg-light">
-                        <div class="col-sm-4 col-md-3 fw-bold">@Html.DisplayNameFor(model => model.SelectedSampleRadioId)</div>
-                        <div class="col-sm-8 col-md-9">
-
-
-                            <div class="form-check">
-                                @for (int i = 0; i < Model.SampleRadioOptions.Count; i++)
-                                {
-                                    var item = Model.SampleRadioOptions[i];
-                                    var itemId = int.Parse(item.Value);
-                                    var isChecked = Model.SelectedSampleRadioId == itemId;
-
-                                    if (isChecked)
-                                    {
-                                        <div class="form-check mb-2 ps-0 ms-0">
-                                            <input type="radio"
-                                                   name="SampleRadio"
-                                                   id="sampleradio_@item.Value"
-                                                   class="form-check-input"
-                                                   value="@item.Value"
-                                                   disabled
-                                                   @(isChecked ? "checked" : null) />
-                                            <label class="form-check-label" for="sampleradio_@item.Value">
-                                                @item.Text
-                                            </label>
-                                        </div>
-                                    }
-                                }
-                            </div>
-
-                        </div>
-                    </div>
-
-
-
-                    <!-- Sample Checkbox -->
-                    <div class="row py-2">
-                        <div class="col-sm-4 col-md-3 fw-bold">Sample Checkbox</div>
-                        <div class="col-sm-8 col-md-9">
-                            @foreach (var item in Model.SampleCheckboxOptions)
-                            {
-                                var itemId = int.Parse(item.Value);
-                                var isChecked = Model.SelectedSampleCheckboxIds.Contains(itemId);
-
-                                if (isChecked)
-                                {
-                                    <div class="form-check mb-2">
-                                        <input type="checkbox" class="form-check-input" disabled checked />
-                                        <label class="form-check-label">@item.Text</label>
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
 
 
 
@@ -677,75 +569,32 @@
                                     @Html.HiddenFor(m => m.Id)
 
 
-                                    <!-- TextBox StudentFullName -->
-                                        @Html.HiddenFor(m => m.StudentFullName)
 
 
-                                    <!-- TextBox StudentReferenceNumber -->
-                                        @Html.HiddenFor(m => m.StudentReferenceNumber)
-
-
-                                    <!-- StudentDateOfBirth - Date Picker -->
-                                        @Html.HiddenFor(m => m.StudentDateOfBirth)
-
-
-
-
-
-
-                                    <!-- TextBox SampleTextbox -->
+                                    <!-- TextBox -->
                                     @Html.HiddenFor(m => m.StaffFullName)
                                     @Html.HiddenFor(m => m.StaffTelephoneNumber)
                                     @Html.HiddenFor(m => m.StaffEmail)
                                     @Html.HiddenFor(m => m.IncidentPersonName)
                                     @Html.HiddenFor(m => m.IncidentDate)
-                                    @Html.HiddenFor(m => m.SampleTextbox)
 
 
 
-
-
-
-
-
-                                    <!-- SampleDate - Date Picker -->
-                                    <div class="form-group">
-                                        @Html.HiddenFor(m => m.SampleDate)
-                                    </div>
-
-
-                                    <!-- SampleTime - Time Picker -->
-                                    <div class="form-group">
-                                        @Html.Hidden("SampleTime", Model.SampleTime?.ToString(@"hh\:mm") ?? "")
-                                    </div>
-
-
-                                    <!-- Cost SampleCost -->
-                                    <div class="form-group">
-                                        @Html.HiddenFor(m => m.SampleCost)
-                                    </div>
-
-
-                                    <!-- Textarea SampleTextarea -->
+                                    <!-- Textarea -->
                                     @Html.HiddenFor(m => m.IncidentDetails)
-                                    @Html.HiddenFor(m => m.SampleTextarea)
 
 
-                                    <!-- Radio Button List - SampleRadioId -->
+                                    <!-- Radio Button List -->
                                     @Html.HiddenFor(m => m.SelectedIncidentHappenedToId)
                                     @Html.HiddenFor(m => m.SelectedNumberOfPeopleImpactedId)
                                     @Html.HiddenFor(m => m.SelectedNumberOfPeopleCausedIncidentId)
                                     @Html.HiddenFor(m => m.SelectedIncidentLocationId)
                                     @Html.HiddenFor(m => m.SelectedHasSimilarIncidentHappenedBeforeId)
-                                    @Html.HiddenFor(m => m.SelectedSampleRadioId)
 
 
 
 
-                                    <!-- Drop Down List - SampleDropdown -->
-                                    <div class="form-group">
-                                        @Html.HiddenFor(m => m.SampleDropdownId)
-                                    </div>
+                                    <!-- Drop Down List -->
 
 
                                     <!-- Checkbox Group -->
@@ -763,13 +612,6 @@
                                     {
                                     @Html.Hidden("SelectedIncidentMotivationTypeIds", id)
                                     }
-
-                                    @foreach (var id in Model.SelectedSampleCheckboxIds)
-                                    {
-                                        @Html.Hidden("SelectedSampleCheckboxIds", id)
-                                    }
-
-
 
 
 
@@ -874,286 +716,6 @@
                                         </small>
 
                                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    <!-- TextBox SampleTextboxAdmin -->
-                                    <div class="form-group">
-                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextboxAdmin)
-
-                                        @Html.TextBoxFor(m => m.SampleTextboxAdmin, new Dictionary<string, object>
-                                        {
-                                            // Apply Bootstrap styling to the input field for consistent UI design.
-                                            { "class", "form-control" },
-
-                                            // Connects this input to its corresponding validation message span using the 'id' attribute.
-                                            // This improves accessibility for screen reader users.
-                                            { "aria-describedby", "SampleTextboxAdmin-validation" },
-
-                                            // Dynamically sets the aria-invalid attribute based on whether the model state contains errors.
-                                            // This allows screen readers to announce when a field has failed validation.
-                                            { "aria-invalid", (ViewData.ModelState["SampleTextboxAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }, // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
-
-                                            // Explicit ID for JS targeting
-                                            { "id", "SampleTextbox" }                      
-                                        })
-
-
-                                        @Html.ValidationMessageFor(m => m.SampleTextboxAdmin, "", new
-                                        {
-                                            @class = "form-error-message",
-                                            id = "SampleTextboxAdmin-validation",               // unique id for validation message span
-                                            @aria_live = "assertive"                    // announce validation changes immediately
-                                        })
-                                    </div>
-
-
-
-
-                                    <!-- Textarea SampleTextareaAdmin -->
-                                    <div class="form-group">
-                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleTextareaAdmin)
-                                        @Html.TextAreaFor(m => m.SampleTextareaAdmin, new Dictionary<string, object>
-                                        {
-                                            { "class", "form-control" },                        // Apply Bootstrap styling and fixed height
-                                            { "rows", "4" },                                    // Set number of visible rows
-                                            { "id", Html.IdFor(m => m.SampleTextareaAdmin) },         // Ensure ID is consistent with the label 'for' attribute
-                                            { "aria-describedby", "SampleTextareaAdmin-validation" }, // Link to validation message span for screen readers
-                                            { "aria-invalid", (ViewData.ModelState["SampleTextareaAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" } // Indicate whether the field has a validation error
-                                        })
-
-                                        @Html.ValidationMessageFor(m => m.SampleTextboxAdmin, "", new
-                                        {
-                                            @class = "form-error-message",
-                                            id = "SampleTextareaAdmin-validation",               // unique id for validation message span
-                                            @aria_live = "assertive"                    // announce validation changes immediately
-                                        })
-
-                                    </div>
-
-
-
-
-                                    <!-- SampleDateAdmin - Date Picker -->
-                                    <div class="form-group">
-                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleDateAdmin)
-
-                                        @Html.TextBox("SampleDateAdmin", Model.SampleDateAdmin.HasValue? Model.SampleDateAdmin.Value.ToString("yyyy-MM-dd") : "",
-                                        new Dictionary<string, object>
-                                        {
-                                            { "type", "date" },                                  // HTML5 date input
-                                            { "class", "form-control w-100 w-md-custom" },      // Apply Bootstrap styling to the input
-                                            { "aria-describedby", "SampleDateAdmin-validation" },  // Link to help and validation message spans for screen readers
-                                            { "aria-invalid", (ViewData.ModelState["SampleDateAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }  // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
-                                        })
-
-                                        @Html.ValidationMessageFor(m => m.SampleDateAdmin, "", new
-                                        {
-                                            @class = "form-error-message",
-                                            id = "SampleDateAdmin-validation",
-                                            @aria_live = "assertive"
-                                        })
-                                    </div>
-
-
-
-
-                                    <!-- Cost - SampleCostAdmin -->
-                                    <div class="form-group">
-                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleCostAdmin)
-
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="CostPrefix">£</span>
-
-                                            @Html.TextBoxFor(m => m.SampleCostAdmin, new Dictionary<string, object>
-                                            {
-                                                { "class", "form-control w-md-custom" },
-                                                { "type", "number" },
-                                                { "step", "0.01" },
-                                                { "min", "0" }, // matches [Range(0, ...)] and allows 0.00
-
-                                                // Link to help and validation message spans for screen readers
-                                                { "aria-describedby", "CostPrefix SampleCostAdmin-validation" },
-
-                                                // Set aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false"
-                                                { "aria-invalid", (ViewData.ModelState["SampleCostAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }
-                                            })
-                                        </div>
-
-                                        <small class="form-text text-muted">
-                                            E.g. Sample Admin cost example
-                                        </small>
-
-                                        @Html.ValidationMessageFor(m => m.SampleCostAdmin, "", new
-                                        {
-                                            @class = "form-error-message",
-                                            id = "SampleCostAdmin-validation",
-                                            @aria_live = "assertive"
-                                        })
-                                    </div>
-
-
-
-
-                                    <!-- Radio Button List - SampleRadioAdmin -->
-                                    <div class="form-group">
-                                        @Html.LabelWithRequiredIndicatorFor(m => m.SelectedSampleRadioAdminId)
-
-                                        <div data-radio-group="SelectedSampleRadioAdminId"
-                                             describedby="SelectedSampleRadioAdminId-validation"
-                                             aria-invalid="@(ViewData.ModelState["SelectedSampleRadioAdminId"]?.Errors?.Count > 0 ? "true" : "false")"
-                                             role="radioadmingroup">
-
-                                            @for (int i = 0; i < Model.SampleRadioAdminOptions.Count; i++)
-                                            {
-                                                var item = Model.SampleRadioAdminOptions[i];
-                                                <div class="form-check">
-                                                    @Html.RadioButtonFor(m => m.SelectedSampleRadioAdminId, item.Value, new
-                                                    {
-                                                        @class = "form-check-input",
-                                                        id = $"sampleradioadmin_{item.Value}"
-                                                    })
-                                                    <label class="form-check-label" for="@($"sampleradioadmin_{item.Value}")">
-                                                        @item.Text
-                                                    </label>
-                                                </div>
-                                            }
-
-                                        </div>
-
-                                        @Html.ValidationMessageFor(m => m.SelectedSampleRadioAdminId, "", new
-                                        {
-                                            @class = "form-error-message",
-                                            id = "SelectedSampleRadioAdminId-validation",
-                                            @aria_live = "assertive"
-                                        })
-                                    </div>
-
-
-
-
-
-
-                                    <!-- Drop Down List -  SampleDropdownAdmin -->
-                                    <div class="form-group">
-                                        @Html.LabelWithRequiredIndicatorFor(m => m.SampleDropdownAdminId) 
-
-                                        @Html.DropDownListFor(m => m.SampleDropdownAdminId, Model.SampleDropdownAdminOptions, "Select an Option", new Dictionary<string, object>
-                                        {
-                                            // Applies Bootstrap styling and a validation class to ensure visual consistency and enable validation highlighting
-                                            { "class", "form-select validate-dropdown" },
-
-                                            // Links the dropdown to its corresponding validation message element for screen readers
-                                            // This improves accessibility by providing assistive technology with the proper error context
-                                            { "aria-describedby", "SampleDropdownAdminId-validation" },
-
-                                            // Dynamically sets the aria-invalid attribute to communicate the validation status
-                                            // "true" if there are validation errors for this field; otherwise "false"
-                                            // This supports accessibility by indicating whether the current value is invalid
-                                            { "aria-invalid", (ViewData.ModelState["SampleDropdownAdminId"]?.Errors?.Count ?? 0) > 0 ? "true" : "false" }
-                                        })
-
-                                        @Html.ValidationMessageFor(m => m.SampleDropdownAdminId, "", new
-                                            {
-                                                @class = "form-error-message",
-                                                id = "SampleDropdownAdminId-validation",
-                                                @aria_live = "assertive"
-                                            })
-                                    </div>
-
-
-
-
-
-
-                                    <!-- Checkbox Group - SampleCheckboxAdmin samplecheckboxadmin -->
-                                    <div class="form-group" data-checkbox-group="SampleCheckboxAdmin">
-
-                                        <fieldset aria-describedby="samplecheckboxadmin-help awardtype-validation" class="border-0 p-0 m-0">
-                                            <legend class="col-form-label pt-0 pb-0">
-
-                                                @Html.LabelWithRequiredIndicatorFor(m => m.SelectedSampleCheckboxAdminIds) <span class="text-danger"> *</span>
-
-                                            </legend>
-
-                                            @for (int i = 0; i < Model.SampleCheckboxAdminOptions.Count; i++)
-                                                {
-                                                var item = Model.SampleCheckboxAdminOptions[i];
-                                                    var checkboxId = $"samplecheckboxadmin_{item.Value}";
-
-                                                    <div class="form-check">
-                                                        <input type="checkbox"
-                                                                id="@checkboxId"
-                                                                value="@item.Value"
-                                                                class="form-check-input checkbox-group"
-
-                                                                @* Name shared for model binding to List<int> *@
-                                                                name="SelectedSampleCheckboxAdminIds"
-                                                   
-                                                                @* Group identifier for generic checkbox group validation *@
-                                                                data-group-name="SampleCheckboxAdmin"
-
-                                                                @* Links input to help text and validation message for screen readers *@
-                                                                aria-describedby="samplecheckboxadmin-help samplecheckboxadmin-validation"
-
-                                                                @* Dynamicaly sets aria-invalid to "true" if there are any model state validation errors for this field; otherwise "false" *@
-                                                                aria-invalid="@((ViewData.ModelState["SampleCheckboxAdmin"]?.Errors?.Count ?? 0) > 0 ? "true" : "false")"
-                                                   
-                                                                @* Preserve checked state *@
-                                                                @(Model.SelectedSampleCheckboxAdminIds.Contains(int.Parse(item.Value)) ? "checked" : "") />
-
-                                                            <label class="form-check-label" for="@checkboxId">
-                                                                @item.Text
-                                                            </label>
-                                                    </div>
-                                                }
-
-
-                                                <!-- Help text for screen readers and visual users -->
-                                                <span id="samplecheckboxadmin-help" class="form-text text-muted">
-                                                     Please mark all that apply
-                                                </span>
-
-                                                <!--
-                                                    Hidden field used to store whether any checkbox in the group is selected.
-                                                    This is necessary because model binding and validation attributes work with a scalar boolean
-                                                    (HasSelectedFilms) rather than the list of selected IDs. The custom client-side script updates this field dynamically.
-                                                    COMMENT OUT FOR NON-MANDATORY
-                                                -->
-                                                @Html.HiddenFor(m => m.HasSelectedSampleCheckboxAdmin)
-
-                                                <!--
-                                                    Validation message container:
-                                                    - Displays validation errors related to the checkbox group.
-                                                    - 'id' is linked in aria-describedby to inputs for screen reader users.
-                                                    - 'data-valmsg-for' attribute allows client-side validation scripts to find and update this element.
-                                                    - 'aria-live="assertive"' ensures screen readers announce error messages immediately when they change.
-                                                -->
-                                            @Html.ValidationMessageFor(m => m.HasSelectedSampleCheckboxAdmin, "", new
-                                                {
-                                                    @class = "form-error-message",
-                                                    id = "samplecheckboxadmin-validation",          // ID used by aria-describedby
-                                                    data_valmsg_for = "HasSelectedSampleCheckboxAdmin", // Used for client-side lookup
-                                                    @aria_live = "assertive"             // Announce validation changes immediately
-                                                })
-                                        </fieldset>
-                                    </div>
-
-
 
 
 
@@ -1482,43 +1044,6 @@
             });
 
 
-
-            /* -------------------------------------------------------------
-             * HOW TO ADD NEW FORM ELEMENTS FOR VALIDATION:
-             *
-             * 1. Checkbox Groups:
-             *    - Wrap checkboxes inside a container with attribute: data-checkbox-group="GroupName"
-             *    - Each checkbox inside should have class "checkbox-group" and attribute data-group-name="GroupName"
-             *    - Add a hidden input named "HasSelectedGroupName" or "GroupNameSelected" inside the container for server binding
-             *    - Add a span with class "form-error-message" and attribute data-valmsg-for="HasSelectedGroupName"
-             *    - Validation messages will display after submit attempt automatically
-             *
-             * 2. File Inputs:
-             *    - Add class "validate-file" to file input elements
-             *    - Add an element with id "[fileInputId]ValidationMessage" (e.g., if input id="uploadFile", then span id="uploadFileValidationMessage")
-             *    - Use data-val-required attribute on file input to specify required message (optional)
-             *    - Validation auto-handled and messages show on submit or file change
-             *
-             * 3. Dropdowns:
-             *    - Add class "validate-dropdown" to select elements
-             *    - Add a data-validation-message attribute referencing the selector of the validation message span for this dropdown (e.g., "#dropdown1Msg")
-             *    - Use data-val-required attribute on the dropdown to specify required message (optional)
-             *    - Validation auto-handled on submit and change
-             *
-             * 4. Other Inputs (text, date, time, etc.):
-             *    - Ensure they have jQuery Validation attributes (e.g., data-val="true", data-val-required="message")
-             *    - Validation handled by jQuery Validation plugin automatically
-             *
-             * 5. To Add Custom Validation Rules:
-             *    - Use $.validator.addMethod(...) to define a new rule
-             *    - Add adapters via $.validator.unobtrusive.adapters.add* to link to HTML attributes
-             *    - Call the new validation method inside the submit handler if needed
-             *
-             * 6. To Add New Validation Types:
-             *    - Create a new validateXYZ() function similar to validateCheckboxGroups()
-             *    - Call it in the submit handler and in bindRevalidation for corresponding change events
-             *
-             * ----------------------------------------------------------- */
         });
     </script>
 

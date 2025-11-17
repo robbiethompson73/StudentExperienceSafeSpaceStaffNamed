@@ -26,15 +26,11 @@ namespace EmailLibrary.Models
         // Properties For Display In User Email
         public int Id { get; set; }
         public string SubmittedBy { get; set; } = string.Empty;
-        public string StudentDateOfBirth { get; set; } = string.Empty;
 
-        public string StudentFullName { get; set; } = string.Empty;
-        public string StudentReferenceNumber { get; set; } = string.Empty;
-        public string SampleTextarea { get; set; } = string.Empty;
+        public string StaffFullName { get; set; } = string.Empty;
+        public DateTime? IncidentDate { get; set; }
+        public string IncidentLocationName { get; set; } = string.Empty;
 
-        public string SampleDropdownDisplayName { get; set; } = string.Empty;
-        public List<string> SelectedSampleCheckboxNames { get; set; } = new();
-        public string SampleRadio { get; set; } = string.Empty;
 
         // Read-only property that builds the link to the details page
         public string DetailsLink => $"{_baseUrl}/Admin/Details/{Id}";

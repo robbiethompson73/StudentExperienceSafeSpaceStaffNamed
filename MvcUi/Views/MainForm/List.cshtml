@@ -59,7 +59,7 @@
                             <th style="width: 15%;">Name</th>
 
                             <!-- Columns hidden on small screens (mobile), shown on md+ screens -->
-                            <th class="d-none d-md-table-cell" style="width: 40%;">@Html.DisplayNameFor(model => model.First().SampleTextarea)</th>
+                            <th class="d-none d-md-table-cell" style="width: 40%;">hard coded Sample textaera</th>
 
                             
 
@@ -77,10 +77,10 @@
                             <tr class="@rowClass">
                                 <td class="align-top">@item.Id</td>
                                 <td class="d-none d-md-table-cell align-top">@DateFormatting.ToLongOrdinalDate(item.DateSubmitted)</td>
-                                <td class="align-top">@item.StudentFullName</td>
+                                <td class="align-top">Student Full Name</td>
 
                                 <!-- Desktop-only columns -->
-                                <td class="d-none d-md-table-cell align-top">@item.SampleTextarea</td>
+                                <td class="d-none d-md-table-cell align-top"> hard code SampleTextarea</td>
 
 
                                 <!-- Always visible columns -->

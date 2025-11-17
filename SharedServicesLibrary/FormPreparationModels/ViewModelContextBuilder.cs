@@ -19,12 +19,8 @@ namespace SharedServicesLibrary.FormPreparationModels
 {
     public class ViewModelContextBuilder : IViewModelContextBuilder
     {
-        private readonly ISampleCheckboxService _sampleCheckboxService;
         private readonly IStatusService _statusServices;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
-        private readonly ISampleDropdownService _sampleDropdownService;
         private readonly IMainFormAdminService _mainFormAdminService;
-        private readonly ISampleRadioService _sampleRadioService;
         private readonly IMainFormService _mainFormService;
         private readonly IIncidentHappenedToService _incidentHappenedToService;
         private readonly INumberOfPeopleImpactedService _numberOfPeopleImpactedService;
@@ -35,12 +31,8 @@ namespace SharedServicesLibrary.FormPreparationModels
         private readonly IIncidentBehaviourTypeService _incidentBehaviourTypeService;
         private readonly IIncidentMotivationTypeService _incidentMotivationTypeService;
 
-        public ViewModelContextBuilder(ISampleCheckboxService sampleCheckboxService,
-                                       IStatusService statusServices,
-                                       IMainFormSampleCheckboxService mainFormSampleCheckboxService,
-                                       ISampleDropdownService sampleDropdownService,
+        public ViewModelContextBuilder(IStatusService statusServices,
                                        IMainFormAdminService mainFormAdminService,
-                                       ISampleRadioService sampleRadioService,
                                        IMainFormService mainFormService,
 
                                        IIncidentHappenedToService incidentHappenedToService,
@@ -54,12 +46,8 @@ namespace SharedServicesLibrary.FormPreparationModels
                                        IIncidentMotivationTypeService incidentMotivationTypeService
                                        )
         {
-            _sampleCheckboxService = sampleCheckboxService;
             _statusServices = statusServices;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
-            _sampleDropdownService = sampleDropdownService;
             _mainFormAdminService = mainFormAdminService;
-            _sampleRadioService = sampleRadioService;
             _mainFormService = mainFormService;
             _incidentHappenedToService = incidentHappenedToService;
             _numberOfPeopleImpactedService = numberOfPeopleImpactedService;
@@ -125,17 +113,10 @@ namespace SharedServicesLibrary.FormPreparationModels
             var selectedHasSimilarIncidentHappenedBeforeName = selectedHasSimilarIncidentHappenedBefore?.Text;
 
 
-            var sampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
-            var selectedSampleRadioId = await _mainFormService.GetSampleRadioIdByMainFormId(submissionId);
-            var selectedSampleRadio = sampleRadioOptions
-                .FirstOrDefault(c => c.Value == selectedSampleRadioId.ToString());
-            var selectedSampleRadioName = selectedSampleRadio?.Text;
-
 
 
 
             // DropdownLists
-            var sampleDropdownOptions = await _sampleDropdownService.GetAllActiveSelectListAsync();
 
 
 
@@ -167,11 +148,6 @@ namespace SharedServicesLibrary.FormPreparationModels
                 .ToList();
 
 
-            var sampleCheckboxOptions = await _sampleCheckboxService.GetAllActiveSelectListAsync();
-            var selectedSampleCheckboxNames = sampleCheckboxOptions
-                .Where(f => existingSubmission.SelectedSampleCheckboxIds.Contains(int.Parse(f.Value)))
-                .Select(f => f.Text)
-                .ToList();
 
 
 
@@ -197,7 +173,6 @@ namespace SharedServicesLibrary.FormPreparationModels
                 // This eliminates duplication (PopulateDropdownsAndListsStaff / PopulateDropdownsAndListsAdmin) and makes User and Admin consistent.
 
                 // DropdownLists
-                SampleDropdownOptions = sampleDropdownOptions,
 
                 // Checkboxes
                 ImpactedPersonTypeOptions = impactedPersonTypeOptions,
@@ -208,10 +183,6 @@ namespace SharedServicesLibrary.FormPreparationModels
 
                 IncidentMotivationTypeOptions = incidentMotivationTypeOptions,
                 SelectedIncidentMotivationTypeNames = selectedIncidentMotivationTypeNames,
-
-                SampleCheckboxOptions = sampleCheckboxOptions,
-                SelectedSampleCheckboxNames = selectedSampleCheckboxNames,
-
 
 
 

@@ -167,16 +167,12 @@ builder.Services.AddScoped<IMainFormAdminService, MainFormAdminService>();
 builder.Services.AddScoped<IImpactedPersonTypeService, ImpactedPersonTypeService>();
 builder.Services.AddScoped<IIncidentBehaviourTypeService, IncidentBehaviourTypeService>();
 builder.Services.AddScoped<IIncidentMotivationTypeService, IncidentMotivationTypeService>();
-builder.Services.AddScoped<ISampleCheckboxService, SampleCheckboxService>();
 
 builder.Services.AddScoped<IMainFormImpactedPersonTypeService, MainFormImpactedPersonTypeService>();
 builder.Services.AddScoped<IMainFormIncidentBehaviourTypeService, MainFormIncidentBehaviourTypeService>();
 builder.Services.AddScoped<IMainFormIncidentMotivationTypeService, MainFormIncidentMotivationTypeService>();
-builder.Services.AddScoped<IMainFormSampleCheckboxService, MainFormSampleCheckboxService>();
 
 
-builder.Services.AddScoped<ISampleCheckboxAdminService, SampleCheckboxAdminService>();
-builder.Services.AddScoped<IMainFormSampleCheckboxAdminService, MainFormSampleCheckboxAdminService>();
 
 
 builder.Services.AddScoped<IIncidentHappenedToService, IncidentHappenedToService>();
@@ -184,11 +180,6 @@ builder.Services.AddScoped<INumberOfPeopleImpactedService, NumberOfPeopleImpacte
 builder.Services.AddScoped<INumberOfPeopleCausedIncidentService, NumberOfPeopleCausedIncidentService>();
 builder.Services.AddScoped<IIncidentLocationService, IncidentLocationService>();
 builder.Services.AddScoped<IHasSimilarIncidentHappenedBeforeService, HasSimilarIncidentHappenedBeforeService>();
-builder.Services.AddScoped<ISampleRadioService, SampleRadioService>();
-builder.Services.AddScoped<ISampleRadioAdminService, SampleRadioAdminService>();
-
-builder.Services.AddScoped<ISampleDropdownService, SampleDropdownService>();
-builder.Services.AddScoped<ISampleDropdownAdminService, SampleDropdownAdminService>();
 
 
 builder.Services.AddScoped<IBiisAdminStaffService, BiisAdminStaffService>();

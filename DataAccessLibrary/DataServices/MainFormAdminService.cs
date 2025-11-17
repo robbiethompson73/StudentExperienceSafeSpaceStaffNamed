@@ -16,10 +16,8 @@ namespace DataAccessLibrary.DataServices
     public class MainFormAdminService : IMainFormAdminService
     {
         private readonly IDataAccess _dataAccess;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
         private readonly ConnectionStringData _connectionStringData;
         private readonly IConfiguration _configuration;
-        private readonly IMainFormSampleCheckboxAdminService _mainFormSampleCheckboxAdminService;
         private readonly IMainFormImpactedPersonTypeService _mainFormImpactedPersonTypeService;
         private readonly IMainFormIncidentBehaviourTypeService _mainFormIncidentBehaviourTypeService;
         private readonly IMainFormIncidentMotivationTypeService _mainFormIncidentMotivationTypeService;
@@ -27,8 +25,6 @@ namespace DataAccessLibrary.DataServices
         public MainFormAdminService(IDataAccess dataAccess,
                                          ConnectionStringData connectionStringData,
                                          IConfiguration configuration,
-                                         IMainFormSampleCheckboxService mainFormSampleCheckboxService,
-                                         IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService,
 
                                          IMainFormImpactedPersonTypeService mainFormImpactedPersonTypeService,
                                          IMainFormIncidentBehaviourTypeService mainFormIncidentBehaviourTypeService,
@@ -36,10 +32,8 @@ namespace DataAccessLibrary.DataServices
                                          )
         {
             _dataAccess = dataAccess;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
             _connectionStringData = connectionStringData;
             _configuration = configuration;
-            _mainFormSampleCheckboxAdminService = mainFormSampleCheckboxAdminService;
             _mainFormImpactedPersonTypeService = mainFormImpactedPersonTypeService;
             _mainFormIncidentBehaviourTypeService = mainFormIncidentBehaviourTypeService;
             _mainFormIncidentMotivationTypeService = mainFormIncidentMotivationTypeService;
@@ -114,12 +108,9 @@ namespace DataAccessLibrary.DataServices
                     new
                     {
                         Id = updated.Id,
-                        StudentReferenceNumber = updated.StudentReferenceNumber,
-                        StudentDateOfBirth = updated.StudentDateOfBirth,
                         SubmittedByWindowsUserName = updated.SubmittedByWindowsUserName,
 
                         // Textboxes
-                        StudentFullName = updated.StudentFullName,
                         StaffFullName = updated.StaffFullName,
                         StaffTelephoneNumber = updated.StaffTelephoneNumber,
                         StaffEmail = updated.StaffEmail,
@@ -127,27 +118,14 @@ namespace DataAccessLibrary.DataServices
                         IncidentDate = updated.IncidentDate,
                         StaffMemberAssignedAdmin = updated.StaffMemberAssignedAdmin,
 
-                        SampleTextbox = updated.SampleTextbox,
-                        SampleDate = updated.SampleDate,
-                        SampleTime = updated.SampleTime,
-                        SampleCost = updated.SampleCost,
-                        SampleTextboxAdmin = updated.SampleTextboxAdmin,
-                        SampleDateAdmin = updated.SampleDateAdmin,
-                        SampleCostAdmin = updated.SampleCostAdmin,
-
-
                         // Textareas
                         IncidentDetails = updated.IncidentDetails,
                         ActionTakenByCollegeAdmin = updated.ActionTakenByCollegeAdmin,
                         AdminNote = updated.AdminNote,
-                        SampleTextarea = updated.SampleTextarea,
-                        SampleTextareaAdmin = updated.SampleTextareaAdmin,
 
 
                         // DropDownList
                         StatusId = updated.StatusId,
-                        SampleDropdownId = updated.SampleDropdownId,
-                        SampleDropdownAdminId = updated.SampleDropdownAdminId,
 
 
                         // Radios
@@ -156,8 +134,6 @@ namespace DataAccessLibrary.DataServices
                         NumberOfPeopleCausedIncidentId = updated.NumberOfPeopleCausedIncidentId,
                         IncidentLocationId = updated.IncidentLocationId,
                         HasSimilarIncidentHappenedBeforeId = updated.HasSimilarIncidentHappenedBeforeId,
-                        SampleRadioId = updated.SampleRadioId,
-                        SampleRadioAdminId = updated.SampleRadioAdminId,
 
 
                         // Checkboxes
@@ -182,28 +158,12 @@ namespace DataAccessLibrary.DataServices
             await _mainFormImpactedPersonTypeService.CreateAndDeleteAsync(updated.Id, updated.SelectedImpactedPersonTypeIds);
             await _mainFormIncidentBehaviourTypeService.CreateAndDeleteAsync(updated.Id, updated.SelectedIncidentBehaviourTypeIds);
             await _mainFormIncidentMotivationTypeService.CreateAndDeleteAsync(updated.Id, updated.SelectedIncidentMotivationTypeIds);
-            await _mainFormSampleCheckboxService.CreateAndDeleteAsync(updated.Id, updated.SelectedSampleCheckboxIds);
-            await _mainFormSampleCheckboxAdminService.CreateAndDeleteAsync(updated.Id, updated.SelectedSampleCheckboxAdminIds);
 
             return updated.Id;
         }
 
 
 
-        // Method updated to return nullable int (int?) to safely handle NULLs from the database
-        public async Task<int?> GetSampleRadioAdminIdByMainFormId(int submissionId)
-        {
-            var parameters = new { Id = submissionId };
-
-            // LoadDataAsync updated to use int? so Dapper can handle NULL values without throwing an exception
-            var rows = await _dataAccess.LoadDataAsync<int?, dynamic>(
-                                        "dbo.spMainForm_GetSampleRadioAdminIdByMainFormId",
-                                        parameters,
-                                        _connectionStringData.SqlConnectionName);
-
-            // Return the first result, which may be null if the database value is NULL or no rows are returned
-            return rows.FirstOrDefault();
-        }
 
 
 

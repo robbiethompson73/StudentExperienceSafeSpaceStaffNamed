@@ -13,7 +13,6 @@ namespace DataAccessLibrary.DataServices
     public class MainFormService : IMainFormService
     {
         private readonly IDataAccess _dataAccess;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
         private readonly IMainFormImpactedPersonTypeService _mainFormImpactedPersonTypeService;
         private readonly IMainFormIncidentBehaviourTypeService _mainFormIncidentBehaviourTypeService;
         private readonly IMainFormIncidentMotivationTypeService _mainFormIncidentMotivationTypeService;
@@ -23,14 +22,12 @@ namespace DataAccessLibrary.DataServices
         public MainFormService(IDataAccess dataAccess,
                                ConnectionStringData connectionStringData,
                                IStatusService statusService,
-                               IMainFormSampleCheckboxService mainFormSampleCheckboxService,
                                IMainFormImpactedPersonTypeService mainFormImpactedPersonTypeService,
                                IMainFormIncidentBehaviourTypeService mainFormIncidentBehaviourTypeService,
                                IMainFormIncidentMotivationTypeService mainFormIncidentMotivationTypeService
                                )
         {
             _dataAccess = dataAccess;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
             _mainFormImpactedPersonTypeService = mainFormImpactedPersonTypeService;
             _mainFormIncidentBehaviourTypeService = mainFormIncidentBehaviourTypeService;
             _mainFormIncidentMotivationTypeService = mainFormIncidentMotivationTypeService;
@@ -43,32 +40,20 @@ namespace DataAccessLibrary.DataServices
         {
             // Prepare parameters for stored procedure
             DynamicParameters p = new DynamicParameters();
-            p.Add("StudentReferenceNumber", mainFormEntityModel.StudentReferenceNumber);
-            p.Add("StudentDateOfBirth", mainFormEntityModel.StudentDateOfBirth);
             p.Add("SubmittedByWindowsUserName", mainFormEntityModel.SubmittedByWindowsUserName);
 
             // Textboxes
-            p.Add("StudentFullName", mainFormEntityModel.StudentFullName);
             p.Add("StaffFullName", mainFormEntityModel.StaffFullName);
             p.Add("StaffTelephoneNumber", mainFormEntityModel.StaffTelephoneNumber);
             p.Add("StaffEmail", mainFormEntityModel.StaffEmail);
             p.Add("IncidentPersonName", mainFormEntityModel.IncidentPersonName);
             p.Add("IncidentDate", mainFormEntityModel.IncidentDate);
 
-            p.Add("SampleDate", mainFormEntityModel.SampleDate);
-            p.Add("SampleTime", mainFormEntityModel.SampleTime);
-            p.Add("SampleCost", mainFormEntityModel.SampleCost);
-
-            p.Add("SampleTextbox", mainFormEntityModel.SampleTextbox);
-
-
             // Textareas
             p.Add("IncidentDetails", mainFormEntityModel.IncidentDetails);
-            p.Add("SampleTextarea", mainFormEntityModel.SampleTextarea);
 
 
             // DropdownLists
-            p.Add("SampleDropDownId", mainFormEntityModel.SampleDropdownId);
 
 
             // Radios
@@ -77,7 +62,6 @@ namespace DataAccessLibrary.DataServices
             p.Add("NumberOfPeopleCausedIncidentId", mainFormEntityModel.NumberOfPeopleCausedIncidentId);
             p.Add("IncidentLocationId", mainFormEntityModel.IncidentLocationId);
             p.Add("HasSimilarIncidentHappenedBeforeId", mainFormEntityModel.HasSimilarIncidentHappenedBeforeId);
-            p.Add("SampleRadioId", mainFormEntityModel.SampleRadioId);
 
 
             // Checkboxes
@@ -98,7 +82,6 @@ namespace DataAccessLibrary.DataServices
             await _mainFormImpactedPersonTypeService.CreateAsync(submissionId, mainFormEntityModel.SelectedImpactedPersonTypeIds);
             await _mainFormIncidentBehaviourTypeService.CreateAsync(submissionId, mainFormEntityModel.SelectedIncidentBehaviourTypeIds);
             await _mainFormIncidentMotivationTypeService.CreateAsync(submissionId, mainFormEntityModel.SelectedIncidentMotivationTypeIds);
-            await _mainFormSampleCheckboxService.CreateAsync(submissionId, mainFormEntityModel.SelectedSampleCheckboxIds);
 
 
             // Insert selected Status into bridging table tblMainFormStatus
@@ -153,20 +136,6 @@ namespace DataAccessLibrary.DataServices
                                         },
                                         _connectionStringData.SqlConnectionName);
 
-            // rows is a Task of List<> of type BiisStaffModel 
-            // return a single BiisStaffModel
-            return rows.FirstOrDefault();
-        }
-
-
-        public async Task<int> GetSampleRadioIdByMainFormId(int submissionId)
-        {
-            var parameters = new { Id = submissionId };
-
-            var rows = await _dataAccess.LoadDataAsync<int, dynamic>(
-                                        "dbo.spMainForm_GetSampleRadioIdByMainFormId",
-                                        parameters,
-                                        _connectionStringData.SqlConnectionName);
             // rows is a Task of List<> of type BiisStaffModel 
             // return a single BiisStaffModel
             return rows.FirstOrDefault();

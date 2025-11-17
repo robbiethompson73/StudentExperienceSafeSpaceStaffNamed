@@ -31,7 +31,7 @@
                                              alt="Student Experience Logo" width="40" height="40" style="display: block;" />
                                     </td>
                                     <td style="vertical-align: middle; color: #fff; font-size: 20px; font-weight: bold; background-color: #000;">
-                                        Student Experience Forms
+                                        Safe Space Forms
                                     </td>
                                 </tr>
                             </table>
@@ -42,13 +42,13 @@
                         <td style="padding: 15px 40px 30px 40px; color: #e0f2f2; font-size: 16px; line-height: 1.5;">
                             <p>Hello,</p>
 
-                            <p><strong>@Model.SubmittedBy</strong> has created a new record in the <strong>@Model.FormName</strong>.</p>
+                            <p><strong>@Model.SubmittedBy</strong> has created a new record in the <strong>@Model.FormName</strong>. It is now awaiting your action. Please use the buttons below to process it.</p>
 
                             <p><strong><u>Submission Details:</u></strong></p>
 
-                            <p>Name: @Model.StudentFullName</p>
-                            <p>Student Reference Number: @Model.StudentReferenceNumber</p>
-                            <p>Student Date of Birth: @Model.StudentDateOfBirth</p>
+                            <p>Staff Name: @Model.StaffFullName</p>
+                            <p>Incident Date: @DateFormatting.ToLongOrdinalDate(Model.IncidentDate)</p>
+                            <p>Incident Location: @Model.IncidentLocationName</p>
 
 
 @*                             <p>SampleTextarea: @Model.SampleTextarea</p>

@@ -11,12 +11,6 @@ namespace MvcUi.Services
     public class AuditService : IAuditService
     {
         private readonly IStatusService _statusService;
-        private readonly ISampleCheckboxService _sampleCheckboxService;
-        private readonly ISampleRadioService _sampleRadioService;
-        private readonly ISampleRadioAdminService _sampleRadioAdminService;
-        private readonly ISampleCheckboxAdminService _sampleCheckboxAdminService;
-        private readonly ISampleDropdownService _sampleDropdownService;
-        private readonly ISampleDropdownAdminService _sampleDropdownAdminService;
 
         // Generates an audit trail string describing what changed between original and updated entities
         // Parameters:
@@ -26,21 +20,9 @@ namespace MvcUi.Services
         // Returns:
         // - A multiline string summarizing the updated fields with old and new values, including timestamp and user
 
-        public AuditService(IStatusService statusService,
-                                         ISampleCheckboxService sampleCheckboxService,
-                                          ISampleRadioService sampleRadioService,
-                                          ISampleRadioAdminService sampleRadioAdminService,
-                                          ISampleCheckboxAdminService sampleCheckboxAdminService,
-                                          ISampleDropdownService sampleDropdownService,
-                                          ISampleDropdownAdminService sampleDropdownAdminService)
+        public AuditService(IStatusService statusService)
         {
             _statusService = statusService;
-            _sampleCheckboxService = sampleCheckboxService;
-            _sampleRadioService = sampleRadioService;
-            _sampleRadioAdminService = sampleRadioAdminService;
-            _sampleCheckboxAdminService = sampleCheckboxAdminService;
-            _sampleDropdownService = sampleDropdownService;
-            _sampleDropdownAdminService = sampleDropdownAdminService;
         }
 
 
@@ -127,35 +109,7 @@ namespace MvcUi.Services
                     if (val == null) return "";
                     var id = int.TryParse(val.ToString(), out var parsedId) ? parsedId : 0;
                     return await _statusService.GetStatusTitleById(id) ?? $"(Unknown ID: {val})";
-                },
-
-                ["SampleRadioId"] = async val =>
-                {
-                    if (val == null) return "";
-                    var id = int.TryParse(val.ToString(), out var parsedId) ? parsedId : 0;
-                    return await _sampleRadioService.GetTitleById(parsedId) ?? $"(Unknown ID: {val})";
-                },
-
-                ["SampleRadioAdminId"] = async val =>
-                {
-                    if (val == null) return "";
-                    var id = int.TryParse(val.ToString(), out var parsedId) ? parsedId : 0;
-                    return await _sampleRadioAdminService.GetTitleById(parsedId) ?? $"(Unknown ID: {val})";
-                },
-
-                ["SampleDropdownId"] = async val =>
-                {
-                    if (val == null) return "";
-                    var id = int.TryParse(val.ToString(), out var parsedId) ? parsedId : 0;
-                    return await _sampleDropdownService.GetTitleById(parsedId) ?? $"(Unknown ID: {val})";
-                },
-
-                ["SampleDropdownAdminId"] = async val =>
-                {
-                    if (val == null) return "";
-                    var id = int.TryParse(val.ToString(), out var parsedId) ? parsedId : 0;
-                    return await _sampleDropdownAdminService.GetTitleById(parsedId) ?? $"(Unknown ID: {val})";
-                },
+                }
 
 
             };
@@ -163,10 +117,6 @@ namespace MvcUi.Services
             // Resolvers for bridging table collections (List<int>) that resolve IDs to friendly names
             var collectionResolvers = new Dictionary<string, Func<int, Task<string>>>
             {
-                ["SelectedSampleCheckboxIds"] = async id => await _sampleCheckboxService.GetTitleById(id) ?? $"(Unknown ID: {id})",
-                ["SelectedSampleCheckboxAdminIds"] = async id => await _sampleCheckboxAdminService.GetTitleById(id) ?? $"(Unknown ID: {id})",
-                // Add additional collections here as needed
-
 
 
             };

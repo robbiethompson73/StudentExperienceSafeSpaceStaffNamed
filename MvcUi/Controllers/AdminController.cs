@@ -36,8 +36,6 @@ namespace MvcUi.Controllers
         private readonly IMainFormAdminService _mainFormAdminService;
         private readonly IInputSanitizer _inputSanitizer;
         private readonly IFileService _fileService;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
-        private readonly ISampleCheckboxService _sampleCheckboxService;
         private readonly IStatusService _statusService;
         private readonly IMainFormAdminViewModelPreparationService _mainFormAdminViewModelPreparationService;
         private readonly IFormHandlingService _formHandlingService;
@@ -46,15 +44,12 @@ namespace MvcUi.Controllers
         private readonly IExcelDataPreparationService _excelDataPreparationService;
         private readonly IExcelDownloadService _excelDownloadService;
         private readonly IAdminStaffManagementService _adminStaffManagementService;
-        private readonly IMainFormSampleCheckboxAdminService _mainFormSampleCheckboxAdminService;
         private readonly GlobalSettings _globalSettings;
 
 
         public AdminController(IMainFormAdminService mainFormAdminService,
                                 IInputSanitizer inputSanitizer,
                                 IFileService fileService,
-                                IMainFormSampleCheckboxService mainFormSampleCheckboxService,
-                                ISampleCheckboxService sampleCheckboxService,
                                 IStatusService statusService,
                                 IMainFormAdminViewModelPreparationService mainFormAdminViewModelPreparationService,
                                 IFormHandlingService formHandlingService,
@@ -63,15 +58,12 @@ namespace MvcUi.Controllers
                                 IAuditService mainFormAdminAuditService,
                                 IExcelDataPreparationService excelDataPreparationService,
                                 IExcelDownloadService excelDownloadService,
-                                IAdminStaffManagementService adminStaffManagementService,
-                                IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService
+                                IAdminStaffManagementService adminStaffManagementService
             )
         {
             _mainFormAdminService = mainFormAdminService;
             _inputSanitizer = inputSanitizer;
             _fileService = fileService;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
-            _sampleCheckboxService = sampleCheckboxService;
             _statusService = statusService;
             _mainFormAdminViewModelPreparationService = mainFormAdminViewModelPreparationService;
             _formHandlingService = formHandlingService;
@@ -80,7 +72,6 @@ namespace MvcUi.Controllers
             _excelDataPreparationService = excelDataPreparationService;
             _excelDownloadService = excelDownloadService;
             _adminStaffManagementService = adminStaffManagementService;
-            _mainFormSampleCheckboxAdminService = mainFormSampleCheckboxAdminService;
             _globalSettings = globalSettings.Value;
         }
 
@@ -243,8 +234,6 @@ namespace MvcUi.Controllers
             MainFormAdminEntityModel updatedSubmission = _formHandlingService.MapViewToEntityAdmin(mainFormAdminViewModel);
 
             // Need to populate SelectedCheckboxIds as these are not populated from _mainFormAdminService.GetById
-            existingSubmission.SelectedSampleCheckboxIds = await _mainFormSampleCheckboxService.GetSelectedSampleCheckboxIdsByMainFormIdAsync(mainFormAdminViewModel.Id);
-            existingSubmission.SelectedSampleCheckboxAdminIds = await _mainFormSampleCheckboxAdminService.GetSelectedSampleCheckboxAdminIdsByMainFormIdAsync(mainFormAdminViewModel.Id);
 
 
             var auditEntries = await _mainFormAdminAuditService.GenerateAuditLogEntries(existingSubmission,
