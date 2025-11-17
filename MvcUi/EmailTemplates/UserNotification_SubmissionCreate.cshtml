@@ -29,7 +29,7 @@
                                              alt="Student Experience Logo" width="40" height="40" style="display: block;" />
                                     </td>
                                     <td style="vertical-align: middle; color: #fff; font-size: 20px; font-weight: bold; background-color: #000;">
-                                        Student Experience Forms
+                                        Safe Space Forms
                                     </td>
                                 </tr>
                             </table>
@@ -46,15 +46,17 @@
 
                             <p><strong>Form Title:</strong> @Model.FormName</p>
 
-                            <p><strong>Student Reference Number:</strong> @Model.StudentReferenceNumber</p>
+                            <p>Staff Name: @Model.StaffFullName</p>
+                            <p>Incident Date: @DateFormatting.ToLongOrdinalDate(Model.IncidentDate)</p>
+                            <p>Incident Location: @Model.IncidentLocationName</p>
 
                             <p><strong>Submitted On:</strong> @DateFormatting.ToLongOrdinalDate(Model.SubmittedAt)</p>
 
-                            <p>If you have any questions about your submission, please contact us at: <strong>se@ayrshire.ac.uk</strong>.</p>
+                            <p>If you have any questions about your submission, please contact HR at: <strong>HRServices@ayrshire.ac.uk</strong>.</p>
 
                             <p>Thank you,</p>
 
-                            <p>Student Experience</p>
+                            <p>Human Resources</p>
                         </td>
                     </tr>
 

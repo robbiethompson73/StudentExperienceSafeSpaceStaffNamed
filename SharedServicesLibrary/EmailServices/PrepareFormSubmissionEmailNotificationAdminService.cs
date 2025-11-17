@@ -25,7 +25,6 @@ namespace SharedServicesLibrary.EmailServices
         private readonly IIdentityService _identityService;
         private readonly IConfiguration _configuration;
         private readonly IMainFormService _submissionFlatService;
-        private readonly ISampleDropdownService _sampleDropdownService;
         private readonly GlobalSettings _globalSettings;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -35,7 +34,6 @@ namespace SharedServicesLibrary.EmailServices
                                                 IIdentityService identityService,
                                                 IConfiguration configuration,
                                                 IMainFormService submissionFlatService,
-                                                ISampleDropdownService sampleDropdownService,
                                                 IOptions<GlobalSettings> globalSettings,
                                                 IWebHostEnvironment webHostEnvironment
                                                 )
@@ -45,7 +43,6 @@ namespace SharedServicesLibrary.EmailServices
             _identityService = identityService;
             _configuration = configuration;
             _submissionFlatService = submissionFlatService;
-            _sampleDropdownService = sampleDropdownService;
             _globalSettings = globalSettings.Value;
             _webHostEnvironment = webHostEnvironment;
 
@@ -82,15 +79,10 @@ namespace SharedServicesLibrary.EmailServices
 
                 Id = submissionId,
                 SubmittedBy = formattedUserName,
-                StudentFullName = viewModel.StudentFullName,
-                StudentReferenceNumber = viewModel.StudentReferenceNumber,
-                StudentDateOfBirth = viewModel.StudentDateOfBirth.HasValue
-                                                      ? DateFormatting.ToLongOrdinalDate(viewModel.StudentDateOfBirth.Value)
-                                                      : null
 
-                //,SampleTextarea = viewModel.SampleTextarea,
-                //SampleDropdownDisplayName = viewModel.SampleDropdownDisplayName,
-                //SelectedSampleCheckboxNames = viewModel.SelectedSampleCheckboxNames,
+                StaffFullName = viewModel.StaffFullName,
+                IncidentDate = viewModel.IncidentDate,
+                IncidentLocationName = viewModel.IncidentLocationName
                 //SampleRadio = viewModel.SampleRadio
             };
 
@@ -118,12 +110,15 @@ namespace SharedServicesLibrary.EmailServices
                 Subject = globalFormName + " Create Record",
                 TemplatePath = templatePath,
 
+                StaffFullName = viewModel.StaffFullName,
+                IncidentDate = viewModel.IncidentDate,
+                IncidentLocationName = viewModel.IncidentLocationName,
+
+
                 SubmittedBy = formattedUserName,
                 TargetUserEmail = targetUserEmail,
 
-                Id = submissionId,
-                StudentFullName = viewModel.StudentFullName,
-                StudentReferenceNumber = viewModel.StudentReferenceNumber
+                Id = submissionId
 
                 //,SampleTextarea = viewModel.SampleTextarea
             };

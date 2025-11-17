@@ -28,11 +28,11 @@ namespace EmailLibrary.Models
         public string SubmittedByFirstNamesOnly =>
                         string.Join(" ", SubmittedBy.Split(' ', StringSplitOptions.RemoveEmptyEntries).Reverse().Skip(1).Reverse());
 
-        public string StudentFullName { get; set; } = string.Empty;
+        public string StaffFullName { get; set; } = string.Empty;
 
-        public string StudentReferenceNumber { get; set; } = string.Empty;
+        public DateTime? IncidentDate { get; set; }
 
-        public string SampleTextarea { get; set; } = string.Empty;
+        public string IncidentLocationName { get; set; } = string.Empty;
 
         public DateTime SubmittedAt { get; set; } = DateTime.Now; // or DateTime.UtcNow
 

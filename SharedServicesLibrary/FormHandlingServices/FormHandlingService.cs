@@ -21,15 +21,9 @@ namespace SharedServicesLibrary.FormHandlingServices
 {
     public class FormHandlingService : IFormHandlingService
     {
-        private readonly ISampleCheckboxService _sampleCheckboxService;
         private readonly IStatusService _statusService;
         private readonly IFileUploadHelper _fileUploadHelper;
         private readonly IInputSanitizer _inputSanitizer;
-        private readonly ISampleDropdownService _sampleDropdownService;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
-        private readonly ISampleRadioService _sampleRadioService;
-        private readonly ISampleRadioAdminService _sampleRadioAdminService;
-        private readonly IMainFormSampleCheckboxAdminService _mainFormSampleCheckboxAdminService;
         private readonly IIncidentHappenedToService _incidentHappenedToService;
         private readonly INumberOfPeopleImpactedService _numberOfPeopleImpactedService;
         private readonly INumberOfPeopleCausedIncidentService _numberOfPeopleCausedIncidentService;
@@ -41,21 +35,11 @@ namespace SharedServicesLibrary.FormHandlingServices
         private readonly IMainFormImpactedPersonTypeService _mainFormImpactedPersonTypeService;
         private readonly IMainFormIncidentBehaviourTypeService _mainFormIncidentBehaviourTypeService;
         private readonly IMainFormIncidentMotivationTypeService _mainFormIncidentMotivationTypeService;
-        private readonly ISampleCheckboxAdminService _sampleCheckboxAdminService;
-        private readonly ISampleDropdownAdminService _sampleDropdownAdminService;
 
-        public FormHandlingService(ISampleCheckboxService sampleCheckboxService,
-                                   ISampleCheckboxAdminService sampleCheckboxAdminService,
-                                   IStatusService statusService,
+        public FormHandlingService(IStatusService statusService,
                                    IFileUploadHelper fileUploadHelper,
                                    IInputSanitizer inputSanitizer,
-                                   ISampleDropdownService sampleDropdownService,
-                                   ISampleDropdownAdminService sampleDropdownAdminService,
-                                   IMainFormSampleCheckboxService mainFormSampleCheckboxService,
-                                   ISampleRadioService sampleRadioService,
-                                   ISampleRadioAdminService sampleRadioAdminService,
-                                   IMainFormSampleCheckboxAdminService mainFormSampleCheckboxAdminService,
-
+                                   
                                     IIncidentHappenedToService incidentHappenedToService,
                                     INumberOfPeopleImpactedService numberOfPeopleImpactedService,
                                     INumberOfPeopleCausedIncidentService numberOfPeopleCausedIncidentService,
@@ -69,19 +53,11 @@ namespace SharedServicesLibrary.FormHandlingServices
                                    IMainFormImpactedPersonTypeService mainFormImpactedPersonTypeService,
                                    IMainFormIncidentBehaviourTypeService mainFormIncidentBehaviourTypeService,
                                    IMainFormIncidentMotivationTypeService mainFormIncidentMotivationTypeService
-
-
                                    )
         {
-            _sampleCheckboxService = sampleCheckboxService;
             _statusService = statusService;
             _fileUploadHelper = fileUploadHelper;
             _inputSanitizer = inputSanitizer;
-            _sampleDropdownService = sampleDropdownService;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
-            _sampleRadioService = sampleRadioService;
-            _sampleRadioAdminService = sampleRadioAdminService;
-            _mainFormSampleCheckboxAdminService = mainFormSampleCheckboxAdminService;
             _incidentHappenedToService = incidentHappenedToService;
             _numberOfPeopleImpactedService = numberOfPeopleImpactedService;
             _numberOfPeopleCausedIncidentService = numberOfPeopleCausedIncidentService;
@@ -93,8 +69,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             _mainFormImpactedPersonTypeService = mainFormImpactedPersonTypeService;
             _mainFormIncidentBehaviourTypeService = mainFormIncidentBehaviourTypeService;
             _mainFormIncidentMotivationTypeService = mainFormIncidentMotivationTypeService;
-            _sampleCheckboxAdminService = sampleCheckboxAdminService;
-            _sampleDropdownAdminService = sampleDropdownAdminService;
         }
 
 
@@ -150,11 +124,9 @@ namespace SharedServicesLibrary.FormHandlingServices
             viewModel.NumberOfPeopleCausedIncidentOptions = await _numberOfPeopleCausedIncidentService.GetAllActiveSelectListAsync();
             viewModel.IncidentLocationOptions = await _incidentLocationService.GetAllActiveSelectListAsync();
             viewModel.HasSimilarIncidentHappenedBeforeOptions = await _hasSimilarIncidentHappenedBeforeService.GetAllActiveSelectListAsync();
-            viewModel.SampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
 
 
             // DropDownlist
-            viewModel.SampleDropdownOptions = await _sampleDropdownService.GetAllActiveSelectListAsync();
 
 
             // If an ID is selected, attempt to resolve its corresponding display name
@@ -205,14 +177,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             }
 
 
-            if (viewModel.SelectedSampleRadioId.HasValue)
-            {
-                var selectedSampleRadio = viewModel.SampleRadioOptions
-                    .FirstOrDefault(option => option.Value == viewModel.SelectedSampleRadioId.Value.ToString());
-                viewModel.SampleRadioName = selectedSampleRadio?.Text;
-            }
-
-
 
 
             // Checkbox group
@@ -222,9 +186,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             viewModel.ImpactedPersonTypeOptions = await _impactedPersonTypeService.GetAllActiveSelectListAsync();
             viewModel.IncidentBehaviourTypeOptions = await _incidentBehaviourTypeService.GetAllActiveSelectListAsync();
             viewModel.IncidentMotivationTypeOptions = await _incidentMotivationTypeService.GetAllActiveSelectListAsync();
-            viewModel.SampleCheckboxOptions = await _sampleCheckboxService.GetAllActiveSelectListAsync();
-
-
 
             // Predefined
             viewModel.StatusOptions = await _statusService.GetStatusAllActiveSelectListAsync();
@@ -240,13 +201,9 @@ namespace SharedServicesLibrary.FormHandlingServices
             viewModel.NumberOfPeopleCausedIncidentOptions = await _numberOfPeopleCausedIncidentService.GetAllActiveSelectListAsync();
             viewModel.IncidentLocationOptions = await _incidentLocationService.GetAllActiveSelectListAsync();
             viewModel.HasSimilarIncidentHappenedBeforeOptions = await _hasSimilarIncidentHappenedBeforeService.GetAllActiveSelectListAsync();
-            viewModel.SampleRadioOptions = await _sampleRadioService.GetAllActiveSelectListAsync();
-            viewModel.SampleRadioAdminOptions = await _sampleRadioAdminService.GetAllActiveSelectListAsync();
 
 
             // Dropdowns
-            viewModel.SampleDropdownOptions = await _sampleDropdownService.GetAllActiveSelectListAsync();
-            viewModel.SampleDropdownAdminOptions = await _sampleDropdownAdminService.GetAllActiveSelectListAsync();
             viewModel.StatusOptions = await _statusService.GetStatusAllActiveSelectListAsync();
 
 
@@ -254,9 +211,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             viewModel.ImpactedPersonTypeOptions = await _impactedPersonTypeService.GetAllActiveSelectListAsync();
             viewModel.IncidentBehaviourTypeOptions = await _incidentBehaviourTypeService.GetAllActiveSelectListAsync();
             viewModel.IncidentMotivationTypeOptions = await _incidentMotivationTypeService.GetAllActiveSelectListAsync();
-            viewModel.SampleCheckboxOptions = await _sampleCheckboxService.GetAllActiveSelectListAsync();
-            viewModel.SampleCheckboxAdminOptions = await _sampleCheckboxAdminService.GetAllActiveSelectListAsync();
-
 
             return viewModel;
         }
@@ -274,28 +228,20 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             // Textboxes
             entity.StaffMemberAssignedAdmin = _inputSanitizer.Sanitize(viewModel.StaffMemberAssignedAdmin);
-            entity.SampleTextboxAdmin = _inputSanitizer.Sanitize(viewModel.SampleTextboxAdmin);
-            entity.SampleDateAdmin = viewModel.SampleDateAdmin;
-            entity.SampleCostAdmin = viewModel.SampleCostAdmin;
 
 
             // Textareas
             entity.ActionTakenByCollegeAdmin = _inputSanitizer.Sanitize(viewModel.ActionTakenByCollegeAdmin);
             entity.AdminNote = _inputSanitizer.Sanitize(viewModel.AdminNote);
-            entity.SampleTextareaAdmin = _inputSanitizer.Sanitize(viewModel.SampleTextareaAdmin);
 
 
             // Radios
-            entity.SampleRadioAdminId = viewModel.SelectedSampleRadioAdminId ?? throw new InvalidOperationException("SampleRadioadminId is required");
 
 
             // Dropdown Lists
-            entity.SampleDropdownAdminId = viewModel.SampleDropdownAdminId;
-
 
 
             // Checkboxes
-            entity.SelectedSampleCheckboxAdminIds = viewModel.SelectedSampleCheckboxAdminIds;
 
 
             return entity;
@@ -319,28 +265,17 @@ namespace SharedServicesLibrary.FormHandlingServices
         {
             // Basic identification and tracking fields
             entity.Id = viewModel.Id;
-            entity.StudentReferenceNumber = viewModel.StudentReferenceNumber?.ToUpperInvariant(); // Ensure consistent casing
-            entity.StudentDateOfBirth = viewModel.StudentDateOfBirth;
             entity.SubmittedByWindowsUserName = viewModel.SubmittedByWindowsUserName;
 
             // Textboxes (input sanitization to prevent injection or formatting issues)
-            entity.StudentFullName = _inputSanitizer.Sanitize(viewModel.StudentFullName);
-
             entity.StaffFullName = _inputSanitizer.Sanitize(viewModel.StaffFullName);
             entity.StaffTelephoneNumber = _inputSanitizer.Sanitize(viewModel.StaffTelephoneNumber);
             entity.StaffEmail = viewModel.StaffEmail;
             entity.IncidentPersonName = _inputSanitizer.Sanitize(viewModel.IncidentPersonName);
             entity.IncidentDate = viewModel.IncidentDate;
 
-            entity.SampleTextbox = _inputSanitizer.Sanitize(viewModel.SampleTextbox);
-            entity.SampleDate = viewModel.SampleDate;
-            entity.SampleTime = viewModel.SampleTime;
-            entity.SampleCost = viewModel.SampleCost;
-
-
             // Textareas
             entity.IncidentDetails = _inputSanitizer.Sanitize(viewModel.IncidentDetails);
-            entity.SampleTextarea = _inputSanitizer.Sanitize(viewModel.SampleTextarea);
 
 
             // Radios (throw if not selected — these are required fields)
@@ -349,19 +284,15 @@ namespace SharedServicesLibrary.FormHandlingServices
             entity.NumberOfPeopleCausedIncidentId = viewModel.SelectedNumberOfPeopleCausedIncidentId ?? throw new InvalidOperationException("NumberOfPeopleCausedIncidentId is required");
             entity.IncidentLocationId = viewModel.SelectedIncidentLocationId ?? throw new InvalidOperationException("IncidentLocationId is required");
             entity.HasSimilarIncidentHappenedBeforeId = viewModel.SelectedHasSimilarIncidentHappenedBeforeId ?? throw new InvalidOperationException("HasSimilarIncidentHappenedBeforeId is required");
-            entity.SampleRadioId = viewModel.SelectedSampleRadioId ?? throw new InvalidOperationException("SampleRadioId is required");
 
 
             // Dropdown Lists
-            entity.SampleDropdownId = viewModel.SampleDropdownId;
 
 
             // Checkboxes (stored as list of selected IDs)
             entity.SelectedImpactedPersonTypeIds = viewModel.SelectedImpactedPersonTypeIds;
             entity.SelectedIncidentBehaviourTypeIds = viewModel.SelectedIncidentBehaviourTypeIds;
             entity.SelectedIncidentMotivationTypeIds = viewModel.SelectedIncidentMotivationTypeIds;
-            entity.SelectedSampleCheckboxIds = viewModel.SelectedSampleCheckboxIds;
-
 
 
             // Predefined dropdown (e.g. form status)
@@ -369,18 +300,6 @@ namespace SharedServicesLibrary.FormHandlingServices
 
             return entity;
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -410,33 +329,19 @@ namespace SharedServicesLibrary.FormHandlingServices
             vm.IncidentDate = entityModel.IncidentDate;
 
             vm.StaffMemberAssignedAdmin = _inputSanitizer.Sanitize(entityModel.StaffMemberAssignedAdmin);
-            vm.SampleTextboxAdmin = _inputSanitizer.Sanitize(entityModel.SampleTextboxAdmin);
-            vm.SampleDateAdmin = entityModel.SampleDateAdmin;
-            vm.SampleCostAdmin = entityModel.SampleCostAdmin;
 
 
 
             // Textareas
             vm.ActionTakenByCollegeAdmin = _inputSanitizer.Sanitize(entityModel.ActionTakenByCollegeAdmin);
             vm.AdminNote = _inputSanitizer.Sanitize(entityModel.AdminNote);
-            vm.SampleTextareaAdmin = _inputSanitizer.Sanitize(entityModel.SampleTextareaAdmin);
 
 
             // Radios
-            vm.SelectedSampleRadioAdminId = entityModel.SampleRadioAdminId;
-            vm.SampleRadioAdminName = context.SelectedSampleRadioAdminName;
 
 
             // Dropdown Lists
             vm.AdminStatusId = entityModel.StatusId;
-
-
-            var sampleDropdownAdminId = entityModel.SampleDropdownAdminId;
-            var sampleDropdownAdminName = context.SampleDropdownAdminOptions
-                                .FirstOrDefault(s => s.Value == sampleDropdownAdminId.ToString())?.Text
-                             ?? "-";
-            vm.SampleDropdownAdminId = sampleDropdownAdminId;
-            vm.SampleDropdownAdminDisplayName = sampleDropdownAdminName;
 
 
 
@@ -447,10 +352,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             // Selected xyz Ids come directly from the entity model.
             // These represent the raw, persisted user selections (domain data),
             // and should be mapped as-is during the entity-to-view model conversion.
-            vm.SelectedSampleCheckboxAdminIds = await _mainFormSampleCheckboxAdminService.GetSelectedSampleCheckboxAdminIdsByMainFormIdAsync(entityModel.Id);
-            vm.SampleCheckboxAdminOptions = context.SampleCheckboxAdminOptions;
-            vm.SelectedSampleCheckboxAdminNames = context.SelectedSampleCheckboxAdminNames;
-
 
 
             vm.AdminAuditFormatted = context.AuditFormattedHtml;
@@ -471,27 +372,17 @@ namespace SharedServicesLibrary.FormHandlingServices
             where TViewModel : MainFormViewModel
         {
             vm.Id = entityModel.Id;
-            vm.StudentReferenceNumber = entityModel.StudentReferenceNumber;
-            vm.StudentDateOfBirth = entityModel.StudentDateOfBirth;
             vm.SubmittedByWindowsUserName = entityModel.SubmittedByWindowsUserName;
 
             // Textboxes (input sanitization to prevent injection or formatting issues)
-            vm.StudentFullName = _inputSanitizer.Sanitize(entityModel.StudentFullName);
-
             vm.StaffFullName = _inputSanitizer.Sanitize(entityModel.StaffFullName);
             vm.StaffTelephoneNumber = _inputSanitizer.Sanitize(entityModel.StaffTelephoneNumber);
             vm.StaffEmail = entityModel.StaffEmail;
             vm.IncidentPersonName = _inputSanitizer.Sanitize(entityModel.IncidentPersonName);
             vm.IncidentDate = entityModel.IncidentDate;
 
-            vm.SampleTextbox = _inputSanitizer.Sanitize(entityModel.SampleTextbox);
-            vm.SampleDate = entityModel.SampleDate;
-            vm.SampleTime = entityModel.SampleTime;
-            vm.SampleCost = entityModel.SampleCost;
-
             // Textareas
             vm.IncidentDetails = _inputSanitizer.Sanitize(entityModel.IncidentDetails);
-            vm.SampleTextarea = _inputSanitizer.Sanitize(entityModel.SampleTextarea);
 
 
             // Radios
@@ -515,19 +406,8 @@ namespace SharedServicesLibrary.FormHandlingServices
             vm.HasSimilarIncidentHappenedBeforeName = context.SelectedHasSimilarIncidentHappenedBeforeName;
             vm.HasSimilarIncidentHappenedBeforeOptions = context.HasSimilarIncidentHappenedBeforeOptions;
 
-            vm.SelectedSampleRadioId = entityModel.SampleRadioId;
-            vm.SampleRadioName = context.SelectedSampleRadioName;
-            vm.SampleRadioOptions = context.SampleRadioOptions;
-
 
             // Dropdowns
-            vm.SampleDropdownId = entityModel.SampleDropdownId;
-            var sampleDropdownOptions = (List<SelectListItem>)context.SampleDropdownOptions;
-            vm.SampleDropdownOptions = sampleDropdownOptions;
-            var sampleDropdownName = sampleDropdownOptions
-                .FirstOrDefault(s => s.Value == entityModel.SampleDropdownId.ToString())?.Text ?? "Unknown";
-            vm.SampleDropdownDisplayName = sampleDropdownName;
-
 
 
 
@@ -554,11 +434,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             vm.SelectedIncidentMotivationTypeIds = await _mainFormIncidentMotivationTypeService.GetSelectedIncidentMotivationTypeIdsByMainFormIdAsync(entityModel.Id);
             vm.IncidentMotivationTypeOptions = context.IncidentMotivationTypeOptions;
             vm.SelectedIncidentMotivationTypeNames = context.SelectedIncidentMotivationTypeNames;
-
-            vm.SelectedSampleCheckboxIds = await _mainFormSampleCheckboxService.GetSelectedSampleCheckboxIdsByMainFormIdAsync(entityModel.Id);
-            vm.SampleCheckboxOptions = context.SampleCheckboxOptions;
-            vm.SelectedSampleCheckboxNames = context.SelectedSampleCheckboxNames;
-
 
 
 
@@ -592,14 +467,6 @@ namespace SharedServicesLibrary.FormHandlingServices
         public void PopulateDisplayProperties(MainFormViewModel viewModel)
         {
             // Dropdowns
-            // SampleDropdown: If options exist, find the text matching the selected SampleDropdownId
-            if (viewModel.SampleDropdownOptions?.Any() == true)
-            {
-                viewModel.SampleDropdownDisplayName = viewModel.SampleDropdownOptions
-                    .FirstOrDefault(x => x.Value == viewModel.SampleDropdownId?.ToString())?.Text
-                    ?? string.Empty;  // Fallback to empty if not found
-            }
-
 
             // Status dropdown: If options exist, find the text matching the selected StatusId
             if (viewModel.StatusOptions?.Any() == true)
@@ -635,13 +502,6 @@ namespace SharedServicesLibrary.FormHandlingServices
                     .ToList();
             }
             
-            if (viewModel.SampleCheckboxOptions?.Any() == true)
-            {
-                viewModel.SelectedSampleCheckboxNames = viewModel.SampleCheckboxOptions
-                    .Where(x => viewModel.SelectedSampleCheckboxIds.Contains(int.Parse(x.Value)))
-                    .Select(x => x.Text)
-                    .ToList();
-            }
 
 
         }
@@ -655,21 +515,6 @@ namespace SharedServicesLibrary.FormHandlingServices
         public void PopulateDisplayPropertiesAdmin(MainFormAdminViewModel viewModel)
         {
             // Dropdowns
-
-            // If SampleDropdown options are provided, find and set the display name matching the selected GenderId
-            if (viewModel.SampleDropdownOptions?.Any() == true)
-            {
-                viewModel.SampleDropdownDisplayName = viewModel.SampleDropdownOptions
-                    .FirstOrDefault(x => x.Value == viewModel.SampleDropdownId?.ToString())?.Text
-                    ?? string.Empty;  // Fallback to empty if not found
-            }
-
-            if (viewModel.SampleDropdownAdminOptions?.Any() == true)
-            {
-                viewModel.SampleDropdownAdminDisplayName = viewModel.SampleDropdownAdminOptions
-                    .FirstOrDefault(x => x.Value == viewModel.SampleDropdownAdminId?.ToString())?.Text
-                    ?? string.Empty;  // Fallback to empty if not found
-            }
 
 
 
@@ -707,22 +552,6 @@ namespace SharedServicesLibrary.FormHandlingServices
             {
                 viewModel.SelectedIncidentMotivationTypeNames = viewModel.IncidentMotivationTypeOptions
                     .Where(x => viewModel.SelectedIncidentMotivationTypeIds.Contains(int.Parse(x.Value)))
-                    .Select(x => x.Text)
-                    .ToList();
-            }
-
-            if (viewModel.SampleCheckboxOptions?.Any() == true)
-            {
-                viewModel.SelectedSampleCheckboxNames = viewModel.SampleCheckboxOptions
-                    .Where(x => viewModel.SelectedSampleCheckboxIds.Contains(int.Parse(x.Value)))
-                    .Select(x => x.Text)
-                    .ToList();
-            }
-
-            if (viewModel.SampleCheckboxAdminOptions?.Any() == true)
-            {
-                viewModel.SelectedSampleCheckboxAdminNames = viewModel.SampleCheckboxAdminOptions
-                    .Where(x => viewModel.SelectedSampleCheckboxAdminIds.Contains(int.Parse(x.Value)))
                     .Select(x => x.Text)
                     .ToList();
             }

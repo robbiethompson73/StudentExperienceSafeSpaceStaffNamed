@@ -13,6 +13,5 @@ namespace DataAccessLibrary.DataServices
         Task<int> GetIncidentLocationIdByMainFormId(int submissionId);
         Task<int> GetNumberOfPeopleCausedIncidentIdByMainFormId(int submissionId);
         Task<int> GetNumberOfPeopleImpactedIdByMainFormId(int submissionId);
-        Task<int> GetSampleRadioIdByMainFormId(int submissionId);
     }
 }

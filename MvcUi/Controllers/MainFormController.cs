@@ -45,8 +45,6 @@ namespace MvcUi.Controllers
         private readonly IMainFormService _mainFormService;
         private readonly IInputSanitizer _inputSanitizer;
         private readonly IFileService _fileService;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
-        private readonly ISampleCheckboxService _sampleCheckboxService;
         private readonly IStatusService _statusService;
         private readonly IMainFormViewModelPreparationService _mainFormViewModelPreparationService;
         private readonly IIdentityService _identityService;
@@ -61,8 +59,6 @@ namespace MvcUi.Controllers
         public MainFormController(IMainFormService mainFormService,
                                     IInputSanitizer inputSanitizer,
                                     IFileService fileService,
-                                    IMainFormSampleCheckboxService mainFormSampleCheckboxService,
-                                    ISampleCheckboxService sampleCheckboxService,
                                     IStatusService statusService,
                                     IMainFormViewModelPreparationService mainFormViewModelPreparationService,
                                     IIdentityService identityService,
@@ -78,8 +74,6 @@ namespace MvcUi.Controllers
             _mainFormService = mainFormService;
             _inputSanitizer = inputSanitizer;
             _fileService = fileService;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
-            _sampleCheckboxService = sampleCheckboxService;
             _statusService = statusService;
             _mainFormViewModelPreparationService = mainFormViewModelPreparationService;
             _identityService = identityService;

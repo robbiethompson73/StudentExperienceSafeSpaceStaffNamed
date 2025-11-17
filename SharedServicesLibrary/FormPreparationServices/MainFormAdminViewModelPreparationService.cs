@@ -13,25 +13,19 @@ namespace SharedServicesLibrary.FormPreparationServices
 {
     public class MainFormAdminViewModelPreparationService : IMainFormAdminViewModelPreparationService
     {
-        private readonly ISampleCheckboxService _sampleCheckboxService;
         private readonly IStatusService _statusService;
         private readonly IMainFormAdminService _mainFormAdminService;
-        private readonly IMainFormSampleCheckboxService _mainFormSampleCheckboxService;
         private readonly IFormHandlingService _formHandlingService;
         private readonly IAdminViewModelContextBuilder _adminViewModelContextBuilder;
 
-        public MainFormAdminViewModelPreparationService(ISampleCheckboxService sampleCheckboxService,
-                                      IStatusService statusService,
+        public MainFormAdminViewModelPreparationService(IStatusService statusService,
                                       IMainFormAdminService mainFormAdminService,
-                                      IMainFormSampleCheckboxService mainFormSampleCheckboxService,
                                       IFormHandlingService formHandlingService,
                                       IAdminViewModelContextBuilder adminViewModelContextBuilder)
 
         {
-            _sampleCheckboxService = sampleCheckboxService;
             _statusService = statusService;
             _mainFormAdminService = mainFormAdminService;
-            _mainFormSampleCheckboxService = mainFormSampleCheckboxService;
             _formHandlingService = formHandlingService;
             _adminViewModelContextBuilder = adminViewModelContextBuilder;
         }
