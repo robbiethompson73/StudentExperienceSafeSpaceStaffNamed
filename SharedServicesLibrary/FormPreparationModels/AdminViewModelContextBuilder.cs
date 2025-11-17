@@ -136,7 +136,6 @@ namespace SharedServicesLibrary.FormPreparationModels
 
 
                 // DropdownLists
-                SampleDropdownOptions = baseContext.SampleDropdownOptions,
 
 
                 // Checkboxes
@@ -148,9 +147,6 @@ namespace SharedServicesLibrary.FormPreparationModels
 
                 IncidentMotivationTypeOptions = baseContext.IncidentMotivationTypeOptions,
                 SelectedIncidentMotivationTypeNames = baseContext.SelectedIncidentMotivationTypeNames,
-
-                SampleCheckboxOptions = baseContext.SampleCheckboxOptions,
-                SelectedSampleCheckboxNames = baseContext.SelectedSampleCheckboxNames,
 
 
 
