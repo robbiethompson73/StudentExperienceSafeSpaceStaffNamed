@@ -35,16 +35,10 @@ namespace SharedServicesLibrary.FormPreparationModels
         public string? SelectedHasSimilarIncidentHappenedBeforeName { get; set; }
 
 
-        public List<SelectListItem> SampleRadioOptions { get; set; }
-        public int? SelectedSampleRadioId { get; set; }
-        public string? SelectedSampleRadioName { get; set; }
-
-
 
 
 
         // DropDownLists
-        public List<SelectListItem> SampleDropdownOptions { get; set; }
 
 
 
@@ -63,10 +57,6 @@ namespace SharedServicesLibrary.FormPreparationModels
         public List<SelectListItem> IncidentMotivationTypeOptions { get; set; }
         public List<string> SelectedIncidentMotivationTypeNames { get; set; }
 
-
-        public List<int> SelectedSampleCheckboxIds { get; set; }
-        public List<SelectListItem> SampleCheckboxOptions { get; set; }
-        public List<string> SelectedSampleCheckboxNames { get; set; }
 
 
 

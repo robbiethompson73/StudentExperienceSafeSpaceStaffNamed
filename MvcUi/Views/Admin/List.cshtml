@@ -21,7 +21,7 @@
             <nav aria-label="breadcrumb" class="breadcrumb-wrapper">
                 <ol class="breadcrumb custom-breadcrumb admin mb-3">
                     <li class="breadcrumb-item text-nowrap">
-                        <a href="https://biis.ayrshire.ac.uk/HRFormsGateway" title="HR Forms Gateway Link">HR Forms Gateway Home</a>
+                        <a href="https://biis.ayrshire.ac.uk/StudentExperienceFormsGateway" title="Student Experience Gateway Link">Student Experience Gateway Home</a>
                     </li>
 
                     <li class="breadcrumb-item text-nowrap">
@@ -171,12 +171,12 @@
                                 <a asp-action="List"
                                    asp-route-staffFullName="@ViewData["StaffFullName"]"
                                    asp-route-statusId="@ViewData["StatusId"]"
-                                   asp-route-sortBy="Id"
-                                   asp-route-sortDirection="@NextDirection("Id")"
+                                   asp-route-sortBy="DateSubmitted"
+                                   asp-route-sortDirection="@NextDirection("DateSubmitted")"
                                    asp-route-pageNumber="@ViewData["PageNumber"]"
                                    asp-route-pageSize="@ViewData["PageSize"]"
-                                   title="Click to sort by Id"
-                                   class="sort-link @(currentSortBy == "Id" ? "sorted" : "")">
+                                   title="Click to sort by submission date"
+                                   class="sort-link @(currentSortBy == "DateSubmitted" ? "sorted" : "")">
                                     @Html.DisplayNameFor(model => model.Items.FirstOrDefault().DateSubmitted)
 
                                     @if (currentSortBy == "DateSubmitted")
@@ -188,6 +188,7 @@
                                     }
                                 </a>
                             </th>
+
 
 
                             <!--

@@ -11,22 +11,14 @@ namespace SharedServicesLibrary.FormPreparationModels
     {
 
         // Radios
-        public List<SelectListItem> SampleRadioAdminOptions { get; set; }
-        public int? SelectedSampleRadioAdminId { get; set; }
-        public string? SelectedSampleRadioAdminName { get; set; }
 
 
 
         // DropDownLists
-        public List<SelectListItem> SampleDropdownAdminOptions { get; set; }
 
 
 
         // Checkboxes
-        public List<int> SelectedSampleCheckboxAdminIds { get; set; }
-        public List<SelectListItem> SampleCheckboxAdminOptions { get; set; }
-        public List<string> SelectedSampleCheckboxAdminNames { get; set; }
-
 
 
 
