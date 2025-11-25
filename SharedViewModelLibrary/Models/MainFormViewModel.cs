@@ -220,16 +220,16 @@ namespace SharedViewModelLibrary.Models
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Only require IncidentPersonName if SelectedIncidentHappenedToId == 2
-            if (SelectedIncidentHappenedToId.HasValue && SelectedIncidentHappenedToId.Value == 2)
-            {
-                if (string.IsNullOrWhiteSpace(IncidentPersonName))
-                {
-                    yield return new ValidationResult(
-                        "Affected person name is required.",
-                        new[] { nameof(IncidentPersonName) }
-                    );
-                }
-            }
+            //if (SelectedIncidentHappenedToId.HasValue && SelectedIncidentHappenedToId.Value == 2)
+            //{
+            //    if (string.IsNullOrWhiteSpace(IncidentPersonName))
+            //    {
+            //        yield return new ValidationResult(
+            //            "Affected person name is required.",
+            //            new[] { nameof(IncidentPersonName) }
+            //        );
+            //    }
+            //}
 
 
             // Existing checkbox validation
