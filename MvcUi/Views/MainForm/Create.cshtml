@@ -1065,7 +1065,6 @@
 
                     // Clear any existing validation error and message
                     if (validator) {
-                        validator.resetForm();
                         validator.element($incidentPersonName); // recheck field
                     }
                 } else {
@@ -1078,7 +1077,6 @@
 
                     // Clear and re-validate
                     if (validator) {
-                        validator.resetForm();
                         validator.element($incidentPersonName);
                     }
                 }
