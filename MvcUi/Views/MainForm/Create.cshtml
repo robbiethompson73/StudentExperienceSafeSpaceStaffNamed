@@ -258,6 +258,10 @@
                                 { "id", "IncidentPersonName" }                      // Explicit ID for JS targeting
                             })
 
+                            <small class="form-text text-muted">
+                                You may leave this field blank if you do not have this information.
+                            </small>
+
                             @Html.ValidationMessageFor(m => m.IncidentPersonName, "", new
                             {
                                 @class = "form-error-message",
