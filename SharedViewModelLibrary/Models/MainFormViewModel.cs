@@ -23,11 +23,10 @@ namespace SharedViewModelLibrary.Models
         [Display(Name = "Staff Full Name")]
         public string StaffFullName { get; set; }
 
-        [Required(ErrorMessage = "Staff telephone number is required.")]
         [NoWhitespaceOnly]
-        [StringLength(100, ErrorMessage = "Staff telephone number cannot exceed 100 characters.")]
-        [Display(Name = "Staff Telephone Number")]
-        public string StaffTelephoneNumber { get; set; }
+        [StringLength(100, ErrorMessage = "Staff mobile or phone number cannot exceed 100 characters.")]
+        [Display(Name = "Mobile or phone number")]
+        public string? StaffTelephoneNumber { get; set; }
 
 
         [Required(ErrorMessage = "Staff Email address is required.")]

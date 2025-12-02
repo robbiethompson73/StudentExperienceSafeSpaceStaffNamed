@@ -17,7 +17,7 @@
                     </li>
 
                     <li class="breadcrumb-item text-nowrap">
-                        @Html.ActionLink($"{ViewData["AppName"]} Information", "Index", "Home")
+                        @Html.ActionLink($"{ViewData["AppName"]} - Named Home", "Index", "Home")
                     </li>
 
                     <li class="breadcrumb-item active text-nowrap" aria-current="page">@ViewData["Title"]</li>
@@ -45,26 +45,39 @@
 
 
 
-
 <div class="container py-0">
   <div class="row">
     <div class="col-12">
 
+            <div class="alert-styled p-4 mb-4 d-flex">
+                <div class="icon-wrap me-3">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
 
-      <div class="alert bg-white no-border p-3 mb-4 d-flex align-items-start">
-        <div class="me-3" style="margin-top: -3px;">
-            <i class="fa-solid fa-circle-info text-info fa-2x"></i>
-        </div>
-        <div>
-          <p class="mb-2 text-black-sticky">
-                        Please note that this form will be picked up during normal working hours and should not be used to report an emergency or a serious safeguarding concern which requires immediate action. If you need to report a serious incident, or you believe that yourself, or someone else, is at risk of imminent harm, please contact the Police on 999.
-          </p>
-        </div>
-      </div>
+                <div>
+                    <p class="mb-0 text-black">
+                        <strong>This form is for named reports.</strong>
+                        You can choose to share your name so we can support you directly.
+                    </p>
+
+                    <p class="mt-2 mb-0 text-black">
+                        <strong class="text-danger">Important:</strong>
+                        You have chosen the named form which means that once you submit the form, we are able to look into the incident, contact you for more details and offer support. 
+                        <br />To let us know, please click on the “Let us know” button below:
+                    </p>
+                </div>
+            </div>
+
 
         </div> @* <div class="col-12"> *@
     </div> @* <div class="row"> *@
 </div> @* <div class="container py-0"> *@
+
+
+
+
+
+
 
 
 <!-- Centered Logo -->
