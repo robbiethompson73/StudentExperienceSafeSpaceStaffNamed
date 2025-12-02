@@ -19,31 +19,26 @@ namespace SharedServicesLibrary.ExcelExportServices
 
             // Headers
             worksheet.Cell(1, 1).Value = "ID";
-            worksheet.Cell(1, 2).Value = "Date Submitted";
-            worksheet.Cell(1, 3).Value = "Student Reference Number";
-            worksheet.Cell(1, 4).Value = "Student DOB";
-            worksheet.Cell(1, 5).Value = "Submitted By Windows Name";
-            worksheet.Cell(1, 6).Value = "Full Name";
-            worksheet.Cell(1, 7).Value = "SampleDropdown";
-            worksheet.Cell(1, 8).Value = "SampleCheckbox Titles";
+            worksheet.Cell(1, 2).Value = "IncidentDate";
+            worksheet.Cell(1, 3).Value = "StaffFullName";
+            worksheet.Cell(1, 4).Value = "IncidentDetails";
+            worksheet.Cell(1, 5).Value = "DateSubmitted";
+
 
 
 
             // Styling header
-            worksheet.Range("A1:H1").Style.Font.Bold = true;
-            worksheet.Range("A1:H1").Style.Fill.BackgroundColor = XLColor.LightGray;
+            worksheet.Range("A1:E1").Style.Font.Bold = true;
+            worksheet.Range("A1:E1").Style.Fill.BackgroundColor = XLColor.LightGray;
 
             int row = 2;
             foreach (var item in data)
             {
                 worksheet.Cell(row, 1).Value = item.Id;
-                worksheet.Cell(row, 2).Value = item.DateSubmitted;
-                worksheet.Cell(row, 3).Value = item.StudentReferenceNumber;
-                worksheet.Cell(row, 4).Value = item.StudentDateOfBirth;
-                worksheet.Cell(row, 5).Value = item.SubmittedByWindowsUserName;
-                worksheet.Cell(row, 6).Value = item.StudentFullName;
-                worksheet.Cell(row, 7).Value = item.SampleDropdownTitle;
-                worksheet.Cell(row, 8).Value = item.SampleCheckboxTitles;
+                worksheet.Cell(row, 2).Value = item.IncidentDate;
+                worksheet.Cell(row, 3).Value = item.StaffFullName;
+                worksheet.Cell(row, 4).Value = item.IncidentDetails;
+                worksheet.Cell(row, 5).Value = item.DateSubmitted;
 
                 row++;
             }

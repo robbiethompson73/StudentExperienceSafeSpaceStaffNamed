@@ -2,7 +2,7 @@
 
 @{
     var appName = ViewData["AppName"] as string ?? "App";
-    ViewData["Title"] = $"{appName} Information";
+    ViewData["Title"] = appName + " - Named Home";
 }
 
 
@@ -68,19 +68,12 @@
                         <div id="collapseInstructions" class="accordion-collapse collapse show" aria-labelledby="headingInstructions" data-bs-parent="#siteInfoAccordion">
                             <div class="accordion-body accordion-body-padding-bottom">
                                 <p>
-                                    <strong>How to Fill Forms:</strong><br>
-                                    Complete all required fields marked with * before submitting.
+                                    You have chosen the named form which means that once you submit the form, we are able to look into the incident, contact you for more details and offer support. 
+                                    <br />To let us know, please click on the “Let us know” button below:
+
                                 </p>
 
-                                <p>
-                                    <strong>Estimated Time to Complete:</strong><br>
-                                    This form should take 5–10 minutes to complete.
-                                </p>
 
-                                <p>
-                                    <strong>Required Information:</strong><br>
-                                    You will need the student ID to complete the form. 
-                                </p>
 
 
                                 <div class="row mt-3">
@@ -89,9 +82,9 @@
 
                                         <a asp-Controller="MainForm" asp-action="Create"
                                            class="btn custom-outline w-100 btn-sm text-purple border-purple"
-                                           title="Start a new form for Curriculum Discretionary Form"
-                                           aria-label="Start a new form for Curriculum Discretionary Form">
-                                            <i class="fa fa-pen-to-square me-1" aria-hidden="true"></i> Submit Record
+                                           title="Start a new form"
+                                           aria-label="Start a new form">
+                                            <i class="fa fa-pen-to-square me-1" aria-hidden="true"></i> Let us know
                                         </a>
 
                                     </div>
@@ -102,8 +95,8 @@
 
                                         <a asp-Controller="MainForm" asp-action="List"
                                            class="btn custom-outline w-100 btn-sm text-purple border-purple"
-                                           title="Start a new form for Curriculum Discretionary Form"
-                                           aria-label="Start a new form for Curriculum Discretionary Form">
+                                           title="View Previous Submissions"
+                                           aria-label="View Previous Submissions">
                                             <i class="fas fa-folder-open me-1" aria-hidden="true"></i> View Previous Submissions
                                         </a>
 
@@ -119,8 +112,8 @@
                                             <a asp-controller="Admin" asp-action="List"
                                                class="btn custom-outline btn-sm text-purple border-purple flex-fill"
                                                style="min-width: 150px;"
-                                               title="Start a new form for Curriculum Discretionary Form"
-                                               aria-label="Start a new form for Curriculum Discretionary Form">
+                                               title="View All Records"
+                                               aria-label="View All Records">
                                                 <i class="fas fa-magnifying-glass me-1" aria-hidden="true"></i> View All Records
                                             </a>
 
@@ -178,7 +171,7 @@
                             <div class="accordion-body accordion-body-padding-bottom">
                                 <p>
                                     <strong>What Happens After Submission:</strong><br>
-                                    You will receive a confirmation email. A member of Student Experience Admin will process the application or will get in touch if any further information is required.                                 
+                                    You will receive a confirmation email.  An HR Advisor will get in touch for support or for more information
                                 </p>
                             </div>
                         </div>
