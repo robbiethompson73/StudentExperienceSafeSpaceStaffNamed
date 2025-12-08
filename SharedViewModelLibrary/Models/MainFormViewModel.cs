@@ -25,7 +25,7 @@ namespace SharedViewModelLibrary.Models
 
         [NoWhitespaceOnly]
         [StringLength(100, ErrorMessage = "Staff mobile or phone number cannot exceed 100 characters.")]
-        [Display(Name = "Mobile or phone number")]
+        [Display(Name = "Mobile or Phone Number")]
         public string? StaffTelephoneNumber { get; set; }
 
 
@@ -39,7 +39,7 @@ namespace SharedViewModelLibrary.Models
 
         [NoWhitespaceOnly]
         [StringLength(100, ErrorMessage = "Affected person name cannot exceed 100 characters.")]
-        [Display(Name = "If you know who this happened to, can you give us their name")]
+        [Display(Name = "If you know who this happened to, can you give us their name?")]
         public string? IncidentPersonName { get; set; }
 
 
@@ -83,35 +83,35 @@ namespace SharedViewModelLibrary.Models
 
         // Radio - IncidentHappenedToOptions
         [Required(ErrorMessage = "Please select an option.")]
-        [Display(Name = "Who did the incident happen to")]
+        [Display(Name = "Who did the incident happen to?")]
         public int? SelectedIncidentHappenedToId { get; set; } // Bound to radio buttons
         public string? IncidentHappenedToName { get; set; }
         public List<SelectListItem> IncidentHappenedToOptions { get; set; } = new();
 
 
         [Required(ErrorMessage = "Please select an option.")]
-        [Display(Name = "How many people were impacted by this incident")]
+        [Display(Name = "How many people were impacted by this incident?")]
         public int? SelectedNumberOfPeopleImpactedId { get; set; } // Bound to radio buttons
         public string? NumberOfPeopleImpactedName { get; set; }
         public List<SelectListItem> NumberOfPeopleImpactedOptions { get; set; } = new();
 
 
         [Required(ErrorMessage = "Please select an option.")]
-        [Display(Name = "How many people allegedly caused this incident")]
+        [Display(Name = "How many people allegedly caused this incident?")]
         public int? SelectedNumberOfPeopleCausedIncidentId { get; set; } // Bound to radio buttons
         public string? NumberOfPeopleCausedIncidentName { get; set; }
         public List<SelectListItem> NumberOfPeopleCausedIncidentOptions { get; set; } = new();
 
 
         [Required(ErrorMessage = "Please select an option.")]
-        [Display(Name = "Where did it happen")]
+        [Display(Name = "Where did it happen?")]
         public int? SelectedIncidentLocationId { get; set; } // Bound to radio buttons
         public string? IncidentLocationName { get; set; }
         public List<SelectListItem> IncidentLocationOptions { get; set; } = new();
 
 
         [Required(ErrorMessage = "Please select an option.")]
-        [Display(Name = "Has a similar incident happened before")]
+        [Display(Name = "Has a similar incident happened before?")]
         public int? SelectedHasSimilarIncidentHappenedBeforeId { get; set; } // Bound to radio buttons
         public string? HasSimilarIncidentHappenedBeforeName { get; set; }
         public List<SelectListItem> HasSimilarIncidentHappenedBeforeOptions { get; set; } = new();
@@ -135,7 +135,7 @@ namespace SharedViewModelLibrary.Models
 
 
         // Checkbox Group read from tblImpactedPersonType
-        [Display(Name = "Do you know whether the person/persons impacted by this incident were")]
+        [Display(Name = "Do you know whether the person/persons impacted by this incident were?")]
         public List<int> SelectedImpactedPersonTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
 
         // Holds the list of checkbox <options> (Id and Name) that render as checkboxes in the view
@@ -152,7 +152,7 @@ namespace SharedViewModelLibrary.Models
 
 
         // Checkbox Group read from tblIncidentBehaviourType
-        [Display(Name = "Did the incident involve any of the following")]
+        [Display(Name = "Did the incident involve any of the following?")]
         public List<int> SelectedIncidentBehaviourTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
 
         // Holds the list of checkbox <options> (Id and Name) that render as checkboxes in the view
@@ -167,7 +167,7 @@ namespace SharedViewModelLibrary.Models
 
 
         // Checkbox Group read from tblIncidentMotivationType
-        [Display(Name = "Do you believe the incident was motivated by any of the following")]
+        [Display(Name = "Do you believe the incident was motivated by any of the following?")]
         public List<int> SelectedIncidentMotivationTypeIds { get; set; } = new(); // Instantiate to defend against NullReferenceExceptions
 
         // Holds the list of checkbox <options> (Id and Name) that render as checkboxes in the view
@@ -188,7 +188,7 @@ namespace SharedViewModelLibrary.Models
 
 
         [BindNever] // not included in ModalState.IsValid. BindNever reference types Must be nullable
-        [Display(Name = "Submission date")]
+        [Display(Name = "Submission Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
         public DateTime DateSubmitted { get; set; }
 
